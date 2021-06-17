@@ -1,14 +1,22 @@
+% This paper is copyright 2021 the authors.
+
+% people who might comment on it:
+% - Rix
+% - KSF
+% - Kilian Walsh
+
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
 % math macros
 \usepackage{amsmath, amsfonts}
 \DeclareMathOperator*{\argmax}{argmax}
+\newcommand{\dd}{\mathrm{d}}
 \renewcommand{\vec}[1]{\boldsymbol{#1}}
 \newcommand{\uvec}{\vec{\hat{e}}}
 \newcommand{\tensor}[1]{\mathbf{#1}}
 \newcommand{\air}{\text{air}}
-\newcommand{\water}{\text{water}}
+\newcommand{\water}{\text{wat}}
 \newcommand{\boat}{\text{boat}}
 \newcommand{\destination}{\text{dest}}
 \newcommand{\sail}{\text{s}}
@@ -21,15 +29,22 @@
 \usepackage{biblatex}
 \addbibresource{sailing.bib}
 \newcommand{\documentname}{\textsl{Article}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
 
 % typesetting adjustments
+\makeatletter
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+  {-3.25ex \@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\raggedright\normalfont\large\bfseries}}
+\makeatother
 \addtolength{\textheight}{2.20in}
 \addtolength{\topmargin}{-1.00in}
 \linespread{1.08}
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
 \title{\bfseries%
-An anisotropic ram-pressure model for sailing}
+A simple, anisotropic ram-pressure model for sailing}
 \author{DWH, MK, others?}
 \date{June 2021}
 \begin{document}
@@ -47,13 +62,13 @@ An anisotropic ram-pressure model for sailing}
     Interestingly, nothing about the mechanical model or discussion depend on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing.
 \end{abstract}
 
-\section{Introduction}
+\section{Introduction}\label{sec:intro}
 
 KLEBAN: Write things about ddwfttw, maybe?
 
 HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong; a motivation to reconsider sailing too.
 
-\section{Ram-pressure sailboat}
+\section{Ram-pressure sailboat}\label{sec:boat}
 
 We are going to work in 2D, where velocities $\vec{v}$ are column vectors (or $\vec{v}\in\mathbb{R}^{2\times 1}$).
 To stay coordinate-free, we are going to talk about angles as orientations of unit vectors like $\uvec_{\perp\sail}$ and $\uvec_{\parallel\sail}$ (which will be defined below).
@@ -67,7 +82,9 @@ We won't particularly use angles much in what follows, but if you want to come b
 Our sailboat is going to be an anisotropic object such that wind that is perpendicular to the sail will produce more ram pressure than wind at any other angle (and far more than wind that ``goes along'' the sail direction).
 In detail, the ram-pressure force from the air on the sailboat will be
 \begin{align}
-    \vec{F}_\air &= \rho_\air\,|\vair - \vboat|\,\tensor{A}_\air\,(\vair - \vboat) \label{eq:Fair}
+    \Delta\vair &\equiv \vair-\vboat
+    \\
+    \vec{F}_\air &= \rho_\air\,|\Delta\vair|\,\tensor{A}_\air\,\Delta\vair \label{eq:Fair}
     \\
     \tensor{A}_\air &= A_{\perp\sail}\,\uvec_{\perp\sail}\,\uvec_{\perp\sail}^\top + A_{\parallel\sail},\uvec_{\parallel\sail}\,\uvec_{\parallel\sail}^\top \label{eq:Aair}
     \\
@@ -79,7 +96,9 @@ If you are uncomfortable with the expression for the tensor $\tensor{A}_\air$ in
 The inequality \eqref{eq:sail} says (loosely) that the sail (plus hull) is much bigger face-on than edge-on.
 The force from the water is similar
 \begin{align}
-    \vec{F}_\water &= \rho_\water\,|\vwater - \vboat|\,\tensor{A}_\water\,(\vwater - \vboat) \label{eq:Fwater}
+    \Delta\vwater &\equiv \vwater-\vboat
+    \\
+    \vec{F}_\water &= \rho_\water\,|\Delta\vwater|\,\tensor{A}_\water\,\Delta\vwater \label{eq:Fwater}
     \\
     \tensor{A}_\water &= A_{\perp\keel}\,\uvec_{\perp\keel}\,\uvec_{\perp\keel}^\top + A_{\parallel\keel},\uvec_{\parallel\keel}\,\uvec_{\parallel\keel}^\top
     \\
@@ -92,22 +111,43 @@ Mathematically, steady sailing in steady wind and steady current (constant $\vai
 \begin{align}\label{eq:sailing}
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
-If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel. KLEBAN CHECK THIS: This is a quartic root-finding problem so it has no simple closed form; we solve it numerically in the code associated with this \documentname.
+If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel. KLEBAN CHECK THIS: This is a quartic root-finding problem so it has no simple closed form; we solve it numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method.
+For Newton's method we make use of the derivatives
+\begin{align}
+    \frac{\dd\vec{F}_\air}{\dd\vboat} &= -\frac{\rho_\air}{|\Delta\vair|}\,A_\air\,\Delta\vair\,\Delta\vair^\top-\rho_\air\,|\Delta\vair|\,A_\air
+    \\
+    \frac{\dd\vec{F}_\water}{\dd\vboat} &= -\frac{\rho_\water}{|\Delta\vwater|}\,A_\water\,\Delta\vwater\,\Delta\vwater^\top-\rho_\water\,|\Delta\vwater|\,A_\water
+    ~,
+\end{align}
+which are order-2 tensors.
 
 HOGG: PUT FIGURES HERE SHOWING THE BEHAVIOR OF THE BOAT IN THE WIND.
 
-\section{Good sailing}
+HOGG: Comments: Don't sail DIRECTLY in the direction the keel is pointed. Many of these settings sail backwards: We don't distinguish forwards and backwards! Our boat is quadrupolar!
 
-In general a type-A sailor is trying to get from a current position to a destination as quickly as possible.
+\section{Good sailing}\label{sec:sailing}
+
+In \secref{sec:boat} we showed how the boat moves, given any arbitrary setting of the orientation of the keel and the sail.
+However, one doesn't sail by randomly setting the keel and sail!
+One sails by pointing the boat some direction and setting the sail (or sails) appropriately.
+In our simple, ram-pressure boat, how should we set the planar sail?
+
+HOGG:...
+
+\section{Competitive sailing}\label{sec:racing}
+
+A type-A sailor---or maybe a competetive sailor---is trying to get from a current position to a destination as quickly as possible.\footnote{We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
 The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vboat$
 \begin{align}
     \uvec_{\perp,\sail}^\ast,\uvec_{\perp\keel}^\ast &\leftarrow \argmax_{\uvec_{\perp,\sail},\uvec_{\perp\keel}} (\uvec_\destination^\top\,\vboat) ~,
 \end{align}
 where $\uvec_{\perp,\sail}^\ast,\uvec_{\perp\keel}^\ast$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and implicitly $\vboat$ is being thought of as a function of these orientations.
+Note that the sailor explicitly \emph{does not want} to travel directly towards the destination:
+The sailor wants to make as much progress as possible in that direction, but is willing to tack back-and-forth to get there, if it gets the boat there faster.
+So the metric really is the projection of the boat velocity onto the displacement vector pointing from the current position of the boat to the destination.
 
-While this is simple to state, the numerical optimization involves a quantity $\vboat$ that is itself the root of a quartic expression.
-Numerically this optimization can be implemented using a Lagrange multiplier and it looks like this...HOGG
+While this is simple to state, the numerical optimization hurts...HOGG
 
 HOGG PUT FIGURES HERE SHOWING THE OPTIMAL SETTINGS OF SAIL AND KEEL ORIENTATIONS FOR DIFFERENT DESTINATION DIRECTIONS.
 
@@ -115,7 +155,15 @@ Now if you want to plan a complete path or journey for the sailboat in (unrealis
 
 HOGG PUT FIGURES HERE SHOWING TRAJECTORIES FOR SIMPLE JOURNEYS.
 
-\section{Discussion}
+\section{Numerical implementation notes}\label{sec:implementation}
+
+Newton's method, invert, solve, etc.
+
+Look-up tables for proper boat trim.
+
+Path planning.
+
+\section{Discussion}\label{sec:discussion}
 
 HOGG: What did we find? What's important about that?
 
