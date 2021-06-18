@@ -1,9 +1,16 @@
 % This paper is copyright 2021 the authors.
 
 % people who might comment on it:
-% - Rix
+% -------------------------------
 % - KSF
 % - Kilian Walsh
+
+% to-do items:
+% ------------
+% — Put in the dumbell figure
+% - Reconsider the post-equation commas? (HWR SAY).
+% — Find references for, and destroy, Bernoulli.
+% — Make some comments on the situations in which the ram-pressure force approximation is more appropriate---gale force or lull?
 
 \documentclass{article}
 \usepackage[utf8]{inputenc}
@@ -80,7 +87,7 @@ for some angle $\theta_\sail$ in that coordinate system.
 We won't particularly use angles much in what follows, but if you want to come back to angles, you can take the arctangent of the components of $\uvec_{\perp\sail}$.
 
 Our sailboat is going to be an anisotropic object such that wind that is perpendicular to the sail will produce more ram pressure than wind at any other angle (and far more than wind that ``goes along'' the sail direction).
-In detail, the ram-pressure force from the air on the sailboat will be
+In detail, the ram-pressure force $\vec{F}_\air$ from the air on the sailboat will be
 \begin{align}
     \Delta\vair &\equiv \vair-\vboat
     \\
@@ -94,7 +101,7 @@ In detail, the ram-pressure force from the air on the sailboat will be
 where $\rho_\air$ is the mass density of air, $\vair,\vboat$ are the velocities of the air and boat, $\tensor{A}_\air$ is a Hermitian tensor with units of area, $A_{\perp\sail}, A_{\parallel\sail}$ are two constants with units of area defining the geometry of the sail, $\uvec_{\perp\sail}$ is a unit vector pointing normal to the surface of the (assumed planar) sail, and $\uvec_{\parallel\sail}$ is a unit vector perpendicular to that.
 If you are uncomfortable with the expression for the tensor $\tensor{A}_\air$ in \eqref{eq:Aair}, look at the discussion of tensors in, for example, \cite{kusse}.
 The inequality \eqref{eq:sail} says (loosely) that the sail (plus hull) is much bigger face-on than edge-on.
-The force from the water is similar
+The force $\vec{F}_\water$ from the water is similar
 \begin{align}
     \Delta\vwater &\equiv \vwater-\vboat
     \\
@@ -111,25 +118,23 @@ Mathematically, steady sailing in steady wind and steady current (constant $\vai
 \begin{align}\label{eq:sailing}
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
-If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel. KLEBAN CHECK THIS: This is a quartic root-finding problem so it has no simple closed form; we solve it numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method.
-For Newton's method we make use of the derivatives
-\begin{align}
-    \frac{\dd\vec{F}_\air}{\dd\vboat} &= -\frac{\rho_\air}{|\Delta\vair|}\,A_\air\,\Delta\vair\,\Delta\vair^\top-\rho_\air\,|\Delta\vair|\,A_\air
-    \\
-    \frac{\dd\vec{F}_\water}{\dd\vboat} &= -\frac{\rho_\water}{|\Delta\vwater|}\,A_\water\,\Delta\vwater\,\Delta\vwater^\top-\rho_\water\,|\Delta\vwater|\,A_\water
-    ~,
-\end{align}
-which are order-2 tensors.
+If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel. KLEBAN CHECK THIS: This is a quartic root-finding problem so it has no simple closed form; we solve it numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
+
+HOGG: Give the settings of all our parameters for the figures we are about to show.
+
+HOGG: Define direction cosines with the wind using vectors.
 
 HOGG: PUT FIGURES HERE SHOWING THE BEHAVIOR OF THE BOAT IN THE WIND.
 
-HOGG: Comments: Don't sail DIRECTLY in the direction the keel is pointed. Many of these settings sail backwards: We don't distinguish forwards and backwards! Our boat is quadrupolar!
+HOGG: Comments: You can see from the figures that you don't sail DIRECTLY in the direction the keel is pointed.
+
+HOGG: Right now, the concept of forwards and backwards is a bit soft; our boat is quadrupolar! But we will get more serious about deliberately sailing in the correct direction in the next Section.
 
 \section{Good sailing}\label{sec:sailing}
 
 In \secref{sec:boat} we showed how the boat moves, given any arbitrary setting of the orientation of the keel and the sail.
 However, one doesn't sail by randomly setting the keel and sail!
-One sails by pointing the boat some direction and setting the sail (or sails) appropriately.
+One sails by pointing the boat in some direction and then setting the sail (or sails) appropriately.
 In our simple, ram-pressure boat, how should we set the planar sail?
 
 HOGG:...
@@ -143,7 +148,7 @@ The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vb
     \uvec_{\perp,\sail}^\ast,\uvec_{\perp\keel}^\ast &\leftarrow \argmax_{\uvec_{\perp,\sail},\uvec_{\perp\keel}} (\uvec_\destination^\top\,\vboat) ~,
 \end{align}
 where $\uvec_{\perp,\sail}^\ast,\uvec_{\perp\keel}^\ast$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and implicitly $\vboat$ is being thought of as a function of these orientations.
-Note that the sailor explicitly \emph{does not want} to travel directly towards the destination:
+Note that the sailor \emph{does not necessarily want} to travel directly towards the destination:
 The sailor wants to make as much progress as possible in that direction, but is willing to tack back-and-forth to get there, if it gets the boat there faster.
 So the metric really is the projection of the boat velocity onto the displacement vector pointing from the current position of the boat to the destination.
 
@@ -157,7 +162,16 @@ HOGG PUT FIGURES HERE SHOWING TRAJECTORIES FOR SIMPLE JOURNEYS.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
-Newton's method, invert, solve, etc.
+HOGG: Newton's method (CITE), invert, solve, etc.
+Note that in practice, Newton's method works amazingly well.
+For Newton's method we make use of the derivatives
+\begin{align}
+    \frac{\dd\vec{F}_\air}{\dd\vboat} &= -\frac{\rho_\air}{|\Delta\vair|}\,A_\air\,\Delta\vair\,\Delta\vair^\top-\rho_\air\,|\Delta\vair|\,A_\air
+    \\
+    \frac{\dd\vec{F}_\water}{\dd\vboat} &= -\frac{\rho_\water}{|\Delta\vwater|}\,A_\water\,\Delta\vwater\,\Delta\vwater^\top-\rho_\water\,|\Delta\vwater|\,A_\water
+    ~,
+\end{align}
+which are order-2 tensors.
 
 Look-up tables for proper boat trim.
 
