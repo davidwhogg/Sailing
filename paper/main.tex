@@ -7,6 +7,9 @@
 
 % to-do items:
 % ------------
+% - FIX THE FORCE EXPRESSION and discuss it in terms of inner products, tensors, and Einstein summation notation.
+% - Put in running head.
+% - Overleaf seems to have wrong papersize?
 % — Put in the dumbell figure
 % - Reconsider the post-equation commas? (HWR SAY).
 % — Find references for, and destroy, Bernoulli.
@@ -45,8 +48,8 @@
   {1.5ex \@plus .2ex}%
   {\raggedright\normalfont\large\bfseries}}
 \makeatother
-\addtolength{\textheight}{2.20in}
-\addtolength{\topmargin}{-1.00in}
+\addtolength{\textheight}{2.00in}
+\addtolength{\topmargin}{-1.20in}
 \linespread{1.08}
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
@@ -88,6 +91,7 @@ We won't particularly use angles much in what follows, but if you want to come b
 
 Our sailboat is going to be an anisotropic object such that wind that is perpendicular to the sail will produce more ram pressure than wind at any other angle (and far more than wind that ``goes along'' the sail direction).
 In detail, the ram-pressure force $\vec{F}_\air$ from the air on the sailboat will be
+HOGG THIS EXPRESSION IS ALL WRONG. THE FORCE IS GIVEN BY DOUBLE-CONTRACTION ON AN ORDER-2 TENSOR. SEE NOTES 2021-06-19. FIX THIS.
 \begin{align}
     \Delta\vair &\equiv \vair-\vboat
     \\
@@ -122,13 +126,21 @@ If we want to operationalize steady sailing in code, steady sailing can be thoug
 
 HOGG: Give the settings of all our parameters for the figures we are about to show.
 
-HOGG: Define direction cosines with the wind using vectors.
+HOGG: Define direction cosines with the wind, and with boat parts, using vectors.
 
 HOGG: PUT FIGURES HERE SHOWING THE BEHAVIOR OF THE BOAT IN THE WIND.
+
+HOGG: Put the random-dot hourglass figure here.
 
 HOGG: Comments: You can see from the figures that you don't sail DIRECTLY in the direction the keel is pointed.
 
 HOGG: Right now, the concept of forwards and backwards is a bit soft; our boat is quadrupolar! But we will get more serious about deliberately sailing in the correct direction in the next Section.
+
+HOGG: Comment: It is easy to sail downwind fttw.
+
+HOGG: Comment: It is easy to sail upwind. But impossible to sail upwind fttw.
+
+HOGG: Comment: You can't sail directly into the wind, or within XXX radians of directly into the wind. This XXX depends on dimensionless sail and boat ratios.
 
 \section{Good sailing}\label{sec:sailing}
 
@@ -137,9 +149,19 @@ However, one doesn't sail by randomly setting the keel and sail!
 One sails by pointing the boat in some direction and then setting the sail (or sails) appropriately.
 In our simple, ram-pressure boat, how should we set the planar sail?
 
-HOGG:...
+HOGG: IN THIS SECTION EXPLICITLY DEFINE ``GOOD SAILING''.
+
+HOGG: FIGURE showing good sailing for a set of boat orientations.
+
+HOGG: Figure showing direction cosines of sail relative to keel/boat orientation.
+
+HOGG: Put the equivalent of the hourglass figure.
+
+HOGG: Comment: The settings of the sail look ``tight'' relative to standard sailing practice. But this boat has flat sails, so it's hard to compare the exact settings with sailor experiences (which are all with curved sails).
 
 \section{Competitive sailing}\label{sec:racing}
+
+HOGG IN THIS SECTION EXPLICITLY DEFINE ``COMPETITIVE SAILING''.
 
 A type-A sailor---or maybe a competetive sailor---is trying to get from a current position to a destination as quickly as possible.\footnote{We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
