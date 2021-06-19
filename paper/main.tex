@@ -29,11 +29,14 @@
 \newcommand{\water}{\text{wat}}
 \newcommand{\boat}{\text{boat}}
 \newcommand{\destination}{\text{dest}}
+\newcommand{\good}{\text{(good)}}
+\newcommand{\best}{\text{(best)}}
 \newcommand{\sail}{\text{s}}
 \newcommand{\keel}{\text{k}}
 \newcommand{\vair}{\vec{v}_\air}
 \newcommand{\vwater}{\vec{v}_\water}
 \newcommand{\vboat}{\vec{v}_\boat}
+\newcommand{\vdest}{\vec{v}_\destination}
 
 % text macros
 \usepackage{biblatex}
@@ -48,8 +51,11 @@
   {1.5ex \@plus .2ex}%
   {\raggedright\normalfont\large\bfseries}}
 \makeatother
-\addtolength{\textheight}{2.00in}
-\addtolength{\topmargin}{-1.20in}
+\setlength{\textwidth}{5.00in}
+\setlength{\textheight}{9.00in}
+\setlength{\topmargin}{-0.40in}
+\pagestyle{myheadings}
+\markright{\textsf{Hogg \& Kleban / Ram-pressure model for sailing}}
 \linespread{1.08}
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
@@ -84,13 +90,32 @@ We are going to work in 2D, where velocities $\vec{v}$ are column vectors (or $\
 To stay coordinate-free, we are going to talk about angles as orientations of unit vectors like $\uvec_{\perp\sail}$ and $\uvec_{\parallel\sail}$ (which will be defined below).
 If you prefer to think in terms of angles, you can choose a coordinate system and then
 \begin{align}
-    \uvec_{\perp,\sail} &= \begin{bmatrix}\cos\theta_\sail \\ \sin\theta_\sail\end{bmatrix} ~ ; ~ \uvec_{\parallel,\sail} = \begin{bmatrix}-\sin\theta_\sail \\ \cos\theta_\sail\end{bmatrix} ~,
+    \uvec_{\perp\sail} &= \begin{bmatrix}\cos\theta_\sail \\ \sin\theta_\sail\end{bmatrix} ~ ; ~ \uvec_{\parallel\sail} = \begin{bmatrix}-\sin\theta_\sail \\ \cos\theta_\sail\end{bmatrix} ~,
 \end{align}
 for some angle $\theta_\sail$ in that coordinate system.
 We won't particularly use angles much in what follows, but if you want to come back to angles, you can take the arctangent of the components of $\uvec_{\perp\sail}$.
 
-Our sailboat is going to be an anisotropic object such that wind that is perpendicular to the sail will produce more ram pressure than wind at any other angle (and far more than wind that ``goes along'' the sail direction).
-In detail, the ram-pressure force $\vec{F}_\air$ from the air on the sailboat will be
+Our sailboat is going to be an anisotropic object such that wind that hits the sail perpendicular to the large surface of the sail (in the rest frame of the boat) will produce more ram pressure than wind at any other angle (and far more than wind that ``goes along'' the sail direction).
+We can construct the complete force law on the sailboat by thinking about ram-pressure forces on surfaces.
+If the fluid (air or water in this case) is thought of as being composed of particles that bounce elastically off of a flat surface of area $A$, then the ram-pressure force on that surface is
+\begin{align}
+    \vec{F} &= \eta\,\rho\,A\,(\uvec_\perp^\top\vec{v})^2\,\uvec_\perp ~,
+\end{align}
+where $\eta$ is a dimensionless constant (naively 2, but HOGG), $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
+If you like thinking about tensors, this can be thought of as a tensor expression, in which $\rho$, $A$, and the unit vectors are combined into a three-index (order-three) tensor $\mathbb{A}$, which is then contracted onto the velocity twice:
+\begin{align}
+    \mathbb{A} &\equiv \eta\,A\,\uvec_\perp\,\uvec_\perp^\top\otimes\uvec_\perp^\top ~.
+\end{align}
+In Einstein summation notation, the three-index tensor is contracted as follows
+\begin{align}
+    [\vec{F}]_i &= \rho\,[\mathbb{A}]_{ijk}\,[\vec{v}]_j\,[\vec{v}]_k ~,
+    \\
+    [\mathbb{A}]_{ijk} &= \eta\,A\,[\uvec_\perp]_i\,[\uvec_\perp]_j\,[\uvec_\perp]_k
+    ~,
+\end{align}
+where the $[\vec{F}]_i$ notation indicates the $i$th component or coordinate of the vector, the tensor $\mathbb{A}$ has three indices, and the repeated indices are summed over.
+
+HOGG: PARAGRAPH AND EQUATIONS ALL WRONG: In detail, the ram-pressure force $\vec{F}_\air$ from the air on the sailboat will be
 HOGG THIS EXPRESSION IS ALL WRONG. THE FORCE IS GIVEN BY DOUBLE-CONTRACTION ON AN ORDER-2 TENSOR. SEE NOTES 2021-06-19. FIX THIS.
 \begin{align}
     \Delta\vair &\equiv \vair-\vboat
@@ -122,7 +147,8 @@ Mathematically, steady sailing in steady wind and steady current (constant $\vai
 \begin{align}\label{eq:sailing}
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
-If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel. KLEBAN CHECK THIS: This is a quartic root-finding problem so it has no simple closed form; we solve it numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
+If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel.
+This is a quadratic root-finding problem so it has HOGG SOME SIMPLE CLOSED FORM, WHICH IS... we CAN ALSO MAYBE solve it numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
 
 HOGG: Give the settings of all our parameters for the figures we are about to show.
 
@@ -138,6 +164,8 @@ HOGG: Right now, the concept of forwards and backwards is a bit soft; our boat i
 
 HOGG: Comment: It is easy to sail downwind fttw.
 
+HOGG: Comment: It is easy to sail faster than the wind speed.
+
 HOGG: Comment: It is easy to sail upwind. But impossible to sail upwind fttw.
 
 HOGG: Comment: You can't sail directly into the wind, or within XXX radians of directly into the wind. This XXX depends on dimensionless sail and boat ratios.
@@ -150,6 +178,10 @@ One sails by pointing the boat in some direction and then setting the sail (or s
 In our simple, ram-pressure boat, how should we set the planar sail?
 
 HOGG: IN THIS SECTION EXPLICITLY DEFINE ``GOOD SAILING''.
+\begin{align}\label{eq:good}
+    \uvec_{\perp\sail}^\good &\leftarrow \argmax_{\uvec_{\perp\sail}} \left[\uvec_{\parallel\keel}^\top\,(\vboat-\vwater)\right] ~,
+\end{align}
+where .... HOGG IMPLICITLY $\vboat-\vwater$ is a function of all the properties of the world and the boat boat, along with the orientation of its keel and sail.
 
 HOGG: FIGURE showing good sailing for a set of boat orientations.
 
@@ -168,10 +200,11 @@ HOGG IN THIS SECTION EXPLICITLY DEFINE ``COMPETITIVE SAILING''.
 A type-A sailor---or maybe a competetive sailor---is trying to get from a current position to a destination as quickly as possible.\footnote{We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
 The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vboat$
-\begin{align}
-    \uvec_{\perp,\sail}^\ast,\uvec_{\perp\keel}^\ast &\leftarrow \argmax_{\uvec_{\perp,\sail},\uvec_{\perp\keel}} (\uvec_\destination^\top\,\vboat) ~,
+\begin{align}\label{eq:best}
+    \uvec_{\perp\sail}^\best,\uvec_{\perp\keel}^\best &\leftarrow \argmax_{\uvec_{\perp\sail},\uvec_{\perp\keel}} \left[\uvec_\destination^\top\,(\vboat-\vdest)\right] ~,
 \end{align}
-where $\uvec_{\perp,\sail}^\ast,\uvec_{\perp\keel}^\ast$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and implicitly $\vboat$ is being thought of as a function of these orientations.
+where $\uvec_{\perp\sail}^\best,\uvec_{\perp\keel}^\best$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and (because we are Galilean-relativistic) this velocity is relative to the velocity $\vdest$ of the destination (which might not be stationary with respect to the water).
+In this expresion \eqref{eq:best}, implicitly $\vboat$ is being thought of as a function of these orientations (and more).
 Note that the sailor \emph{does not necessarily want} to travel directly towards the destination:
 The sailor wants to make as much progress as possible in that direction, but is willing to tack back-and-forth to get there, if it gets the boat there faster.
 So the metric really is the projection of the boat velocity onto the displacement vector pointing from the current position of the boat to the destination.
