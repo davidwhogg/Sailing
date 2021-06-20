@@ -4,6 +4,8 @@
 % -------------------------------
 % - KSF
 % - Kilian Walsh
+% - Sanjoy Mahajan
+% - David Grier
 
 % to-do items:
 % ------------
@@ -100,7 +102,8 @@ If you prefer to think in terms of angles, you can choose a coordinate system an
 for some angle $\theta_\sail$ in that coordinate system.
 We won't particularly use angles much in what follows, but if you want to come back to angles, you can take the arctangent of the components of $\uvec_{\perp\sail}$.
 
-Our sailboat is going to be an anisotropic object such that wind that hits the sail perpendicular to the large surface of the sail (in the rest frame of the boat) will produce more ram pressure than wind at any other angle (and far more than wind that ``goes along'' the sail direction).
+Our sailboat is going to be a simple anisotropic object such that wind that hits its planar sail produces a ram-pressure force perpendicular to the surface of the sail,
+and water that hits its planar keel produces a ram-pressure force perpendicular to the surface of the keel.
 We can construct the complete force law on the sailboat by thinking about ram-pressure forces on surfaces.
 If the fluid (air or water in this case) is thought of as being composed of particles that bounce elastically off of a flat surface of area $A$, then the ram-pressure force on that surface is
 \begin{align}\label{eq:flat}
@@ -121,12 +124,12 @@ In Einstein summation notation, the three-index tensor is contracted as follows
     ~,
 \end{align}
 where the $[\vec{v}]_i$ notation indicates the $i$th component or coordinate of the vector, the tensor $\tensor{A}$ has three indices, and the repeated indices are summed over.
-If, instead of a planar object, you have an isotropic object (a sphere in fully 3D situations, a floating cylinder in our 2D water world), the ram-pressure force becomes
+If, instead of a planar object, you have an isotropic object (a sphere in fully 3D situations, an axi-symmetric boat in our 2D water world), the ram-pressure force becomes
 \begin{align}\label{eq:iso}
     \vec{F}_\iso &= \eta\,\rho\,A\,|\vec{v}|\,\vec{v}
 \end{align}
-where now it's a different prefactor $\eta$, now $A$ is the cross-sectional or projected area of the surface, and $\vec{v}$ is still the fluid velocity in the rest frame of the object.
-Again, $\eta$ depends on velocity, but again we are going to ignore that.
+where $\eta$ is a (different) dimensionless prefactor, $A$ is now the cross-sectional or projected area of the surface, and $\vec{v}$ is still the fluid velocity in the rest frame of the object.
+Again $\eta$ depends on velocity, but again we are going to ignore that.
 
 Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull.
 Thus the ram-pressure force on the sailboat will have four components, a force on the flat sail from the air, a force on the flat keel from the water, a force on the hull from the air, and a force on the hull from the water.
@@ -156,7 +159,9 @@ Similarly, the forces from the water are given by
 where the sail is replaced by the keel everywhere, and $A_{\hull,\below}$ is an area related to the area of the hull below the water surface.
 HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE.
 
-Mathematically, steady sailing in steady wind and steady current (constant $\vair, \vwater$) is given by
+\section{Steady sailing}
+
+Mathematically, steady sailing (constant $\vboat$) in steady wind and steady current (constant $\vair, \vwater$) is given by
 \begin{align}\label{eq:sailing}
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
@@ -253,7 +258,7 @@ HOGG: What did we find? What's important about that?
 
 HOGG: Galilean symmetry, coordinate freedom?
 
-HOGG: What were our assumptions? What are the myriad ways in which those assumptions must be wrong? For example, boat has an asymmetry in the wind too, so really the boat must also matter. Viscosity; why can we ignore it? But turbulence; we can't ignore that!
+HOGG: What were our assumptions? What are the myriad ways in which those assumptions must be wrong? For example, boat has an asymmetry in the wind too, so really the boat must also matter. Viscosity; why can we ignore it? But turbulence; we can't ignore that! Constant $\eta$ is also wrong.
 
 HOGG: Take some time to bash the Bernoulli bullshit.
 
