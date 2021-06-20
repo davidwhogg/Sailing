@@ -34,7 +34,7 @@
 \newcommand{\boat}{\text{boat}}
 \newcommand{\destination}{\text{dest}}
 \newcommand{\good}{\text{(good)}}
-\newcommand{\best}{\text{(best)}}
+\newcommand{\better}{\text{(best)}}
 \newcommand{\sail}{\text{sail}}
 \newcommand{\keel}{\text{keel}}
 \newcommand{\hull}{\text{hull}}
@@ -50,6 +50,7 @@
 \addbibresource{sailing.bib}
 \newcommand{\documentname}{\textsl{Article}}
 \newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
 
 % typesetting adjustments
 \makeatletter
@@ -110,7 +111,8 @@ If the fluid (air or water in this case) is thought of as being composed of part
     \vec{F}_\flat &= \eta\,\rho\,A\,(\uvec_\perp^\top\vec{v})^2\,\uvec_\perp ~,
 \end{align}
 where $\eta$ is a dimensionless prefactor, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
-Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is HOGG (CITE).}.
+Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{%
+Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is HOGG (CITE).}.
 We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ in everything that follows.
 If you like thinking about tensors, the flat-surface force \eqref{eq:flat}  can be thought of as a tensor expression, in which $\rho$, $A$, and the unit vectors are combined into a three-index (order-three) tensor $\tensor{A}$, which is then contracted onto the velocity twice:
 \begin{align}
@@ -139,42 +141,53 @@ In detail the forces from the air are given by
 \begin{align}
   \vec{F}_\air &= \vec{F}_{\sail-\air} + \vec{F}_{\hull-\air}
   \\
-  \vec{\Delta v}_\air &\equiv \vec{v}_\air - \vec{v}_\boat
+  \vec{\Delta v}_\air &\equiv \vair - \vboat
   \\
   \vec{F}_{\sail-\air} & = \rho_\air\,A_\sail\,(\uvec_{\perp\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\perp\sail}
   \\
-  \vec{F}_{\hull-\air} & = \rho_\air\,A_{\hull,\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air ~,
+  \vec{F}_{\hull-\air} & = \rho_\air\,A_{\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air ~,
 \end{align}
-where we have dropped the $\eta$ prefactors (or really combined them with the area constants), $\vec{v}_\air,\vec{v}_\boat$ are the velocities of the air and boat, $A_\sail$ is an area related to the area of the sail, $\uvec_{\perp\sail}$ is a unit vector perpendicular to the plane of the planar sail, and $A_{\hull,\above}$ is an area related to the area of the boat's hull that is above the water surface.
+where we have dropped the $\eta$ prefactors (or really combined them with the area constants), $\vair,\vboat$ are the velocities of the air and boat, $A_\sail$ is an area related to the area of the sail, $\uvec_{\perp\sail}$ is a unit vector perpendicular to the plane of the planar sail, and $A_{\above}$ is an area related to the area of the boat's hull that is above the water surface.
 Similarly, the forces from the water are given by
 \begin{align}
   \vec{F}_\water &= \vec{F}_{\keel-\water} + \vec{F}_{\hull-\water}
   \\
-  \vec{\Delta v}_\water &\equiv \vec{v}_\water - \vec{v}_\boat
+  \vec{\Delta v}_\water &\equiv \vwater - \vboat
   \\
   \vec{F}_{\keel-\water} & = \rho_\water\,A_\keel\,(\uvec_{\perp\keel}^\top\,\vec{\Delta v}_\water)^2\,\uvec_{\perp\keel}
   \\
-  \vec{F}_{\hull-\water} & = \rho_\water\,A_{\hull,\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,
+  \vec{F}_{\hull-\water} & = \rho_\water\,A_{\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,
 \end{align}
-where the sail is replaced by the keel everywhere, and $A_{\hull,\below}$ is an area related to the area of the hull below the water surface.
+where the sail is replaced by the keel everywhere, and $A_{\below}$ is an area related to the area of the hull below the water surface.
 HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE.
 
-\section{Steady sailing}
+\section{Steady sailing}\label{sec:steady}
 
 Mathematically, steady sailing (constant $\vboat$) in steady wind and steady current (constant $\vair, \vwater$) is given by
 \begin{align}\label{eq:sailing}
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
 If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel.
-This is a root-finding problem that (probably) has no closed form\footnote{It might be interesting to note that the flat-surface force \eqref{eq:flat} is a vector-valued quadratic form, so if one constructed the sailboat model completely from flat surfaces, the force law, in this approximation would be a quadratic form. That might lead to a closed-form solution for the equation \eqref{eq:sailing} of steady sailing.}.
-We solve equation~\eqref{eq:sailing} numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
+This is a root-finding problem that (probably) has no closed form\footnote{%
+It might be interesting to note that the flat-surface force \eqref{eq:flat} is a vector-valued quadratic form, so if one constructed the sailboat model completely from flat surfaces, the force law, in this approximation would be a quadratic form.
+That might lead to a closed-form solution for the equation \eqref{eq:sailing} of steady sailing.}.
+We solve equation~\eqref{eq:sailing} numerically in the code associated with this \documentname\footnote{%
+HOGG GIVE LINK HERE}
+by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
 
-HOGG: Give the settings of all our parameters for the figures we are about to show.
+HOGG: Define direction cosines with the wind, and with boat parts, using vectors. ADD THOSE direction cosines to the figure panels.
 
-HOGG: Define direction cosines with the wind, and with boat parts, using vectors.
+In \figref{fig:steady} we show examples of steady sailing, for a wide range of orientations of the keel and sail.
+All these examples are shown in the water rest frame.
+The boat has four free parameters $(A_\sail,A_\keel,A_{\above},A_{\below})$ all with units of area (or really three independent dimensionless ratios of these four areas).
+The values we chose for these four parameters are given in \secref{sec:design} and discussed in detail there.
+\begin{figure}[tp]
+  \caption{Visualizations of the boat velocity $\vboat$ for different settings of the orientations of the keel and sail, all presented in the water rest frame.
+    The views are top-down; the keel is represented by a thick grey line, the sail is represented by a thin black line, and the wind and boat velocities are represented by black arrows.
+    Most of the settings of the keel and sail lead to downwind travel, but a few lead to upwind travel, for example XXX and YYY. HOGG LABEL THE PANELS.\label{fig:steady}}
+\end{figure}
 
-HOGG: PUT FIGURES HERE SHOWING THE BEHAVIOR OF THE BOAT IN THE WIND.
-
+In \figref{fig:hourglass} we show the distribution of boat velocities one obtains if one randomly orients one's sail and keel....HOGG
 HOGG: Put the random-dot hourglass figure here.
 
 HOGG: Comments: You can see from the figures that you don't sail DIRECTLY in the direction the keel is pointed.
@@ -191,7 +204,7 @@ HOGG: Comment: It is easy to sail upwind. If the boat is AMAZING you can sail up
 
 HOGG: Comment: You can't sail directly into the wind, or within XXX radians of directly into the wind. This XXX depends on dimensionless sail and boat ratios.
 
-\section{Good sailing}\label{sec:sailing}
+\section{Good sailing}\label{sec:good}
 
 In \secref{sec:boat} we showed how the boat moves, given any arbitrary setting of the orientation of the keel and the sail.
 However, one doesn't sail by randomly setting the keel and sail!
@@ -218,7 +231,8 @@ HOGG: Final comment: But this is not the BEST a sailor can do...
 
 HOGG IN THIS SECTION EXPLICITLY DEFINE ``BETTER SAILING''.
 
-A type-A sailor---or maybe a competetive sailor---is trying to get from a current position to a destination as quickly as possible.\footnote{We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}
+A type-A sailor---or maybe a competetive sailor---is trying to get from a current position to a destination as quickly as possible\footnote{%
+We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}.
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
 The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vboat$
 \begin{align}\label{eq:better}
@@ -238,7 +252,16 @@ Now if you want to plan a complete path or journey for the sailboat in (unrealis
 
 HOGG PUT FIGURES HERE SHOWING TRAJECTORIES FOR SIMPLE JOURNEYS. MAYBE??
 
-\section{Boat properties and boat design}
+\section{Boat properties and boat design}\label{sec:design}
+
+HOGG: In the above experiments and diagrams we made use of a boat with the following properties....
+
+HOGG: These properties might seem unreasonable! However, remember that our boat is just a brutal approximation.
+A true boat has sails that are globally curved\footnote{%
+In the local-curvature or Riemann-curvature senses, sails are not (very) curved; after all, they are made from flat pieces of fabric.
+However, they are curved in the global or colloquial sense: Different patches of the sail have differently oriented normal vectors.},
+and forces that are different from these pure ram-pressure forces.
+The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
 HOGG show how the hourglass plots depend on the qualities of the boat, such as: Relative area of sail and keel. Relative area of hull and keel. Etc.
 
