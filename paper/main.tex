@@ -28,13 +28,16 @@
 \renewcommand{\flat}{\text{flat}}
 \newcommand{\iso}{\text{iso}}
 \newcommand{\air}{\text{air}}
-\newcommand{\water}{\text{wat}}
+\newcommand{\water}{\text{water}}
 \newcommand{\boat}{\text{boat}}
 \newcommand{\destination}{\text{dest}}
 \newcommand{\good}{\text{(good)}}
 \newcommand{\best}{\text{(best)}}
-\newcommand{\sail}{\text{s}}
-\newcommand{\keel}{\text{k}}
+\newcommand{\sail}{\text{sail}}
+\newcommand{\keel}{\text{keel}}
+\newcommand{\hull}{\text{hull}}
+\renewcommand{\above}{\text{above}}
+\newcommand{\below}{\text{below}}
 \newcommand{\vair}{\vec{v}_\air}
 \newcommand{\vwater}{\vec{v}_\water}
 \newcommand{\vboat}{\vec{v}_\boat}
@@ -103,9 +106,9 @@ If the fluid (air or water in this case) is thought of as being composed of part
 \begin{align}\label{eq:flat}
     \vec{F}_\flat &= \eta\,\rho\,A\,(\uvec_\perp^\top\vec{v})^2\,\uvec_\perp ~,
 \end{align}
-where $\eta$ is a dimensionless constant, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
-Na\"ively in the particle-collision model the constant $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is HOGG (CITE).}.
-We're going to treat $\eta$ as an uninteresting constant that doesn't depend on velocity, such that it can be combined with the area $A$ in everything that follows.
+where $\eta$ is a dimensionless prefactor, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
+Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is HOGG (CITE).}.
+We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ in everything that follows.
 If you like thinking about tensors, the flat-surface force \eqref{eq:flat}  can be thought of as a tensor expression, in which $\rho$, $A$, and the unit vectors are combined into a three-index (order-three) tensor $\tensor{A}$, which is then contracted onto the velocity twice:
 \begin{align}
     \tensor{A} &\equiv \eta\,A\,\uvec_\perp\,\uvec_\perp^\top\otimes\uvec_\perp^\top ~.
@@ -122,14 +125,36 @@ If, instead of a planar object, you have an isotropic object (a sphere in fully 
 \begin{align}\label{eq:iso}
     \vec{F}_\iso &= \eta\,\rho\,A\,|\vec{v}|\,\vec{v}
 \end{align}
-where now it's a different constant $\eta$, now $A$ is the cross-sectional or projected area of the surface, and $\vec{v}$ is still the fluid velocity in the rest frame of the object.
+where now it's a different prefactor $\eta$, now $A$ is the cross-sectional or projected area of the surface, and $\vec{v}$ is still the fluid velocity in the rest frame of the object.
 Again, $\eta$ depends on velocity, but again we are going to ignore that.
 
 Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull.
 Thus the ram-pressure force on the sailboat will have four components, a force on the flat sail from the air, a force on the flat keel from the water, a force on the hull from the air, and a force on the hull from the water.
 This model is extremely simplistic!
 In some sense it is the closest possible model to the spherical cow that will sail non-trivially.
-HOGG: COMPLETE THIS PARAGRAPH WITH EQUATIONS.
+In detail the forces from the air are given by
+\begin{align}
+  \vec{F}_\air &= \vec{F}_{\sail-\air} + \vec{F}_{\hull-\air}
+  \\
+  \vec{\Delta v}_\air &\equiv \vec{v}_\air - \vec{v}_\boat
+  \\
+  \vec{F}_{\sail-\air} & = \rho_\air\,A_\sail\,(\uvec_{\perp\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\perp\sail}
+  \\
+  \vec{F}_{\hull-\air} & = \rho_\air\,A_{\hull,\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air ~,
+\end{align}
+where we have dropped the $\eta$ prefactors (or really combined them with the area constants), $\vec{v}_\air,\vec{v}_\boat$ are the velocities of the air and boat, $A_\sail$ is an area related to the area of the sail, $\uvec_{\perp\sail}$ is a unit vector perpendicular to the plane of the planar sail, and $A_{\hull,\above}$ is an area related to the area of the boat's hull that is above the water surface.
+Similarly, the forces from the water are given by
+\begin{align}
+  \vec{F}_\water &= \vec{F}_{\keel-\water} + \vec{F}_{\hull-\water}
+  \\
+  \vec{\Delta v}_\water &\equiv \vec{v}_\water - \vec{v}_\boat
+  \\
+  \vec{F}_{\keel-\water} & = \rho_\water\,A_\keel\,(\uvec_{\perp\keel}^\top\,\vec{\Delta v}_\water)^2\,\uvec_{\perp\keel}
+  \\
+  \vec{F}_{\hull-\water} & = \rho_\water\,A_{\hull,\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,
+\end{align}
+where the sail is replaced by the keel everywhere, and $A_{\hull,\below}$ is an area related to the area of the hull below the water surface.
+HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE.
 
 Mathematically, steady sailing in steady wind and steady current (constant $\vair, \vwater$) is given by
 \begin{align}\label{eq:sailing}
