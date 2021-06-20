@@ -24,7 +24,9 @@
 \newcommand{\dd}{\mathrm{d}}
 \renewcommand{\vec}[1]{\boldsymbol{#1}}
 \newcommand{\uvec}{\vec{\hat{e}}}
-\newcommand{\tensor}[1]{\mathbf{#1}}
+\newcommand{\tensor}[1]{\mathbb{#1}}
+\renewcommand{\flat}{\text{flat}}
+\newcommand{\iso}{\text{iso}}
 \newcommand{\air}{\text{air}}
 \newcommand{\water}{\text{wat}}
 \newcommand{\boat}{\text{boat}}
@@ -86,7 +88,7 @@ HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong
 
 \section{Ram-pressure sailboat}\label{sec:boat}
 
-We are going to work in 2D, where velocities $\vec{v}$ are column vectors (or $\vec{v}\in\mathbb{R}^{2\times 1}$).
+We are going to work in 2D, with velocities $\vec{v}$ and forces $\vec{F}$ that are column vectors (or $2\times 1$ matrices).
 To stay coordinate-free, we are going to talk about angles as orientations of unit vectors like $\uvec_{\perp\sail}$ and $\uvec_{\parallel\sail}$ (which will be defined below).
 If you prefer to think in terms of angles, you can choose a coordinate system and then
 \begin{align}
@@ -98,57 +100,44 @@ We won't particularly use angles much in what follows, but if you want to come b
 Our sailboat is going to be an anisotropic object such that wind that hits the sail perpendicular to the large surface of the sail (in the rest frame of the boat) will produce more ram pressure than wind at any other angle (and far more than wind that ``goes along'' the sail direction).
 We can construct the complete force law on the sailboat by thinking about ram-pressure forces on surfaces.
 If the fluid (air or water in this case) is thought of as being composed of particles that bounce elastically off of a flat surface of area $A$, then the ram-pressure force on that surface is
-\begin{align}
-    \vec{F} &= \eta\,\rho\,A\,(\uvec_\perp^\top\vec{v})^2\,\uvec_\perp ~,
+\begin{align}\label{eq:flat}
+    \vec{F}_\flat &= \eta\,\rho\,A\,(\uvec_\perp^\top\vec{v})^2\,\uvec_\perp ~,
 \end{align}
-where $\eta$ is a dimensionless constant (naively 2, but HOGG), $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
-If you like thinking about tensors, this can be thought of as a tensor expression, in which $\rho$, $A$, and the unit vectors are combined into a three-index (order-three) tensor $\mathbb{A}$, which is then contracted onto the velocity twice:
+where $\eta$ is a dimensionless constant, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
+Na\"ively in the particle-collision model the constant $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is HOGG (CITE).}.
+We're going to treat $\eta$ as an uninteresting constant that doesn't depend on velocity, such that it can be combined with the area $A$ in everything that follows.
+If you like thinking about tensors, the flat-surface force \eqref{eq:flat}  can be thought of as a tensor expression, in which $\rho$, $A$, and the unit vectors are combined into a three-index (order-three) tensor $\tensor{A}$, which is then contracted onto the velocity twice:
 \begin{align}
-    \mathbb{A} &\equiv \eta\,A\,\uvec_\perp\,\uvec_\perp^\top\otimes\uvec_\perp^\top ~.
+    \tensor{A} &\equiv \eta\,A\,\uvec_\perp\,\uvec_\perp^\top\otimes\uvec_\perp^\top ~.
 \end{align}
 In Einstein summation notation, the three-index tensor is contracted as follows
 \begin{align}
-    [\vec{F}]_i &= \rho\,[\mathbb{A}]_{ijk}\,[\vec{v}]_j\,[\vec{v}]_k ~,
+    [\vec{F}_\flat]_i &= \rho\,[\tensor{A}]_{ijk}\,[\vec{v}]_j\,[\vec{v}]_k ~,
     \\
-    [\mathbb{A}]_{ijk} &= \eta\,A\,[\uvec_\perp]_i\,[\uvec_\perp]_j\,[\uvec_\perp]_k
+    [\tensor{A}]_{ijk} &= \eta\,A\,[\uvec_\perp]_i\,[\uvec_\perp]_j\,[\uvec_\perp]_k
     ~,
 \end{align}
-where the $[\vec{F}]_i$ notation indicates the $i$th component or coordinate of the vector, the tensor $\mathbb{A}$ has three indices, and the repeated indices are summed over.
+where the $[\vec{v}]_i$ notation indicates the $i$th component or coordinate of the vector, the tensor $\tensor{A}$ has three indices, and the repeated indices are summed over.
+If, instead of a planar object, you have an isotropic object (a sphere in fully 3D situations, a floating cylinder in our 2D water world), the ram-pressure force becomes
+\begin{align}\label{eq:iso}
+    \vec{F}_\iso &= \eta\,\rho\,A\,|\vec{v}|\,\vec{v}
+\end{align}
+where now it's a different constant $\eta$, now $A$ is the cross-sectional or projected area of the surface, and $\vec{v}$ is still the fluid velocity in the rest frame of the object.
+Again, $\eta$ depends on velocity, but again we are going to ignore that.
 
-HOGG: PARAGRAPH AND EQUATIONS ALL WRONG: In detail, the ram-pressure force $\vec{F}_\air$ from the air on the sailboat will be
-HOGG THIS EXPRESSION IS ALL WRONG. THE FORCE IS GIVEN BY DOUBLE-CONTRACTION ON AN ORDER-2 TENSOR. SEE NOTES 2021-06-19. FIX THIS.
-\begin{align}
-    \Delta\vair &\equiv \vair-\vboat
-    \\
-    \vec{F}_\air &= \rho_\air\,|\Delta\vair|\,\tensor{A}_\air\,\Delta\vair \label{eq:Fair}
-    \\
-    \tensor{A}_\air &= A_{\perp\sail}\,\uvec_{\perp\sail}\,\uvec_{\perp\sail}^\top + A_{\parallel\sail},\uvec_{\parallel\sail}\,\uvec_{\parallel\sail}^\top \label{eq:Aair}
-    \\
-    A_{\perp\sail} &\gg A_{\parallel\sail} \label{eq:sail}
-    ~,
-\end{align}
-where $\rho_\air$ is the mass density of air, $\vair,\vboat$ are the velocities of the air and boat, $\tensor{A}_\air$ is a Hermitian tensor with units of area, $A_{\perp\sail}, A_{\parallel\sail}$ are two constants with units of area defining the geometry of the sail, $\uvec_{\perp\sail}$ is a unit vector pointing normal to the surface of the (assumed planar) sail, and $\uvec_{\parallel\sail}$ is a unit vector perpendicular to that.
-If you are uncomfortable with the expression for the tensor $\tensor{A}_\air$ in \eqref{eq:Aair}, look at the discussion of tensors in, for example, \cite{kusse}.
-The inequality \eqref{eq:sail} says (loosely) that the sail (plus hull) is much bigger face-on than edge-on.
-The force $\vec{F}_\water$ from the water is similar
-\begin{align}
-    \Delta\vwater &\equiv \vwater-\vboat
-    \\
-    \vec{F}_\water &= \rho_\water\,|\Delta\vwater|\,\tensor{A}_\water\,\Delta\vwater \label{eq:Fwater}
-    \\
-    \tensor{A}_\water &= A_{\perp\keel}\,\uvec_{\perp\keel}\,\uvec_{\perp\keel}^\top + A_{\parallel\keel},\uvec_{\parallel\keel}\,\uvec_{\parallel\keel}^\top
-    \\
-    A_{\perp\keel} &\gg A_{\parallel\keel} ~,
-\end{align}
-where we have gone from air to water and sail ``s'' to keel ``k''.
-The ram-pressure forces given in \eqref{eq:Fair} and \eqref{eq:Fwater} can be justified with a simple molecular model in which air and water molecules are elastically bouncing off the sail and keel surfaces; this is the same set of assumptions that leads to, for example, the ideal gas law (HOGG CITE).
+Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull.
+Thus the ram-pressure force on the sailboat will have four components, a force on the flat sail from the air, a force on the flat keel from the water, a force on the hull from the air, and a force on the hull from the water.
+This model is extremely simplistic!
+In some sense it is the closest possible model to the spherical cow that will sail non-trivially.
+HOGG: COMPLETE THIS PARAGRAPH WITH EQUATIONS.
 
 Mathematically, steady sailing in steady wind and steady current (constant $\vair, \vwater$) is given by
 \begin{align}\label{eq:sailing}
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
 If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel.
-This is a quadratic root-finding problem so it has HOGG SOME SIMPLE CLOSED FORM, WHICH IS... we CAN ALSO MAYBE solve it numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
+This is a root-finding problem that (probably) has no closed form\footnote{It might be interesting to note that the flat-surface force \eqref{eq:flat} is a vector-valued quadratic form, so if one constructed the sailboat model completely from flat surfaces, the force law, in this approximation would be a quadratic form. That might lead to a closed-form solution for the equation \eqref{eq:sailing} of steady sailing.}.
+We solve equation~\eqref{eq:sailing} numerically in the code associated with this \documentname\footnote{HOGG GIVE LINK HERE} by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
 
 HOGG: Give the settings of all our parameters for the figures we are about to show.
 
@@ -161,6 +150,8 @@ HOGG: Put the random-dot hourglass figure here.
 HOGG: Comments: You can see from the figures that you don't sail DIRECTLY in the direction the keel is pointed.
 
 HOGG: Right now, the concept of forwards and backwards is a bit soft; our boat is quadrupolar! But we will get more serious about deliberately sailing in the correct direction in the next Section.
+
+HOGG: Comment: You can't achieve zero velocity wrt either the air or the water.
 
 HOGG: Comment: It is easy to sail downwind fttw.
 
@@ -215,20 +206,17 @@ HOGG PUT FIGURES HERE SHOWING THE OPTIMAL SETTINGS OF SAIL AND KEEL ORIENTATIONS
 
 Now if you want to plan a complete path or journey for the sailboat in (unrealistically) steady wind, you... HOGG
 
-HOGG PUT FIGURES HERE SHOWING TRAJECTORIES FOR SIMPLE JOURNEYS.
+HOGG PUT FIGURES HERE SHOWING TRAJECTORIES FOR SIMPLE JOURNEYS. MAYBE??
+
+\section{Boat properties and boat design}
+
+HOGG show how the hourglass plots depend on the qualities of the boat, such as: Relative area of sail and keel. Relative area of hull and keel. Etc.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
 HOGG: Newton's method (CITE), invert, solve, etc.
 Note that in practice, Newton's method works amazingly well.
-For Newton's method we make use of the derivatives
-\begin{align}
-    \frac{\dd\vec{F}_\air}{\dd\vboat} &= -\frac{\rho_\air}{|\Delta\vair|}\,A_\air\,\Delta\vair\,\Delta\vair^\top-\rho_\air\,|\Delta\vair|\,A_\air
-    \\
-    \frac{\dd\vec{F}_\water}{\dd\vboat} &= -\frac{\rho_\water}{|\Delta\vwater|}\,A_\water\,\Delta\vwater\,\Delta\vwater^\top-\rho_\water\,|\Delta\vwater|\,A_\water
-    ~,
-\end{align}
-which are order-2 tensors.
+For Newton's method we make use of the derivatives---HOGG GIVE HERE THE DERIVATIVES of the ram-pressure expressions---which are order-2 tensors.
 
 Look-up tables for proper boat trim.
 
