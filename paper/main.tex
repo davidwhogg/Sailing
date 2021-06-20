@@ -19,6 +19,8 @@
 
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{{./}{../ipynb/}}
 
 % math macros
 \usepackage{amsmath, amsfonts}
@@ -64,6 +66,7 @@
 \setlength{\topmargin}{-0.40in}
 \pagestyle{myheadings}
 \markright{\textsf{Hogg \& Kleban / Ram-pressure model for sailing}}
+\newcommand{\captionrule}{\\\rule{\textwidth}{0.2pt}}
 \linespread{1.08}
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
@@ -181,10 +184,11 @@ In \figref{fig:steady} we show examples of steady sailing, for a wide range of o
 All these examples are shown in the water rest frame.
 The boat has four free parameters $(A_\sail,A_\keel,A_{\above},A_{\below})$ all with units of area (or really three independent dimensionless ratios of these four areas).
 The values we chose for these four parameters are given in \secref{sec:design} and discussed in detail there.
-\begin{figure}[tp]
+\begin{figure}[t!]
+  \includegraphics[width=\textwidth]{steady.pdf}
   \caption{Visualizations of the boat velocity $\vboat$ for different settings of the orientations of the keel and sail, all presented in the water rest frame.
     The views are top-down; the keel is represented by a thick grey line, the sail is represented by a thin black line, and the wind and boat velocities are represented by black arrows.
-    Most of the settings of the keel and sail lead to downwind travel, but a few lead to upwind travel, for example XXX and YYY. HOGG LABEL THE PANELS.\label{fig:steady}}
+    Most of the settings of the keel and sail lead to downwind travel, but a few lead to upwind travel, for example XXX and YYY. HOGG LABEL THE PANELS.\label{fig:steady}\captionrule}
 \end{figure}
 
 In \figref{fig:hourglass} we show the distribution of boat velocities one obtains if one randomly orients one's sail and keel....HOGG
