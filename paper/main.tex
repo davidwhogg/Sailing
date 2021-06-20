@@ -187,7 +187,7 @@ HOGG: Comment: It is easy to sail downwind fttw.
 
 HOGG: Comment: It is easy to sail faster than the wind speed.
 
-HOGG: Comment: It is easy to sail upwind. But impossible to sail upwind fttw.
+HOGG: Comment: It is easy to sail upwind. If the boat is AMAZING you can sail upwind faster than the wind! Probably not possible in practice? KLEBAN?
 
 HOGG: Comment: You can't sail directly into the wind, or within XXX radians of directly into the wind. This XXX depends on dimensionless sail and boat ratios.
 
@@ -214,18 +214,18 @@ HOGG: Comment: The settings of the sail look ``tight'' relative to standard sail
 
 HOGG: Final comment: But this is not the BEST a sailor can do...
 
-\section{Competitive sailing}\label{sec:racing}
+\section{Better sailing}\label{sec:better}
 
-HOGG IN THIS SECTION EXPLICITLY DEFINE ``COMPETITIVE SAILING''.
+HOGG IN THIS SECTION EXPLICITLY DEFINE ``BETTER SAILING''.
 
 A type-A sailor---or maybe a competetive sailor---is trying to get from a current position to a destination as quickly as possible.\footnote{We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
 The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vboat$
-\begin{align}\label{eq:best}
-    \uvec_{\perp\sail}^\best,\uvec_{\perp\keel}^\best &\leftarrow \argmax_{\uvec_{\perp\sail},\uvec_{\perp\keel}} \left[\uvec_\destination^\top\,(\vboat-\vdest)\right] ~,
+\begin{align}\label{eq:better}
+    \uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better &\leftarrow \argmax_{\uvec_{\perp\sail},\uvec_{\perp\keel}} \left[\uvec_\destination^\top\,(\vboat-\vdest)\right] ~,
 \end{align}
-where $\uvec_{\perp\sail}^\best,\uvec_{\perp\keel}^\best$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and (because we are Galilean-relativistic) this velocity is relative to the velocity $\vdest$ of the destination (which might not be stationary with respect to the water).
-In this expresion \eqref{eq:best}, implicitly $\vboat$ is being thought of as a function of these orientations (and more).
+where $\uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and (because we are Galilean-relativistic) this velocity is relative to the velocity $\vdest$ of the destination (which might not be stationary with respect to the water).
+In this expresion \eqref{eq:better}, implicitly $\vboat$ is being thought of as a function of these orientations (and more).
 Note that the sailor \emph{does not necessarily want} to travel directly towards the destination:
 The sailor wants to make as much progress as possible in that direction, but is willing to tack back-and-forth to get there, if it gets the boat there faster.
 So the metric really is the projection of the boat velocity onto the displacement vector pointing from the current position of the boat to the destination.
@@ -248,9 +248,7 @@ HOGG: Newton's method (CITE), invert, solve, etc.
 Note that in practice, Newton's method works amazingly well.
 For Newton's method we make use of the derivatives---HOGG GIVE HERE THE DERIVATIVES of the ram-pressure expressions---which are order-2 tensors.
 
-Look-up tables for proper boat trim.
-
-Path planning.
+HOGG: How we implement GoodSailing(tm) and BetterSailing(tm). It's a mess!
 
 \section{Discussion}\label{sec:discussion}
 
@@ -261,6 +259,8 @@ HOGG: Galilean symmetry, coordinate freedom?
 HOGG: What were our assumptions? What are the myriad ways in which those assumptions must be wrong? For example, boat has an asymmetry in the wind too, so really the boat must also matter. Viscosity; why can we ignore it? But turbulence; we can't ignore that! Constant $\eta$ is also wrong.
 
 HOGG: Take some time to bash the Bernoulli bullshit.
+
+HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do complete successful path planning, and coming about costs time. So you will sail beyond the limits of BetterSailing(tm) if you do this correctly. This is out of scope for this \documentname.
 
 HOGG: All code used to make the figures in this \documentname{} are available HOGG WHERE?
 
