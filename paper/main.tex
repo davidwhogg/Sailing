@@ -10,21 +10,23 @@
 % style notes:
 % ------------
 % - Always air before water, always sail before keel before hull.
+% - Need to choose typesetting for GoodSailing and BetterSailing and then be consistent.
 
 % to-do items:
 % ------------
-% - FIX THE FORCE EXPRESSION and discuss it in terms of inner products, tensors, and Einstein summation notation.
-% - Put in running head.
+% - FIND THE PRIOR LITERATURE!!
 % - Overleaf seems to have wrong papersize?
-% — Put in the dumbell figure
 % - Reconsider the post-equation commas? (HWR SAY).
 % — Find references for, and destroy, Bernoulli.
 % — Make some comments on the situations in which the ram-pressure force approximation is more appropriate---gale force or lull?
+% - Is the latex footnote-footnote separation fucked?
 
-\documentclass{article}
+\documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \graphicspath{{./}{../ipynb/}}
+\usepackage{biblatex}
+\addbibresource{sailing.bib}
 
 % math macros
 \usepackage{amsmath, amsfonts}
@@ -53,8 +55,6 @@
 \newcommand{\mps}{\mathrm{m\,s^{-1}}}
 
 % text macros
-\usepackage{biblatex}
-\addbibresource{sailing.bib}
 \newcommand{\documentname}{\textsl{Article}}
 \newcommand{\secref}[1]{Section~\ref{#1}}
 \newcommand{\figref}[1]{Figure~\ref{#1}}
@@ -106,7 +106,7 @@ HOGG: Who is our audience? People interested in simple mechanics.
 We eschew real fluid dynamics; we over-simplify.
 This is possible because sailing is, in fact, very simple.
 
-HOGG: We make use of good, coordinate-free expressions.
+HOGG: We make use of good, coordinate-free expressions, a la \cite{kusse}.
 We are Galilean-relativistic.
 
 \section{Ram-pressure sailboat}\label{sec:boat}
@@ -250,10 +250,10 @@ You can think of the boat like a slippery wedge, with the wind pushing on one si
 The wedge slips forward.
 Maybe that helps?
 
-Finally, although upwind travel is slow going, with lots of tacking (HOGG DO WE NEED TO DEFINE THIS?) required, if you are situated \emph{on the boat}, upwind travel \emph{feels} very fast.
+Finally, although upwind travel is slow going, with lots of tacking (HOGG DO WE NEED TO DEFINE THIS?) required, if you are situated \emph{on the boat}, upwind travel \emph{feels very fast}.
 Why?
 Because your experience of speed is, at least in part, the feeling of the wind in your face.
-If you think about \figref{fig:hourglass} in terms of the boat-air velocity instead of the boat-water velocity, the upwind travel has much larger boat-air velocities than the downwind travel.
+If you think about \figref{fig:hourglass} in terms of the boat-air velocity instead of the boat-water velocity---that is, if you Galilean-boost to the rest frame of the air---the upwind travel has much larger boat-air velocities than the downwind travel.
 So even though you can sail fast downwind, it sometimes \emph{feels} faster upwind.
 
 \section{Good sailing}\label{sec:good}
@@ -274,6 +274,7 @@ HOGG: FIGURE showing good sailing for a set of boat orientations.
   \includegraphics[width=\textwidth]{good.pdf}
   \caption{Visualizations of GoodSailing(tm) for different settings of the orientation of the keel.
   Conventions are the same as in \figref{fig:steady}.
+  GoodSailing(tm) is unsuccessful in the last two cases, where the pointing is too close to directly upwind.
   .\label{fig:good}}
   \figurerule
 \end{figure}
@@ -283,7 +284,8 @@ HOGG: Announce and discuss \figref{fig:hourgood}.
   ~\hfill\includegraphics[width=3in]{hourglass-good.pdf}\hfill~
   \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for GoodSailing(tm) for a set of randomly oriented keels.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:good}.
-  Compare this to \figref{fig:hourglass}.\label{fig:hourgood}}
+  Compare this to \figref{fig:hourglass}.
+  As in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead.\label{fig:hourgood}}
   \figurerule
 \end{figure}
 
@@ -308,11 +310,18 @@ where $\uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better$ are the best setti
 In this expression \eqref{eq:better}, implicitly $\vboat$ is being thought of as a function of the orientations (and more).
 Note that the sailor \emph{does not necessarily want} to travel directly towards the destination:
 The sailor wants to make as much progress as possible in that direction, but is willing to tack back-and-forth to get there, if it gets the boat there faster.
-So the metric really is the projection of the boat velocity onto the displacement vector pointing from the current position of the boat to the destination.
-
-While this is simple to state, the numerical optimization hurts...HOGG
+So the optimization objective really is the projection of the boat velocity onto the displacement vector pointing from the current position of the boat to the destination.
+While this is all simple to state, the global optimization is a bit painful to implement in code.
+We give details in \secref{sec:implementation}.
 
 HOGG PUT FIGURES HERE SHOWING THE OPTIMAL SETTINGS OF SAIL AND KEEL ORIENTATIONS FOR DIFFERENT DESTINATION DIRECTIONS.
+\begin{figure}[t!]
+  \includegraphics[width=\textwidth]{better.pdf}
+  \caption{Visualizations of BetterSailing(tm) for different directions to a distant destination.
+  Conventions are the same as in \figref{fig:steady} and \figref{fig:good}, except that now the destination direction is indicated with a dashed path line.
+  BetterSailing(tm) often involves sailing at a substantial angle to the direct line towards the destination.\label{fig:better}}
+  \figurerule
+\end{figure}
 
 HOGG discuss the hourglass figure.
 \begin{figure}[t!]
@@ -334,7 +343,8 @@ HOGG: In the above experiments and diagrams we made use of a boat with the follo
 HOGG: These properties might seem unreasonable! However, remember that our boat is just a brutal approximation.
 A true boat has sails that are globally curved\footnote{%
 In the local-curvature or Riemann-curvature senses, sails are not (very) curved; after all, they are made from flat pieces of fabric.
-However, they are curved in the global or colloquial sense: Different patches of the sail have differently oriented normal vectors.},
+However, they are curved in the global or colloquial sense: Different patches of the sail have differently oriented normal vectors.
+It is in this colloquial sense that we are using the words ``curved'' and ``flat''.},
 and forces that are different from these pure ram-pressure forces.
 The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
@@ -346,7 +356,7 @@ HOGG: Newton's method (CITE), invert, solve, etc.
 Note that in practice, Newton's method works amazingly well.
 For Newton's method we make use of the derivatives---HOGG GIVE HERE THE DERIVATIVES of the ram-pressure expressions---which are order-2 tensors.
 
-HOGG: How we implement GoodSailing(tm) and BetterSailing(tm). It's a mess!
+HOGG: How we implement GoodSailing(tm) and BetterSailing(tm) optimizations. It's a mess!
 
 \section{Discussion}\label{sec:discussion}
 
