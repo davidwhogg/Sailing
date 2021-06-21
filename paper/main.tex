@@ -7,6 +7,10 @@
 % - Sanjoy Mahajan
 % - David Grier
 
+% style notes:
+% ------------
+% - Always air before water, always sail before keel before hull.
+
 % to-do items:
 % ------------
 % - FIX THE FORCE EXPRESSION and discuss it in terms of inner products, tensors, and Einstein summation notation.
@@ -46,6 +50,7 @@
 \newcommand{\vwater}{\vec{v}_\water}
 \newcommand{\vboat}{\vec{v}_\boat}
 \newcommand{\vdest}{\vec{v}_\destination}
+\newcommand{\mps}{\mathrm{m\,s^{-1}}}
 
 % text macros
 \usepackage{biblatex}
@@ -91,9 +96,18 @@ A simple, anisotropic ram-pressure model for sailing}
 
 \section{Introduction}\label{sec:intro}
 
-KLEBAN: Write things about ddwfttw, maybe?
+HOGG: Why study sailing? What's the point?
+
+KLEBAN: Write things about ddwfttw, maybe? For context only!
 
 HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong; a motivation to reconsider sailing too.
+
+HOGG: Who is our audience? People interested in simple mechanics.
+We eschew real fluid dynamics; we over-simplify.
+This is possible because sailing is, in fact, very simple.
+
+HOGG: We make use of good, coordinate-free expressions.
+We are Galilean-relativistic.
 
 \section{Ram-pressure sailboat}\label{sec:boat}
 
@@ -192,28 +206,55 @@ The values we chose for these four parameters are given in \secref{sec:design} a
   \figurerule
 \end{figure}
 
-In \figref{fig:hourglass} we show the distribution of boat velocities one obtains if one randomly orients one's sail and keel....HOGG
+One comment to make is that if you look carefully at the panels of \figref{fig:steady}, you can see that, even in the rest frame of the water, the boat doesn't sail \emph{precisely} in the direction the keel is pointed.
+It is close in most cases, but not precisely aligned.
+This makes sense, because the wind is always---in some sense---trying to blow the sailboat downwind.
+
+It might seem strange, in \figref{fig:steady}, that the keel orientation is marked but not the direction that the boat (the prow of the boat) is pointing.
+Right now, the concept of ``forwards'' and ``backwards'' for the boat is a bit soft.
+The boat is defined, in some sense, by the force laws.
+These, in turn, are, in some sense, quadrupolar.
+So the boat doesn't really have a front and a back!
+We will get more serious about deliberately sailing in a particular direction in \secref{sec:good}.
+
+In \figref{fig:hourglass} we show the distribution of relative boat--water velocities one obtains if one randomly orients one's sail and keel.
+These orientations are literally randomly chosen angles from the uniform distribution on $[0,2\pi)$.
+Many of the resulting boat--water velocities are near zero, because randomly orienting your keel and sail is not a good way to sail!
 \begin{figure}[t!]
-  ~\hfill\includegraphics[]{hourglass-random.pdf}\hfill~
-  \caption{HOGG CAPTION HERE.\label{fig:hourglass}}
+  ~\hfill\includegraphics[width=3in]{hourglass-random.pdf}\hfill~
+  \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for a set of randomly oriented keels and sails.
+  For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:steady}.
+  Points to the left of the leftmost vertical grey line are sail--keel settings for which the boat sails upwind. Points to the right of the rightmost vertical grey line are sail--keel settings for which the boat sails downwind faster than the wind.
+  There are no settings that go \emph{directly} upwind, and no settings that go \emph{directly} downwind faster than the wind.\label{fig:hourglass}}
   \figurerule
 \end{figure}
 
-HOGG: Put the random-dot hourglass figure here.
+There are many comments to make about the distribution of velocities shown in \figref{fig:hourglass}.
+Here are a few:
+There are many sail--keel settings that lead to travel at a boat--water velocity magnitude larger than the wind--water velocity magnitude.
+You can't make any settings that give the boat precisely zero velocity with respect to the water.
+The wind always blows it at least a bit.
+There are many sail--keel settings that lead to downwind travel \emph{faster than the wind}.
+Not \emph{directly} downwind faster than the wind, but faster than the wind.
+That is, a sailboat can beat an air balloon at downwind travel even in stationary water!
 
-HOGG: Comments: You can see from the figures that you don't sail DIRECTLY in the direction the keel is pointed.
+There are, of course, many sail--keel settings that lead to upwind travel.
+Not \emph{directly} upwind, but upwind.
+That makes sense; the whole point (in some sense) of building a model of a sailboat is to understand how it sails upwind.
+In \secref{sec:design} we will return to the upwind travel; we will show that in principle you might be able to build a boat that can travel upwind \emph{faster than the wind}.
+Indeed, this boat (specs in \secref{sec:design}) does not sail upwind very fast, and it can't sail at an angle that is even close to directly upwind.
+This closest angle to directly upwind will also be a function of the design of the boat.
 
-HOGG: Right now, the concept of forwards and backwards is a bit soft; our boat is quadrupolar! But we will get more serious about deliberately sailing in the correct direction in the next Section.
+One might ask: Intuitively, how does upwind travel work?
+You can think of the boat like a slippery wedge, with the wind pushing on one side of the wedge (the sail) and the water pushing on the other side of the wedge (the keel).
+The wedge slips forward.
+Maybe that helps?
 
-HOGG: Comment: You can't achieve zero velocity wrt either the air or the water.
-
-HOGG: Comment: It is easy to sail downwind fttw.
-
-HOGG: Comment: It is easy to sail faster than the wind speed.
-
-HOGG: Comment: It is easy to sail upwind. If the boat is AMAZING you can sail upwind faster than the wind! Probably not possible in practice? KLEBAN?
-
-HOGG: Comment: You can't sail directly into the wind, or within XXX radians of directly into the wind. This XXX depends on dimensionless sail and boat ratios.
+Finally, although upwind travel is slow going, with lots of tacking (HOGG DO WE NEED TO DEFINE THIS?) required, if you are situated \emph{on the boat}, upwind travel \emph{feels} very fast.
+Why?
+Because your experience of speed is, at least in part, the feeling of the wind in your face.
+If you think about \figref{fig:hourglass} in terms of the boat-air velocity instead of the boat-water velocity, the upwind travel has much larger boat-air velocities than the downwind travel.
+So even though you can sail fast downwind, it sometimes \emph{feels} faster upwind.
 
 \section{Good sailing}\label{sec:good}
 
@@ -229,10 +270,24 @@ HOGG: IN THIS SECTION EXPLICITLY DEFINE ``GOOD SAILING''.
 where .... HOGG IMPLICITLY $\vboat-\vwater$ is a function of all the properties of the world and the boat boat, along with the orientation of its keel and sail.
 
 HOGG: FIGURE showing good sailing for a set of boat orientations.
+\begin{figure}[t!]
+  \includegraphics[width=\textwidth]{good.pdf}
+  \caption{Visualizations of GoodSailing(tm) for different settings of the orientation of the keel.
+  Conventions are the same as in \figref{fig:steady}.
+  .\label{fig:good}}
+  \figurerule
+\end{figure}
+
+HOGG: Announce and discuss \figref{fig:hourgood}.
+\begin{figure}[t!]
+  ~\hfill\includegraphics[width=3in]{hourglass-good.pdf}\hfill~
+  \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for GoodSailing(tm) for a set of randomly oriented keels.
+  For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:good}.
+  Compare this to \figref{fig:hourglass}.\label{fig:hourgood}}
+  \figurerule
+\end{figure}
 
 HOGG: Figure showing direction cosines of sail relative to keel/boat orientation.
-
-HOGG: Put the equivalent of the hourglass figure.
 
 HOGG: Comment: The settings of the sail look ``tight'' relative to standard sailing practice. But this boat has flat sails, so it's hard to compare the exact settings with sailor experiences (which are all with curved sails).
 
@@ -258,6 +313,15 @@ So the metric really is the projection of the boat velocity onto the displacemen
 While this is simple to state, the numerical optimization hurts...HOGG
 
 HOGG PUT FIGURES HERE SHOWING THE OPTIMAL SETTINGS OF SAIL AND KEEL ORIENTATIONS FOR DIFFERENT DESTINATION DIRECTIONS.
+
+HOGG discuss the hourglass figure.
+\begin{figure}[t!]
+  ~\hfill\includegraphics[width=3in]{hourglass-better.pdf}\hfill~
+  \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for BetterSailing(tm) for a set of randomly oriented destination vectors.
+  For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:better}.
+  Compare this to \figref{fig:hourglass} and also to \figref{fig:hourgood}.\label{fig:hourbetter}}
+  \figurerule
+\end{figure}
 
 Now if you want to plan a complete path or journey for the sailboat in (unrealistically) steady wind, you... HOGG
 
