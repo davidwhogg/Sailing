@@ -36,7 +36,7 @@
 \newcommand{\boat}{\text{boat}}
 \newcommand{\destination}{\text{dest}}
 \newcommand{\good}{\text{(good)}}
-\newcommand{\better}{\text{(best)}}
+\newcommand{\better}{\text{(better)}}
 \newcommand{\sail}{\text{sail}}
 \newcommand{\keel}{\text{keel}}
 \newcommand{\hull}{\text{hull}}
@@ -66,7 +66,7 @@
 \setlength{\topmargin}{-0.40in}
 \pagestyle{myheadings}
 \markright{\textsf{Hogg \& Kleban / Ram-pressure model for sailing}}
-\newcommand{\captionrule}{\\\rule{\textwidth}{0.2pt}}
+\newcommand{\figurerule}{\rule[1ex]{\textwidth}{0.2pt}}
 \linespread{1.08}
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
@@ -187,11 +187,18 @@ The values we chose for these four parameters are given in \secref{sec:design} a
 \begin{figure}[t!]
   \includegraphics[width=\textwidth]{steady.pdf}
   \caption{Visualizations of the boat velocity $\vboat$ for different settings of the orientations of the keel and sail, all presented in the water rest frame.
-    The views are top-down; the keel is represented by a thick grey line, the sail is represented by a thin black line, and the wind and boat velocities are represented by black arrows.
-    Most of the settings of the keel and sail lead to downwind travel, but a few lead to upwind travel, for example XXX and YYY. HOGG LABEL THE PANELS.\label{fig:steady}\captionrule}
+  The views are top-down; the keel is represented by a thick grey line, the sail is represented by a thin black line, and the wind and boat velocities are represented by black arrows.
+  Most of the settings of the keel and sail lead to downwind travel, but a few in the top-left quarter of this grid lead to upwind travel.\label{fig:steady}}
+  \figurerule
 \end{figure}
 
 In \figref{fig:hourglass} we show the distribution of boat velocities one obtains if one randomly orients one's sail and keel....HOGG
+\begin{figure}[t!]
+  \includegraphics[width=\textwidth]{hourglass-random.pdf}
+  \caption{HOGG CAPTION HERE.\label{fig:hourglass}}
+  \figurerule
+\end{figure}
+
 HOGG: Put the random-dot hourglass figure here.
 
 HOGG: Comments: You can see from the figures that you don't sail DIRECTLY in the direction the keel is pointed.
@@ -242,8 +249,8 @@ The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vb
 \begin{align}\label{eq:better}
     \uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better &\leftarrow \argmax_{\uvec_{\perp\sail},\uvec_{\perp\keel}} \left[\uvec_\destination^\top\,(\vboat-\vdest)\right] ~,
 \end{align}
-where $\uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and (because we are Galilean-relativistic) this velocity is relative to the velocity $\vdest$ of the destination (which might not be stationary with respect to the water).
-In this expresion \eqref{eq:better}, implicitly $\vboat$ is being thought of as a function of these orientations (and more).
+where $\uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and (because we are Galilean-relativistic) this velocity is relative to the velocity $\vdest$ of the destination (which might not be stationary with respect to the water; imagine that we are sailing on a fast-flowing river).
+In this expression \eqref{eq:better}, implicitly $\vboat$ is being thought of as a function of the orientations (and more).
 Note that the sailor \emph{does not necessarily want} to travel directly towards the destination:
 The sailor wants to make as much progress as possible in that direction, but is willing to tack back-and-forth to get there, if it gets the boat there faster.
 So the metric really is the projection of the boat velocity onto the displacement vector pointing from the current position of the boat to the destination.
