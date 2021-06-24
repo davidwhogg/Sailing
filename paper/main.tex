@@ -102,6 +102,8 @@ KLEBAN: Write things about ddwfttw, maybe? For context only!
 
 HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong; a motivation to reconsider sailing too.
 
+HOGG: What really is ram pressure? It is a model that the force comes mainly from momentum change or momentum transport in the fluid.
+
 HOGG: Who is our audience? People interested in simple mechanics.
 We eschew real fluid dynamics; we over-simplify.
 This is possible because sailing is, in fact, very simple.
@@ -155,12 +157,12 @@ Thus the ram-pressure force on the sailboat will have four components, a force o
 This model is extremely simplistic!
 In some sense it is the closest possible model to the spherical cow that will sail non-trivially.
 In detail the forces from the air are given by
-\begin{align}
+\begin{align}\label{eq:startmodel}
   \vec{F}_\air &= \vec{F}_{\sail-\air} + \vec{F}_{\hull-\air}
   \\
-  \vec{\Delta v}_\air &\equiv \vair - \vboat
+  \vec{\Delta v}_\air &\equiv \vair - \vboat \label{eq:deltav}
   \\
-  \vec{F}_{\sail-\air} & = \rho_\air\,A_\sail\,(\uvec_{\perp\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\perp\sail}
+  \vec{F}_{\sail-\air} & = \rho_\air\,A_\sail\,(\uvec_{\perp\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\perp\sail} \label{eq:Fsailair}
   \\
   \vec{F}_{\hull-\air} & = \rho_\air\,A_{\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air ~,
 \end{align}
@@ -173,10 +175,26 @@ Similarly, the forces from the water are given by
   \\
   \vec{F}_{\keel-\water} & = \rho_\water\,A_\keel\,(\uvec_{\perp\keel}^\top\,\vec{\Delta v}_\water)^2\,\uvec_{\perp\keel}
   \\
-  \vec{F}_{\hull-\water} & = \rho_\water\,A_{\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,
+  \vec{F}_{\hull-\water} & = \rho_\water\,A_{\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,\label{eq:endmodel}
 \end{align}
 where the sail is replaced by the keel everywhere, and $A_{\below}$ is an area related to the area of the hull below the water surface.
 HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE.
+
+The above model could be called ``isotropic boat, thin planar sail and keel''.
+There is an alternative model to be made, using the same elements, which could be called ``parallelepiped sail, parallelepiped keel''.
+This alternative model uses only the flat-plane force law \eqref{eq:flat}, but the sail and keel each are treated as parallelepipeds with large areas $A_\sail$ and $A_\keel$ and then much smaller perpendicular areas $A_{\sail\parallel}$ and $A_{\keel\parallel}$.
+So, for example, the force from the air on the boat in this model is
+\begin{align}
+  \vec{F}_\air &= \vec{F}_{\sail-\air} + \vec{F}_{\parallel-\air}
+  \\
+  \vec{F}_{\parallel-\air} & = \rho_\air\,A_{\sail\parallel}\,(\uvec_{\parallel\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\parallel\sail}
+   ~,
+\end{align}
+where $F_{\sail-\air}$ and $\vec{\Delta v}_\air$ are as defined in \eqref{eq:Fsailair} and \eqref{eq:deltav}, and $\uvec_{\parallel\sail}$ is the unit vector perpendicular to $\uvec_{\perp\sail}$.
+The water force is similarly updated.
+We have implemented both of these models, the isotropic boat with thin planar sail and keel, and the parallelepiped sail and parallelepiped keel.
+Experimentation shows that these two models give almost exactly identical results, so choose whichever model you prefer.
+In what follows, we use the \emph{isotropic boat with thin planar sail and keel} model of equations \eqref{eq:startmodel} through \eqref{eq:endmodel}.
 
 \section{Steady sailing}\label{sec:steady}
 
@@ -275,7 +293,7 @@ HOGG: FIGURE showing good sailing for a set of boat orientations.
   \caption{Visualizations of GoodSailing(tm) for different settings of the orientation of the keel.
   Conventions are the same as in \figref{fig:steady}.
   GoodSailing(tm) is unsuccessful in the last two cases, where the pointing is too close to directly upwind.
-  .\label{fig:good}}
+  In these cases the the maximum of the GoodSailing(tm) objective \eqref{eq:good} is negative.\label{fig:good}}
   \figurerule
 \end{figure}
 
@@ -285,7 +303,7 @@ HOGG: Announce and discuss \figref{fig:hourgood}.
   \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for GoodSailing(tm) for a set of randomly oriented keels.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:good}.
   Compare this to \figref{fig:hourglass}.
-  As in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead.\label{fig:hourgood}}
+  As is visible in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead; there are no \emph{directly} upwind options.\label{fig:hourgood}}
   \figurerule
 \end{figure}
 
@@ -299,7 +317,7 @@ HOGG: Final comment: But this is not the BEST a sailor can do...
 
 HOGG IN THIS SECTION EXPLICITLY DEFINE ``BETTER SAILING''.
 
-A type-A sailor---or maybe a competetive sailor---is trying to get from a current position to a destination as quickly as possible\footnote{%
+A type-A sailor---or maybe a competitive sailor---is trying to get from a current position to a destination as quickly as possible\footnote{%
 We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}.
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
 The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vboat$
@@ -319,7 +337,9 @@ HOGG PUT FIGURES HERE SHOWING THE OPTIMAL SETTINGS OF SAIL AND KEEL ORIENTATIONS
   \includegraphics[width=\textwidth]{better.pdf}
   \caption{Visualizations of BetterSailing(tm) for different directions to a distant destination.
   Conventions are the same as in \figref{fig:steady} and \figref{fig:good}, except that now the destination direction is indicated with a dashed path line.
-  BetterSailing(tm) often involves sailing at a substantial angle to the direct line towards the destination.\label{fig:better}}
+  These plots assume that the destination is stationary with respect to the water ($\vdest-\vwater=\vec{0}$).
+  BetterSailing(tm) often involves sailing at a substantial angle to the direct line towards the destination.
+  In these cases, the idea is that the best route to the destination involves frequent tacking back and forth across the path to the destination.\label{fig:better}}
   \figurerule
 \end{figure}
 
@@ -366,6 +386,8 @@ HOGG: Galilean symmetry, coordinate freedom?
 
 HOGG: What were our assumptions? What are the myriad ways in which those assumptions must be wrong? For example, boat has an asymmetry in the wind too, so really the boat must also matter. Viscosity; why can we ignore it? But turbulence; we can't ignore that! Constant $\eta$ is also wrong.
 
+HOGG: iso-planar vs parallelepipeds...
+
 HOGG: Take some time to bash the Bernoulli bullshit.
 
 HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do complete successful path planning, and coming about costs time. So you will sail beyond the limits of BetterSailing(tm) if you do this correctly. This is out of scope for this \documentname.
@@ -373,7 +395,7 @@ HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do 
 HOGG: All code used to make the figures in this \documentname{} are available HOGG WHERE?
 
 \paragraph{Acknowledgements:}
-It is a pleasure to thank Hans-Walter Rix (MPIA) for valuable discussions.
+It is a pleasure to thank Hans-Walter Rix (MPIA) and Soledad Villar (JHU) for valuable discussions.
 
 \raggedright
 \printbibliography
