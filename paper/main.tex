@@ -6,16 +6,22 @@
 % - Kilian Walsh
 % - Sanjoy Mahajan
 % - David Grier
+% - All those in the acks.
 
 % style notes:
 % ------------
 % - Always air before water, always sail before keel before hull.
 % - Need to choose typesetting for GoodSailing and BetterSailing and then be consistent.
+% - Maybe the "flat" force should be the "planar" force?
 
 % to-do items:
 % ------------
 % - FIND THE PRIOR LITERATURE!!
-% - Overleaf seems to have wrong papersize?
+% - Should Terry Tao be cited way earlier?
+% - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
+% - Make sure we aren't claiming that the model is NOVEL. It is just SIMPLE.
+% - Should we re-write the planar force to not require that the unit vector be pointed down-wind? YES WE SHUOLD.
+% - Overleaf seems to have wrong papersize? See papersize/geometry hacks.
 % - Reconsider the post-equation commas? (HWR SAY).
 % — Find references for, and destroy, Bernoulli.
 % — Make some comments on the situations in which the ram-pressure force approximation is more appropriate---gale force or lull?
@@ -23,6 +29,7 @@
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[letterpaper]{geometry}
 \usepackage{graphicx}
 \graphicspath{{./}{../ipynb/}}
 \usepackage{biblatex}
@@ -53,6 +60,7 @@
 \newcommand{\vboat}{\vec{v}_\boat}
 \newcommand{\vdest}{\vec{v}_\destination}
 \newcommand{\mps}{\mathrm{m\,s^{-1}}}
+\newcommand{\mmps}{\mathrm{m^2\,s^{-1}}}
 
 % text macros
 \newcommand{\documentname}{\textsl{Article}}
@@ -91,7 +99,7 @@ A simple, anisotropic ram-pressure model for sailing}
     We use this model to derive simple rules for sailing that are not far off from standard sailing practice, for sailing in different directions (including upwind).
     One consequence of this model is that a sailboat does not move (relative to the water) precisely in the direction that its keel points (the direction of the prow); it moves slightly downwind of that.
     Another consequence is that it is possible for an extremely anisotropic (extremely well designed) boat to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
-    Interestingly, nothing about the mechanical model or discussion depend on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing.
+    Interestingly, nothing about the mechanical model or discussion depend on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; but the important thing is that the model \emph{does} depend on what's assumed about the angular re-direction of the wind momentum flux.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
@@ -102,7 +110,9 @@ KLEBAN: Write things about ddwfttw, maybe? For context only!
 
 HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong; a motivation to reconsider sailing too.
 
-HOGG: What really is ram pressure? It is a model that the force comes mainly from momentum change or momentum transport in the fluid.
+HOGG: What do we really mean by ram pressure?
+We'll explain in \secref{sec:ram} but briefly:
+It is a model that the force comes mainly from momentum change or momentum transport in the fluid. Here and below, compare to content (especially Section 8.4 maybe?) of \cite{symmetry}.
 
 HOGG: Who is our audience? People interested in simple mechanics.
 We eschew real fluid dynamics; we over-simplify.
@@ -110,6 +120,36 @@ This is possible because sailing is, in fact, very simple.
 
 HOGG: We make use of good, coordinate-free expressions, a la \cite{kusse}.
 We are Galilean-relativistic.
+
+\section{Why ram-pressure forces? Why planar sails?}\label{sec:ram}
+
+Sailboats and sails---like airplanes and wings---are beautiful curved structures that are designed to redirect air with as little turbulence as possible.
+So why would we make a planar-sail approximation and model that planar sail with a ram-pressure force?
+Ram-pressure forces are generally associated with bow shocks and turbulent wakes.
+Many things (cars, launch vehicles) are designed to \emph{avoid} the ram-pressure effect known as air resistance or drag.
+
+Fundamentally, a sailboat sail works by redirecting the momentum of the air, in the rest frame of the boat.
+More specifically, there is a momentum flux (momentum per unit time) that intersects the sail (and some neighborhood around the sail).
+The air that intersects the sail and neighborhood gets redirected in direction.
+There is therefore not just a momentum flux into the sail, there is a rate of momentum change being input into the air from the sail.
+That momentum transport---the (vector) change in momentum in the air per unit time---is the (vector) force on the air from the sail.
+The sailboat sails using (in part) the equal-and-opposite reaction to this force.
+
+This momentum-transport explanation of a sail (or a wing) has an expression that is, essentially, a particle flux (number per time) times a change in momentum per particle.
+These are also the physical components of a ram-pressure force.
+Indeed, the most basic derivation of the ram-pressure force is in the microscopic model of an ideal gas, in which particles bounce elastically off the surface, changing their momentum.
+HOGG PUT A DIAGRAM HERE AND EQUATIONS.
+In this ideal-gas model, the mean force on the surface can be thought of as the combination of many tiny impulses per unit time from these elastic collisions.
+What's important about the model, however, is the momentum transport:
+The incoming momentum flux upstream of the surface is different than the outgoing momentum flux downstream of the surface.
+The force on the sail can be thought of as being generated by the vector change in that momentum flux.
+
+In this paper we are not arguing that ram pressure on flat sails is a complete explanation of a sailboat!
+We are arguing that the sailboat can be modeled as having two important surfaces---the sail and the keel---one of which deviates the flow of air in the rest-frame of the boat, and the other deviates the flow of water.
+The angles of the sail and keel with respect to the air--boat and water-boat velocity vectors set the angular deviations of the two fluids, and therefore both the magnitudes and the directions of the sail and keel forces.
+The directions of the forces can be manipulated to create amazing boat dynamics and kinematics.
+The point of this \documentname{} is that much of the amazing dynamics can be observed in an amazingly simple model for the sailboat.
+So while we use the phrases ``flat sail'' and ``ram-pressure'' in what follows to describe our model, we really mean ``simple momentum transport''.
 
 \section{Ram-pressure sailboat}\label{sec:boat}
 
@@ -125,14 +165,15 @@ We won't particularly use angles much in what follows, but if you want to come b
 Our sailboat is going to be a simple anisotropic object such that wind that hits its planar sail produces a ram-pressure force perpendicular to the surface of the sail,
 and water that hits its planar keel produces a ram-pressure force perpendicular to the surface of the keel.
 We can construct the complete force law on the sailboat by thinking about ram-pressure forces on surfaces.
-If the fluid (air or water in this case) is thought of as being composed of particles that bounce elastically off of a flat surface of area $A$, then the ram-pressure force on that surface is
+As we note above, if the fluid (air or water in this case) is thought of as being composed of particles that bounce elastically off of a flat surface of area $A$, then the ram-pressure force on that surface is
 \begin{align}\label{eq:flat}
     \vec{F}_\flat &= \eta\,\rho\,A\,(\uvec_\perp^\top\vec{v})^2\,\uvec_\perp ~,
 \end{align}
 where $\eta$ is a dimensionless prefactor, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
 Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{%
-Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is HOGG (CITE).}.
+Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of this brutal model.}.
 We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ in everything that follows.
+
 If you like thinking about tensors, the flat-surface force \eqref{eq:flat}  can be thought of as a tensor expression, in which $\rho$, $A$, and the unit vectors are combined into a three-index (order-three) tensor $\tensor{A}$, which is then contracted onto the velocity twice:
 \begin{align}
     \tensor{A} &\equiv \eta\,A\,\uvec_\perp\,\uvec_\perp^\top\otimes\uvec_\perp^\top ~.
@@ -190,7 +231,7 @@ So, for example, the force from the air on the boat in this model is
   \vec{F}_{\parallel-\air} & = \rho_\air\,A_{\sail\parallel}\,(\uvec_{\parallel\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\parallel\sail}
    ~,
 \end{align}
-where $F_{\sail-\air}$ and $\vec{\Delta v}_\air$ are as defined in \eqref{eq:Fsailair} and \eqref{eq:deltav}, and $\uvec_{\parallel\sail}$ is the unit vector perpendicular to $\uvec_{\perp\sail}$.
+where $F_{\sail-\air}$ and $\vec{\Delta v}_\air$ are as defined in \eqref{eq:Fsailair} and \eqref{eq:deltav}, and $\uvec_{\parallel\sail}$ is the unit vector perpendicular to $\uvec_{\perp\sail}$ (but also pointing downwind).
 The water force is similarly updated.
 We have implemented both of these models, the isotropic boat with thin planar sail and keel, and the parallelepiped sail and parallelepiped keel.
 Experimentation shows that these two models give almost exactly identical results, so choose whichever model you prefer.
@@ -370,6 +411,8 @@ The curvature of the sails will in general rotate the air force vectors towards 
 
 HOGG show how the hourglass plots depend on the qualities of the boat, such as: Relative area of sail and keel. Relative area of hull and keel. Etc.
 
+HOGG take the limit of infinite area ratios and show that you get absurd results. Also understand and cite the Terry Tao blog post \cite{tao}.
+
 \section{Numerical implementation notes}\label{sec:implementation}
 
 HOGG: Newton's method (CITE), invert, solve, etc.
@@ -395,7 +438,7 @@ HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do 
 HOGG: All code used to make the figures in this \documentname{} are available HOGG WHERE?
 
 \paragraph{Acknowledgements:}
-It is a pleasure to thank Hans-Walter Rix (MPIA) and Soledad Villar (JHU) for valuable discussions.
+It is a pleasure to thank Will Kinney (Buffalo), Hans-Walter Rix (MPIA), and Soledad Villar (JHU) for valuable discussions.
 
 \raggedright
 \printbibliography
