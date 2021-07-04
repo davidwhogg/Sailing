@@ -4,6 +4,7 @@ publisher = {Sheridan House},
 isbn = {9781574090000},
 title = {The Symmetry of Sailing: The Physics of Sailing for Yachtsmen},
 year = {1996},
+annotate = {A good long read about sailing and physics, with a remarkably romantic prose style (for a physics textbook). The author claims that all the diagrams are based on good data; since the origin of those data are not given, we're suspicious. However, the diagrams are beautiful and many considerations about boat and trim are discussed clearly and usefully. The model presented by us in \secref{sec:model} in this \documentname\ is given almost exactly in Section~8.4 (HOGG CHECK THIS) of this book and dismissed summarily as not accurate enough for any purpose. There are some discussions of air and water flow around the sail and keel that I am slightly suspicious about, but overall this book is excellent. The content is purely descriptive; it does not include any implementable working physical model of a sailboat that could be used, say, in an introductory physics class to solve problem-set problems about sailing.}
 }
 
 @misc{tao,
@@ -12,13 +13,23 @@ year = {1996},
   year = {2009},
   month = {March},
   howpublished = {\url{https://terrytao.wordpress.com/2009/03/23/sailing-into-the-wind-or-faster-than-the-wind/}},
-  note = {Blog post. Accessed: 2021-06-25}
+  note = {Blog post. Accessed: 2021-06-25},
+  annotate = {HOGG CHECK THIS: The model for sailing presented in this blog post is very similar in spirit to the model presented by us in \secref{sec:model} and \secref{sec:steady}. However Tao assumes that there is no drag; that is, (for example) the ratio $A_{\sail}/A_{\above}$ of the quantities used in \eqref{eq:Fsailair} and \eqref{eq:Fhullair} vanishes. In this limit, sailing can be infinitely fast! But aside from that unreality, the goals of this blogpost are similar to our goals in the sense that it delivers a working, implementable model of sailing.}
+}
+
+@book{explained,
+  author = {Bryon D. Anderson},
+  publisher = {Sheridan House},
+  isbn = {9781574091700},
+  title = {The Physics of Sailing Explained},
+  year = {2003},
+  annotate = {A quick read, and a more superficial treatment of the same basic set of things as in \cite{symmetry}. Contains the slightly wrong (debunked) explanation of how lift works that depends strongly on the Bernoulli effect and differences of airspeeds.}
 }
 
 @book{kusse,
-author = {Bruce R. Kusse and Erik A. Westwig},
-publisher = {John Wiley \& Sons, Ltd},
-isbn = {9783527618132},
-title = {Mathematical Physics},
-year = {2006},
+  author = {Bruce R. Kusse and Erik A. Westwig},
+  publisher = {John Wiley \& Sons, Ltd},
+  isbn = {9783527618132},
+  title = {Mathematical Physics},
+  year = {2006}
 }

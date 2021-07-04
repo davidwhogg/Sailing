@@ -29,11 +29,12 @@
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
 \usepackage[letterpaper]{geometry}
 \usepackage{graphicx}
 \graphicspath{{./}{../ipynb/}}
-\usepackage{biblatex}
-\addbibresource{sailing.bib}
+% \usepackage{biblatex}
+% \addbibresource{sailing.bib}
 
 % math macros
 \usepackage{amsmath, amsfonts}
@@ -117,6 +118,8 @@ It is a model that the force comes mainly from momentum change or momentum trans
 HOGG: Who is our audience? People interested in simple mechanics.
 We eschew real fluid dynamics; we over-simplify.
 This is possible because sailing is, in fact, very simple.
+We are different from the prior literature (including \cite{symmetry, explained}) because we are giving an executable model that can be played with.
+This is a sailing sandbox.
 
 HOGG: We make use of good, coordinate-free expressions, a la \cite{kusse}.
 We are Galilean-relativistic.
@@ -151,7 +154,7 @@ The directions of the forces can be manipulated to create amazing boat dynamics 
 The point of this \documentname{} is that much of the amazing dynamics can be observed in an amazingly simple model for the sailboat.
 So while we use the phrases ``flat sail'' and ``ram-pressure'' in what follows to describe our model, we really mean ``simple momentum transport''.
 
-\section{Ram-pressure sailboat}\label{sec:boat}
+\section{Ram-pressure sailboat}\label{sec:model}
 
 We are going to work in 2D, with velocities $\vec{v}$ and forces $\vec{F}$ that are column vectors (or $2\times 1$ matrices).
 To stay coordinate-free, we are going to talk about angles as orientations of unit vectors like $\uvec_{\perp\sail}$ and $\uvec_{\parallel\sail}$ (which will be defined below).
@@ -205,7 +208,7 @@ In detail the forces from the air are given by
   \\
   \vec{F}_{\sail-\air} & = \rho_\air\,A_\sail\,(\uvec_{\perp\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\perp\sail} \label{eq:Fsailair}
   \\
-  \vec{F}_{\hull-\air} & = \rho_\air\,A_{\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air ~,
+  \vec{F}_{\hull-\air} & = \rho_\air\,A_{\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air \label{eq:Fhullair} ~,
 \end{align}
 where we have dropped the $\eta$ prefactors (or really combined them with the area constants), $\vair,\vboat$ are the velocities of the air and boat, $A_\sail$ is an area related to the area of the sail, $\uvec_{\perp\sail}$ is a unit vector perpendicular to the plane of the planar sail, and $A_{\above}$ is an area related to the area of the boat's hull that is above the water surface.
 Similarly, the forces from the water are given by
@@ -317,7 +320,7 @@ So even though you can sail fast downwind, it sometimes \emph{feels} faster upwi
 
 \section{Good sailing}\label{sec:good}
 
-In \secref{sec:boat} we showed how the boat moves, given any arbitrary setting of the orientation of the keel and the sail.
+In \secref{sec:steady} we showed how the boat moves (in steady state), given any arbitrary setting of the orientation of the keel and the sail.
 However, one doesn't sail by randomly setting the keel and sail!
 One sails by pointing the boat in some direction and then setting the sail (or sails) appropriately.
 In our simple, ram-pressure boat, how should we set the planar sail?
@@ -440,6 +443,9 @@ HOGG: All code used to make the figures in this \documentname{} are available HO
 \paragraph{Acknowledgements:}
 It is a pleasure to thank Will Kinney (Buffalo), Hans-Walter Rix (MPIA), and Soledad Villar (JHU) for valuable discussions.
 
-\raggedright
-\printbibliography
+% \raggedright
+\footnotesize
+\bibliographystyle{annotate}
+\bibliography{sailing.bib}
+% \printbibliography
 \end{document}
