@@ -105,13 +105,29 @@ A simple momentum-transport model for sailing}
 
 \section{Introduction}\label{sec:intro}
 
-HOGG: Why study sailing? What's the point?
+We (the authors) are not sailors!
+However, we believe that sailing is a beautiful technology.
+The boat is powered by the wind, and yet it can travel (possibly with a tacking course) in any direction.
+Of course it's not Galilean-relativistic to say that the boat is powered by the wind:
+There is no absolute velocity, and there is a valid rest frame in which the wind velocity is zero.
+The Galilean-relativistic thing to say is that the boat is powered by the relative velocity between the air and the water (the symmetry between the air and the water in the mechanisms of sailing is the fundamental theme of \cite{symmetry}).
+Here we build the simplest possible physical model for a sailboat and sailing that captures all of the leading-order features of the technology.
 
-KLEBAN: Write things about ddwfttw, maybe? For context only!
+KLEBAN: Write things about ddwfttw, maybe? For context only! But it is worth saying that if we can understand sailing with a simple model, we might resolve some disputes about ddwfttw.
 
-HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong (see, for one of many, many examples, \cite{lift}).
-This is something of a motivation to reconsider sailing too.
-Note that some books (especially \cite{sails}) get the lift from the sail and keel correct: It has to involve changing the direction of flow!
+When we were little, we were taught a story about how airfoils (wings on airplanes, for example) generate lift, in which the air path over the top of the lenticular, curved wing is longer than the path under the bottom, so velocities are different (top to bottom), and thus there is a net force from a difference in Bernoulli pressures.
+This model is now known to be wrong (see, for example, \cite{lift}):
+There is no reason for the air flow to ``join up'' at the end of the airfoil.
+And, besides, airplanes can fly upside-down!
+The best leading-order description is that the lift on the wing comes from \emph{redirection of the flow of air}.
+There is a volumetric rate of momentum change downwards in the air flowing onto the wing, which leads to an equal-and-opposite force upwards on the wing.
+Similarly, the force on a sailboat sail is from the redirection of the flow of the air encountering the sail.
+This point is made admirably in some books on the physics of sailing (especially \cite{sails}).
+And the force on a sailboat keel is from the redirection of the flow of water encountering the keel.
+These forces are sometimes called ``lift'' forces in analogy to the lift force on an airplane wing.
+This \documentname{} is inspired by these observations.
+Sailboats sail by managing momentum changes in the air and water.
+They work on \emph{momentum transport}.
 
 HOGG: What do we really mean by ram pressure?
 We'll explain in \secref{sec:ram} but briefly:
@@ -122,7 +138,7 @@ We eschew real fluid dynamics; we over-simplify.
 This is possible because sailing is, in fact, very simple.
 We are different from the prior literature (including \cite{symmetry, explained, sails}) because we are giving an executable model that can be played with.
 This is a sailing sandbox.
-The only prior work we know that does precisely this is \cite{tao}.
+The only prior work we know that does precisely this is \cite{tao}, but that model is very simplistic (for example, it doesn't lead to steady-state sailing).
 
 HOGG: We make use of good, coordinate-free expressions, a la \cite{kusse}.
 We are Galilean-relativistic.
@@ -181,8 +197,9 @@ Viscosities only matter for very small objects, much smaller than sailboats. The
 We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ (to make an effective area) in everything that follows.
 If you don't like that we had to orient the unit vector $\uvec_\perp$ ``down-flow'', then you can manage the signs by re-writing \eqref{eq:flat} as
 \begin{align}
-    \vec{F}_\flat &= \eta\,\rho\,A\,|\uvec_\perp^\top\vec{v}|\,(\uvec_\perp^\top\vec{v})\,\uvec_\perp ~.
+    \vec{F}_\flat &= \eta\,\rho\,A\,|\uvec_\perp^\top\vec{v}|\,(\uvec_\perp^\top\vec{v})\,\uvec_\perp ~;
 \end{align}
+in this formulation, $\uvec_\perp$ can point in either of the two directions that are normal to the surface.
 
 If, instead of a planar object, you have an isotropic object (a sphere in fully 3D situations, an axi-symmetric boat in our 2D water world), the ram-pressure force becomes
 \begin{align}\label{eq:iso}
@@ -194,7 +211,7 @@ Again $\eta$ depends on velocity, but again we are going to ignore that.
 Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull.
 Thus the ram-pressure force on the sailboat will have four components, a force on the flat sail from the air, a force on the flat keel from the water, a force on the hull from the air, and a force on the hull from the water.
 This model is extremely simplistic!
-In some sense it is the closest possible model to the spherical cow that will sail non-trivially.
+In some sense it is the closest possible object to the spherical cow that will sail non-trivially.
 In detail the forces from the air are given by
 \begin{align}\label{eq:startmodel}
   \vec{F}_\air &= \vec{F}_{\sail-\air} + \vec{F}_{\hull-\air}
