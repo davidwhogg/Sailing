@@ -79,13 +79,13 @@
 \setlength{\textheight}{9.00in}
 \setlength{\topmargin}{-0.40in}
 \pagestyle{myheadings}
-\markright{\textsf{Hogg \& Kleban / Ram-pressure model for sailing}}
 \newcommand{\figurerule}{\rule[1ex]{\textwidth}{0.2pt}}
 \linespread{1.08}
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
 \title{\bfseries%
 A simple momentum-transport model for sailing}
+\markright{\textsf{Hogg \& Kleban / Momentum-transport model for sailing}}
 \author{DWH, MK, others?}
 \date{June 2021}
 \begin{document}
@@ -100,7 +100,7 @@ A simple momentum-transport model for sailing}
     We use this model to derive simple rules for sailing that are not far off from standard sailing practice, for sailing in different directions (including upwind).
     One consequence of this model is that a sailboat does not move (relative to the water) precisely in the direction that its keel points (the direction of the prow); it moves slightly downwind of that.
     Another consequence is that it is possible for an extremely anisotropic (extremely well designed) boat to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
-    Interestingly, nothing about the mechanical model or discussion depend on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; but the important thing is that the model \emph{does} depend on what's assumed about the angular re-direction of the wind momentum flux.
+    Interestingly, nothing conceptual about the mechanical model or discussion depend on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; but the important thing is that the model \emph{does} depend on what's assumed about the angular re-direction of the wind momentum flux.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
@@ -177,21 +177,13 @@ As we note above, if the fluid (air or water in this case) is thought of as bein
 \end{align}
 where $\eta$ is a dimensionless prefactor, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the velocity of the fluid in the rest frame of the surface, and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
 Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{%
-Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of this brutal model.}.
-We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ in everything that follows.
+Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$ for real boats in typical conditions. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of our brutal model.}.
+We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ (to make an effective area) in everything that follows.
+If you don't like that we had to orient the unit vector $\uvec_\perp$ ``down-flow'', then you can manage the signs by re-writing \eqref{eq:flat} as
+\begin{align}
+    \vec{F}_\flat &= \eta\,\rho\,A\,|\uvec_\perp^\top\vec{v}|\,(\uvec_\perp^\top\vec{v})\,\uvec_\perp ~.
+\end{align}
 
-If you like thinking about tensors, the flat-surface force \eqref{eq:flat}  can be thought of as a tensor expression, in which $\rho$, $A$, and the unit vectors are combined into a three-index (order-three) tensor $\tensor{A}$, which is then contracted onto the velocity twice:
-\begin{align}
-    \tensor{A} &\equiv \eta\,A\,\uvec_\perp\,\uvec_\perp^\top\otimes\uvec_\perp^\top ~.
-\end{align}
-In Einstein summation notation, the three-index tensor is contracted as follows
-\begin{align}
-    [\vec{F}_\flat]_i &= \rho\,[\tensor{A}]_{ijk}\,[\vec{v}]_j\,[\vec{v}]_k ~,
-    \\
-    [\tensor{A}]_{ijk} &= \eta\,A\,[\uvec_\perp]_i\,[\uvec_\perp]_j\,[\uvec_\perp]_k
-    ~,
-\end{align}
-where the $[\vec{v}]_i$ notation indicates the $i$th component or coordinate of the vector, the tensor $\tensor{A}$ has three indices, and the repeated indices are summed over.
 If, instead of a planar object, you have an isotropic object (a sphere in fully 3D situations, an axi-symmetric boat in our 2D water world), the ram-pressure force becomes
 \begin{align}\label{eq:iso}
     \vec{F}_\iso &= \eta\,\rho\,A\,|\vec{v}|\,\vec{v}
@@ -213,7 +205,7 @@ In detail the forces from the air are given by
   \\
   \vec{F}_{\hull-\air} & = \rho_\air\,A_{\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air \label{eq:Fhullair} ~,
 \end{align}
-where we have dropped the $\eta$ prefactors (or really combined them with the area constants), $\vair,\vboat$ are the velocities of the air and boat, $A_\sail$ is an area related to the area of the sail, $\uvec_{\perp\sail}$ is a unit vector perpendicular to the plane of the planar sail, and $A_{\above}$ is an area related to the area of the boat's hull that is above the water surface.
+where we have dropped the $\eta$ prefactors (or really combined them with the area constants, to make the area constants \emph{effective areas}), $\vair,\vboat$ are the velocities of the air and boat, $A_\sail$ is an effective area related to the area of the sail, $\uvec_{\perp\sail}$ is a unit vector perpendicular to the plane of the planar sail, and $A_{\above}$ is an effective area related to the area of the boat's hull that is above the water surface.
 Similarly, the forces from the water are given by
 \begin{align}
   \vec{F}_\water &= \vec{F}_{\keel-\water} + \vec{F}_{\hull-\water}
@@ -224,7 +216,7 @@ Similarly, the forces from the water are given by
   \\
   \vec{F}_{\hull-\water} & = \rho_\water\,A_{\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,\label{eq:endmodel}
 \end{align}
-where the sail is replaced by the keel everywhere, and $A_{\below}$ is an area related to the area of the hull below the water surface.
+where the sail is replaced by the keel everywhere, and $A_{\below}$ is an effective area related to the area of the hull below the water surface.
 HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE.
 
 The above model could be called ``isotropic boat, thin planar sail and keel''.
@@ -438,6 +430,10 @@ HOGG: What were our assumptions? What are the myriad ways in which those assumpt
 HOGG: iso-planar vs parallelepipeds...
 
 HOGG: Take some time to bash the Bernoulli bullshit.
+
+HOGG: Because we have such a simple model, there might be a version for a star ship that sails by photon pressure.
+Most thinking about solar sails and reflected-photon propulsion is thinking in terms of sailing ``down wind'' of the nearby star, but with multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination from two or more stars.
+HOGG: Someone must have thought of all this before!
 
 HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do complete successful path planning, and coming about costs time. So you will sail beyond the limits of BetterSailing(tm) if you do this correctly. This is out of scope for this \documentname.
 
