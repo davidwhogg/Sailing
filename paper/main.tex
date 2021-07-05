@@ -4,6 +4,7 @@
 % -------------------------------
 % - KSF
 % - Kilian Walsh
+% - Hyung Don Ryoo
 % - Sanjoy Mahajan
 % - David Grier
 % - All those in the acks.
@@ -20,17 +21,15 @@
 % - Should Terry Tao be cited way earlier?
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
 % - Make sure we aren't claiming that the model is NOVEL. It is just SIMPLE.
-% - Should we re-write the planar force to not require that the unit vector be pointed down-wind? YES WE SHUOLD.
-% - Overleaf seems to have wrong papersize? See papersize/geometry hacks.
 % - Reconsider the post-equation commas? (HWR SAY).
-% — Find references for, and destroy, Bernoulli.
 % — Make some comments on the situations in which the ram-pressure force approximation is more appropriate---gale force or lull?
 % - Is the latex footnote-footnote separation fucked?
+% - Do we still mention "tensors" anywhere? make sure the abstract is consistent with the body.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[letterpaper]{geometry} % because Overleaf is weird.
 \usepackage{hyperref}
-\usepackage[letterpaper]{geometry}
 \usepackage{graphicx}
 \graphicspath{{./}{../ipynb/}}
 % \usepackage{biblatex}
@@ -110,8 +109,9 @@ However, we believe that sailing is a beautiful technology.
 The boat is powered by the wind, and yet it can travel (possibly with a tacking course) in any direction.
 Of course it's not Galilean-relativistic to say that the boat is powered by the wind:
 There is no absolute velocity, and there is a valid rest frame in which the wind velocity is zero.
-The Galilean-relativistic thing to say is that the boat is powered by the relative velocity between the air and the water (the symmetry between the air and the water in the mechanisms of sailing is the fundamental theme of \cite{symmetry}).
-Here we build the simplest possible physical model for a sailboat and sailing that captures all of the leading-order features of the technology.
+The Galilean-relativistic thing to say is that the boat is powered by the relative velocity between the air and the water.
+Indeed, the symmetry between the air and the water in the mechanisms of sailing is the fundamental theme of one of the better books on the physics of sailing \cite{symmetry}.
+Here we build the simplest possible physical model for a sailboat---and sailing---that captures all of the leading-order features of the technology.
 
 KLEBAN: Write things about ddwfttw, maybe? For context only! But it is worth saying that if we can understand sailing with a simple model, we might resolve some disputes about ddwfttw.
 
@@ -125,23 +125,42 @@ Similarly, the force on a sailboat sail is from the redirection of the flow of t
 This point is made admirably in some books on the physics of sailing (especially \cite{sails}).
 And the force on a sailboat keel is from the redirection of the flow of water encountering the keel.
 These forces are sometimes called ``lift'' forces in analogy to the lift force on an airplane wing.
-This \documentname{} is inspired by these observations.
+This \documentname{} is partially motivated by these observations.
 Sailboats sail by managing momentum changes in the air and water.
 They work on \emph{momentum transport}.
 
-HOGG: What do we really mean by ram pressure?
-We'll explain in \secref{sec:ram} but briefly:
-It is a model that the force comes mainly from momentum change or momentum transport in the fluid. Here and below, compare to content (especially Section 8.4 maybe?) of \cite{symmetry}.
+There are multiple books about the physics of sailing (including \cite{symmetry, explained, sails}).
+These books vary in their physical correctness and their comprehensiveness.
+They are mainly aimed at sailors who want to understand better their boats and how to design them and sail them.
+This paper is aimed at a different audience.
+This paper is aimed at physicists and students of physics interested in a simple, implementable, physically justifiable model of sailing.
+This model is a sandbox for experimenting with wind-powered travel and wind-powered machines, which are, in turn, key concepts in sustainable technology.
+Our model of sailing is also something that can be implemented by students new to physics, in extremely simple code (an example of which is released in conjunction with this \documentname\footnote{All code used in this \documentname{} is available under a HOGG WHAT LICENSE? at \url{https://github.com/davidwhogg/Sailing}.}).
 
-HOGG: Who is our audience? People interested in simple mechanics.
-We eschew real fluid dynamics; we over-simplify.
-This is possible because sailing is, in fact, very simple.
-We are different from the prior literature (including \cite{symmetry, explained, sails}) because we are giving an executable model that can be played with.
-This is a sailing sandbox.
-The only prior work we know that does precisely this is \cite{tao}, but that model is very simplistic (for example, it doesn't lead to steady-state sailing).
+Importantly in what follows, we deliver only zeroth-order physical explanations.
+In detail, the flow of air over a sail, and water over a keel, involves boundary layers, turbulence, and all the subtleties and complexities of fluid dynamics.
+We drop all of that in favor of a pure-momentum model that erases all of these critical details, and boils all of this down to some effective areas and direction vectors.
+This over-simplification might be frustrating to sailing experts, or fluid dynamicists.
+But our goal is to find the simplest possible, dimensionally correct, Galilean-symmetric rules for a boat that can sail non-trivially.
+You might say that this is an astrophysics-quality model of a sailboat!
+The only prior work we know in this space is \cite{tao}, but that model is (in our view) overly simplistic.
+For example, it doesn't lead to steady-state sailing because the drag forces vanish.
 
-HOGG: We make use of good, coordinate-free expressions, a la \cite{kusse}.
-We are Galilean-relativistic.
+Above, we've mentioned Galilean relativity:
+It is important that any model for a sailboat precisely obey Galilean relativity; it is an extremely important symmetry for understanding sailing \cite{symmetry}.
+Indeed---according to lore---Galilean relativity was discovered by consideration of doing physics experiments in the hold of a sailing ship \cite{galileo}.
+The contemporary view of Galilean relativity is that all velocities that appear in physical law or the prediction of observables must be relative velocities.
+In addition to obeying this symmetry, our model is consistent with dimensional analysis and is equivariant to rotations and reflections.
+We also make use of good, coordinate-free expressions, in the style of (for example) \cite{kusse}.
+
+Our model for forces on a sailboat presented below in \secref{sec:model} is a very generic momentum-transport model.
+In astrophysics contexts, forces from momentum transport from winds or relative motions of bodies and fluids are called ``ram-pressure'' forces.
+We use that term a bit in what follows, but since it means different things to different people, it's fine to substitute in the word ``lift'' for ``ram-pressure'' everywhere.
+We'll discuss these forces conceptually in \secref{sec:ram}, give Galilean-relativistic expressions in \secref{sec:model}, and use them to explain the steady-state motion of a sailboat in \secref{sec:steady}.
+We follow this modeling with some optimization, useful to an idealized sailor on our idealized boat, in \secref{sec:good} and \secref{sec:better}.
+When we optimize the trim of our boat, we learn about what things the boat can do, in terms of sailing speed, and sailing upwind and downwind.
+It's impressive!
+We will discuss the dependence of our results on our boat properties in \secref{sec:design} and the limitations and extensions of our model in \secref{sec:discussion}.
 
 \section{Why ram-pressure forces?}\label{sec:ram}
 
@@ -418,11 +437,12 @@ HOGG: In the above experiments and diagrams we made use of a boat with the follo
 
 HOGG: These properties might seem unreasonable! However, remember that our boat is just a brutal approximation.
 A true boat has sails that are globally curved\footnote{%
-In the local-curvature or Riemann-curvature senses, sails are not (very) curved; after all, they are made from flat pieces of fabric.
+In the local-curvature or Riemann-curvature senses, sails are often not (very) curved; after all, they are often made from flat pieces of fabric.
 However, they are curved in the global or colloquial sense: Different patches of the sail have differently oriented normal vectors.
-It is in this colloquial sense that we are using the words ``curved'' and ``flat''.},
-and forces that are different from these pure ram-pressure forces.
-The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
+It is in this colloquial sense that we are using the words ``curved'' and ``flat''.
+All that said, the most sophisticated sails in the world are also curved in the local sense \cite{sails}.},
+and forces that are different in detail from these pure ram-pressure forces.
+HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
 HOGG show how the hourglass plots depend on the qualities of the boat, such as: Relative area of sail and keel. Relative area of hull and keel. Etc.
 
