@@ -85,7 +85,7 @@
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
 \title{\bfseries%
-A simple, anisotropic ram-pressure model for sailing}
+A simple momentum-transport model for sailing}
 \author{DWH, MK, others?}
 \date{June 2021}
 \begin{document}
@@ -109,7 +109,9 @@ HOGG: Why study sailing? What's the point?
 
 KLEBAN: Write things about ddwfttw, maybe? For context only!
 
-HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong; a motivation to reconsider sailing too.
+HOGG: Stuff about Bernoulli and flying and aerofoils that turned out to be wrong (see, for one of many, many examples, \cite{lift}).
+This is something of a motivation to reconsider sailing too.
+Note that some books (especially \cite{sails}) get the lift from the sail and keel correct: It has to involve changing the direction of flow!
 
 HOGG: What do we really mean by ram pressure?
 We'll explain in \secref{sec:ram} but briefly:
@@ -118,13 +120,14 @@ It is a model that the force comes mainly from momentum change or momentum trans
 HOGG: Who is our audience? People interested in simple mechanics.
 We eschew real fluid dynamics; we over-simplify.
 This is possible because sailing is, in fact, very simple.
-We are different from the prior literature (including \cite{symmetry, explained}) because we are giving an executable model that can be played with.
+We are different from the prior literature (including \cite{symmetry, explained, sails}) because we are giving an executable model that can be played with.
 This is a sailing sandbox.
+The only prior work we know that does precisely this is \cite{tao}.
 
 HOGG: We make use of good, coordinate-free expressions, a la \cite{kusse}.
 We are Galilean-relativistic.
 
-\section{Why ram-pressure forces? Why planar sails?}\label{sec:ram}
+\section{Why ram-pressure forces?}\label{sec:ram}
 
 Sailboats and sails---like airplanes and wings---are beautiful curved structures that are designed to redirect air with as little turbulence as possible.
 So why would we make a planar-sail approximation and model that planar sail with a ram-pressure force?

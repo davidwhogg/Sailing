@@ -7,6 +7,15 @@ year = {1996},
 annotate = {A good long read about sailing and physics, with a remarkably romantic prose style (for a physics textbook). The author claims that all the diagrams are based on good data; since the origin of those data are not given, we're suspicious. However, the diagrams are beautiful and many considerations about boat and trim are discussed clearly and usefully. The model presented by us in \secref{sec:model} in this \documentname\ is given almost exactly in Section~8.4 (HOGG CHECK THIS) of this book and dismissed summarily as not accurate enough for any purpose. There are some discussions of air and water flow around the sail and keel that I am slightly suspicious about, but overall this book is excellent. The content is purely descriptive; it does not include any implementable working physical model of a sailboat that could be used, say, in an introductory physics class to solve problem-set problems about sailing.}
 }
 
+@book{sails,
+author = {Tom Whidden and Michael Levitt},
+publisher = {Seapoint Books},
+isbn = {9780997392005},
+title = {The Art and Science of Sails, Revised Edition},
+year = {2016},
+annotate = {A beautiful art-meets-physics book about the design and construction of sails. Chapter~3 of this book has very good diagrams and descriptions of sails in the wind, including examples of hypothetical perfectly planar, flat sails. Those examples make the Chapter a very useful physics reference. It does away with the pure-Bernoulli explanation of lift and instead works in terms of redirection of flow (that is, in our language, momentum transport). This book is only about sails but it is would be a pleasure for any fan of sailing.}
+}
+
 @misc{tao,
   title = {Sailing into the wind, or faster than the wind},
   author = {Terence Tao},
@@ -14,7 +23,9 @@ annotate = {A good long read about sailing and physics, with a remarkably romant
   month = {March},
   howpublished = {\url{https://terrytao.wordpress.com/2009/03/23/sailing-into-the-wind-or-faster-than-the-wind/}},
   note = {Blog post. Accessed: 2021-06-25},
-  annotate = {HOGG CHECK THIS: The model for sailing presented in this blog post is very similar in spirit to the model presented by us in \secref{sec:model} and \secref{sec:steady}. However Tao assumes that there is no drag; that is, (for example) the ratio $A_{\sail}/A_{\above}$ of the quantities used in \eqref{eq:Fsailair} and \eqref{eq:Fhullair} vanishes. In this limit, sailing can be infinitely fast! But aside from that unreality, the goals of this blogpost are similar to our goals in the sense that it delivers a working, implementable model of sailing.}
+  annotate = {HOGG CHECK THIS: The model for sailing presented in this blog post is very similar in spirit to the model presented by us in \secref{sec:model} and \secref{sec:steady}.
+  However the author assumes that there is no drag; that is, (for example) the ratio $A_{\sail}/A_{\above}$ of the quantities used in \eqref{eq:Fsailair} and \eqref{eq:Fhullair} goes to infinity.
+  In this limit, sailing can be infinitely fast! But aside from that unreality, the goals of this blogpost are similar to our goals in the sense that it delivers a working, implementable model of sailing.}
 }
 
 @book{explained,
@@ -24,6 +35,19 @@ annotate = {A good long read about sailing and physics, with a remarkably romant
   title = {The Physics of Sailing Explained},
   year = {2003},
   annotate = {A quick read, and a more superficial treatment of the same basic set of things as in \cite{symmetry}. Contains the slightly wrong (debunked) explanation of how lift works that depends strongly on the Bernoulli effect and differences of airspeeds.}
+}
+
+@article{lift,
+author = {Klaus Weltner},
+title = {A comparison of explanations of the aerodynamic lifting force},
+journal = {American Journal of Physics},
+volume = {55},
+number = {1},
+pages = {50-54},
+year = {1987},
+doi = {10.1119/1.14960},
+URL = {https://doi.org/10.1119/1.14960},
+eprint = {https://doi.org/10.1119/1.14960}
 }
 
 @book{kusse,
