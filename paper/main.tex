@@ -107,11 +107,11 @@ A simple momentum-transport model for sailing}
 We (the authors) are not sailors!
 However, we believe that sailing is a beautiful technology.
 The boat is powered by the wind, and yet it can travel (possibly with a tacking course) in any direction.
-Of course it's not Galilean-relativistic to say that the boat is powered by the wind:
+Of course it's not consistent with Galilean relativity to say that the boat is powered by the wind:
 There is no absolute velocity, and there is a valid rest frame in which the wind velocity is zero.
 The Galilean-relativistic thing to say is that the boat is powered by the relative velocity between the air and the water.
 Indeed, the symmetry between the air and the water in the mechanisms of sailing is the fundamental theme of one of the better books on the physics of sailing \cite{symmetry}.
-Here we build the simplest possible physical model for a sailboat---and sailing---that captures all of the leading-order features of the technology.
+Here we build the simplest possible physical model for a sailboat---and sailing---that is consistent with symmetries and captures all of the leading-order features of the technology.
 
 KLEBAN: Write things about ddwfttw, maybe? For context only! But it is worth saying that if we can understand sailing with a simple model, we might resolve some disputes about ddwfttw.
 
@@ -129,7 +129,7 @@ This \documentname{} is partially motivated by these observations.
 Sailboats sail by managing momentum changes in the air and water.
 They work on \emph{momentum transport}.
 
-There are multiple books about the physics of sailing (including \cite{symmetry, explained, sails}).
+There are multiple books about the physics of sailing (including \cite{symmetry, explained, sails, pos}).
 These books vary in their physical correctness and their comprehensiveness.
 They are mainly aimed at sailors who want to understand better their boats and how to design them and sail them.
 This paper is aimed at a different audience.
@@ -144,7 +144,8 @@ This over-simplification might be frustrating to sailing experts, or fluid dynam
 But our goal is to find the simplest possible, dimensionally correct, Galilean-symmetric rules for a boat that can sail non-trivially.
 You might say that this is an astrophysics-quality model of a sailboat!
 The only prior work we know in this space is \cite{tao}, but that model is (in our view) overly simplistic.
-For example, it doesn't lead to steady-state sailing because the drag forces vanish.
+For example, it doesn't lead to steady-state sailing because the drag forces (in that model) vanish (HOGG CHECK).
+In principle also \cite{pos} delivers similar equations to what we derive below, based on similar considerations and similar approximations, but their goals are not really for their reader to build an implementable model.
 
 Above, we've mentioned Galilean relativity:
 It is important that any model for a sailboat precisely obey Galilean relativity; it is an extremely important symmetry for understanding sailing \cite{symmetry}.
@@ -215,12 +216,13 @@ Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the 
 Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$ for real boats in typical conditions. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of our brutal model.}.
 We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ (to make an effective area) in everything that follows.
 If you don't like that we had to orient the unit vector $\uvec_\perp$ ``down-flow'', then you can manage the signs by re-writing \eqref{eq:flat} as
-\begin{align}
+\begin{align}\label{eq:flat2}
     \vec{F}_\flat &= \eta\,\rho\,A\,|\uvec_\perp^\top\vec{v}|\,(\uvec_\perp^\top\vec{v})\,\uvec_\perp ~;
 \end{align}
 in this formulation, $\uvec_\perp$ can point in either of the two directions that are normal to the surface.
+The force law \eqref{eq:flat} and \eqref{eq:flat2} is very similar to what's derived or discussed in \cite{symmetry} (Section~8.4) and in \cite{pos} (Chapters~2, 3).
 
-If, instead of a planar object, you have an isotropic object (a sphere in fully 3D situations, an axi-symmetric boat in our 2D water world), the ram-pressure force becomes
+If, instead of a planar object, you have an isotropic object (a sphere in fully 3D situations, an axisymmetric boat in our 2D water world), the ram-pressure force becomes
 \begin{align}\label{eq:iso}
     \vec{F}_\iso &= \eta\,\rho\,A\,|\vec{v}|\,\vec{v}
 \end{align}
@@ -444,7 +446,7 @@ All that said, the most sophisticated sails in the world are also curved in the 
 and forces that are different in detail from these pure ram-pressure forces.
 HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
-HOGG show how the hourglass plots depend on the qualities of the boat, such as: Relative area of sail and keel. Relative area of hull and keel. Etc.
+HOGG: Introduce drag ratios or lift ratios for the air and the water. And then show how the hourglass plots depend on these ratios. such as: Relative area of sail and keel. Relative area of hull and keel. Etc.
 
 HOGG take the limit of infinite area ratios and show that you get absurd results. Also understand and cite the Terry Tao blog post \cite{tao}.
 
@@ -467,6 +469,8 @@ HOGG: What were our assumptions? What are the myriad ways in which those assumpt
 HOGG: iso-planar vs parallelepipeds...
 
 HOGG: Take some time to bash the Bernoulli bullshit.
+
+HOGG: This model implies, indirectly, that keels should be curved! And they are, in high-end sailing (HOGG cite?)
 
 HOGG: Because we have such a simple model, there might be a version for a star ship that sails by photon pressure.
 Most thinking about solar sails and reflected-photon propulsion is thinking in terms of sailing ``down wind'' of the nearby star, but with multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination from two or more stars.
