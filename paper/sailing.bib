@@ -4,7 +4,7 @@
   isbn = {9781574090000},
   title = {The Symmetry of Sailing: The Physics of Sailing for Yachtsmen},
   year = {1996},
-  annotate = {A good long read about sailing and physics, with a remarkably romantic prose style (for a physics textbook). The author claims that all the diagrams are based on good data; since the origin of those data are not given, we're suspicious. However, the diagrams are beautiful and many considerations about boat and trim are discussed clearly and usefully. The force model presented by us in \secref{sec:model} in this \documentname\ is given almost exactly in Section~8.4 (HOGG CHECK THIS) of this book and dismissed summarily as not accurate enough for any purpose. There are some discussions of air and water flow around the sail and keel that I am slightly suspicious about, but overall this book is excellent. The content of the book is descriptive and engineering-oriented; it does not include any working physical model of sailing that could be implemented in an introductory physics class to solve problem-set problems about sailing.}
+  annote = {A good long read about sailing and physics, with a remarkably romantic prose style (for a physics textbook). The author claims that all the diagrams are based on good data; since the origin of those data are not given, we're suspicious. However, the diagrams are beautiful and many considerations about boat and trim are discussed clearly and usefully. The force model presented by us in \secref{sec:model} in this \documentname\ is given almost exactly in Section~8.4 of this book and dismissed summarily as not accurate enough for any purpose. There are some discussions of air and water flow around the sail and keel that I am slightly suspicious about, but overall this book is excellent. The content of the book is descriptive and engineering-oriented; it does not include any working physical model of sailing that could be implemented in an introductory physics class to solve problem-set problems about sailing.}
 }
 
 @book{pos,
@@ -13,7 +13,7 @@
   publisher = {Taylor and Francis},
   year = {2010},
   isbn = {9781420073768},
-  annotate = {Less comprehensive than \cite{symmetry} but more similar in spirit to our goals, since there are equations for simplified models of forces on boats.
+  annote = {Less comprehensive than \cite{symmetry} but more similar in spirit to our goals, since there are equations for simplified models of forces on boats.
   These equations are derived on the same basic principles (momentum transport from the fluids) as the equations in this \documentname{}.
   This book is the closest of all the physics-of-sailing cannon to delivering an implementable physical model that a student of physics could experiment with, quantitatively, but it stops just short of that.
   The book also clearly says (in contradiction to its own model, we believe) that it is impossible to sail downwind faster than the wind (pp.~36--37 and Figures~3.21, 3.22, and 3.23).}
@@ -25,7 +25,7 @@
   isbn = {9780997392005},
   title = {The Art and Science of Sails, Revised Edition},
   year = {2016},
-  annotate = {A beautiful art-meets-physics book about the design and construction of sails.
+  annote = {A beautiful art-meets-physics book about the design and construction of sails.
   Chapter~3 of this book has very good diagrams and descriptions of sails in the wind, including examples of hypothetical perfectly planar, flat sails. Those examples make the Chapter a very useful physics reference.
   It does away with the pure-Bernoulli explanation of lift and instead works in terms of redirection of flow (that is, in our language, momentum transport).
   This book is only about sails but it is would be a pleasure for any fan of sailing.}
@@ -36,11 +36,13 @@
   author = {Terence Tao},
   year = {2009},
   month = {March},
-  howpublished = {\url{https://terrytao.wordpress.com/2009/03/23/sailing-into-the-wind-or-faster-than-the-wind/}},
+  howpublished = {\\\url{https://terrytao.wordpress.com/2009/03/23/sailing-into-the-wind-or-faster-than-the-wind/}},
   note = {Blog post. Accessed: 2021-06-25},
-  annotate = {HOGG CHECK THIS: The model for sailing presented in this blog post is very similar in spirit to our model.
-  However the author assumes that there is no drag; that is, (for example) the ratio $A_{\sail}/A_{\above}$ of the quantities used in \eqref{eq:Fsailair} and \eqref{eq:Fhullair} goes to infinity.
-  In this limit, sailing can be infinitely fast! But aside from that unreality, the goals of this blogpost are similar to our goals in the sense that it delivers a working, implementable model of sailing.}
+  annote = {The model for sailing presented in this blog post is very similar in spirit to our model; it is an implementable model for experimenting with the physics of sailing.
+  However, the model assumes that the lift forces are proportional to velocity (as opposed to the square of velocity).
+  Linear-in-velocity forces are only correct for exceedingly tiny sailboats dominated by viscosity; this might apply to micron-scale boats!
+  Moreover the author assumes that there is no drag; that is, (for example) the ratio $A_{\sail}/A_{\above}$ of the quantities used in \eqref{eq:Fsailair} and \eqref{eq:Fhullair} goes to infinity.
+  In this limit, sailing can be infinitely fast!}
 }
 
 @book{explained,
@@ -49,7 +51,7 @@
   isbn = {9781574091700},
   title = {The Physics of Sailing Explained},
   year = {2003},
-  annotate = {A quick read, and a more superficial treatment of the same basic set of things as in \cite{symmetry}. Contains the slightly wrong (debunked) explanation of how lift works that depends strongly on the Bernoulli effect and differences of airspeeds (pp.~71--72) but then notes that there is controversy around the explanation.}
+  annote = {A quick read, and a more superficial treatment of the same basic set of things as in \cite{symmetry}. Contains the slightly wrong (debunked) explanation of how lift works that depends strongly on the Bernoulli effect and differences of airspeeds (pp.~71--72) but then notes that there is controversy around the explanation.}
 }
 
 @article{lift,
