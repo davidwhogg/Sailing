@@ -17,8 +17,7 @@
 
 % to-do items:
 % ------------
-% - FIND THE PRIOR LITERATURE!!
-% - Should Terry Tao be cited way earlier?
+% - Change citations to Tao to make it clear that the model is wrong!!
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
 % - Make sure we aren't claiming that the model is NOVEL. It is just SIMPLE.
 % - Reconsider the post-equation commas? (HWR SAY).
@@ -29,7 +28,7 @@
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[letterpaper]{geometry} % because Overleaf is weird.
-\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 \usepackage{graphicx}
 \graphicspath{{./}{../ipynb/}}
 % \usepackage{biblatex}
@@ -75,6 +74,8 @@
   {\raggedright\normalfont\large\bfseries}}
 \makeatother
 \setlength{\textwidth}{5.00in}
+\setlength{\oddsidemargin}{3.25in}
+\addtolength{\oddsidemargin}{-0.5\textwidth}
 \setlength{\textheight}{9.00in}
 \setlength{\topmargin}{-0.40in}
 \pagestyle{myheadings}
@@ -161,7 +162,8 @@ We'll discuss these forces conceptually in \secref{sec:ram}, give Galilean-relat
 We follow this modeling with some optimization, useful to an idealized sailor on our idealized boat, in \secref{sec:good} and \secref{sec:better}.
 When we optimize the trim of our boat, we learn about what things the boat can do, in terms of sailing speed, and sailing upwind and downwind.
 It's impressive!
-We will discuss the dependence of our results on our boat properties in \secref{sec:design} and the limitations and extensions of our model in \secref{sec:discussion}.
+We will discuss the dependence of our results on our boat properties in \secref{sec:design}.
+We comment on the implemntation of the model in \secref{sec:implementation} and we remark on limitations and extensions in \secref{sec:discussion}.
 
 \section{Why ram-pressure forces?}\label{sec:ram}
 
@@ -355,16 +357,21 @@ So even though you can sail fast downwind, it sometimes \emph{feels} faster upwi
 
 In \secref{sec:steady} we showed how the boat moves (in steady state), given any arbitrary setting of the orientation of the keel and the sail.
 However, one doesn't sail by randomly setting the keel and sail!
-One sails by pointing the boat in some direction and then setting the sail (or sails) appropriately.
+One sails by pointing the boat in some direction and setting the sail (or sails) appropriately given that boat pointing, or vice versa.
 In our simple, ram-pressure boat, how should we set the planar sail?
 
-HOGG: IN THIS SECTION EXPLICITLY DEFINE ``GOOD SAILING''.
+We could define \emph{GoodSailing(tm)} to be setting the sail orientation optimally, given the orientation of the boat.
+This might look something like the following:
 \begin{align}\label{eq:good}
     \uvec_{\perp\sail}^\good &\leftarrow \argmax_{\uvec_{\perp\sail}} \left[\uvec_{\parallel\keel}^\top\,(\vboat-\vwater)\right] ~,
 \end{align}
-where .... HOGG IMPLICITLY $\vboat-\vwater$ is a function of all the properties of the world and the boat boat, along with the orientation of its keel and sail.
-
-HOGG: FIGURE showing good sailing for a set of boat orientations.
+where $\uvec_{\perp\sail}^\good$ is the best orientation of the (planar) sail conditioned on the orientation of the keel,
+$\uvec_{\parallel\keel}$ is the unit vector pointing along the keel (parallel to the keel, in the forwards direction),
+the inner product gives the projection of the boat--water velocity vector onto the boat heading direction,
+and (for optimization purposes) the velocity difference $\vboat-\vwater$ is implicitly a function of the sail and keel orientations, according to the model of \secref{sec:steady}.
+This optimization is one-dimensional, but it is a global optimization, so it requires some attention; details of our implmentation of the optimization are given in \secref{sec:implementation}.
+Some examples of GoodSailing(tm) settings of sail and keel are shown in \figref{fig:good}, along with the resulting boat velocity vectors.
+A summary of all possible boat--water velocity vectors possible, for GoodSailing(tm) at many different keel orientations, is shown in \figref{fig:hourgood}.
 \begin{figure}[t!]
   \includegraphics[width=\textwidth]{good.pdf}
   \caption{Visualizations of GoodSailing(tm) for different settings of the orientation of the keel.
@@ -373,22 +380,20 @@ HOGG: FIGURE showing good sailing for a set of boat orientations.
   In these cases the the maximum of the GoodSailing(tm) objective \eqref{eq:good} is negative.\label{fig:good}}
   \figurerule
 \end{figure}
-
-HOGG: Announce and discuss \figref{fig:hourgood}.
 \begin{figure}[t!]
   ~\hfill\includegraphics[width=3in]{hourglass-good.pdf}\hfill~
   \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for GoodSailing(tm) for a set of randomly oriented keels.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:good}.
   Compare this to \figref{fig:hourglass}.
-  As is visible in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead; there are no \emph{directly} upwind options.\label{fig:hourgood}}
+  As is visible in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead; there are no \emph{directly} upwind options. This figure is directly comparable to [HOGG WHAT FIGURES IN THE BOOKS ABOUT SAILING?].\label{fig:hourgood}}
   \figurerule
 \end{figure}
 
-HOGG: Figure showing direction cosines of sail relative to keel/boat orientation.
+HOGG: Figure showing direction cosines of sail relative to keel/boat orientation?
 
-HOGG: Comment: The settings of the sail look ``tight'' relative to standard sailing practice. But this boat has flat sails, so it's hard to compare the exact settings with sailor experiences (which are all with curved sails).
+HOGG: Comments on GoodSailing(tm): As we saw in \secref{sec:steady}, you can sail dwfttw, and you can sail upwind, and you can sail fttw in general. But you can't sail dufttw or ddfttw. The settings of the sail look ``tight'' relative to standard sailing practice. But this boat has flat sails, so it's hard to compare the exact settings with sailor experiences (which are all with curved sails).
 
-HOGG: Final comment: But this is not the BEST a sailor can do...
+HOGG: Final comment: But this is not the BEST a sailor can do, because (a) boat doesn't move in the $\uvec_{\parallel\keel}$ direction, (b) because the destination might also be moving wrt the water, and (c) because you might want to take a tacking path...
 
 \section{Better sailing}\label{sec:better}
 
@@ -484,8 +489,7 @@ HOGG: All code used to make the figures in this \documentname{} are available HO
 It is a pleasure to thank Will Kinney (Buffalo), Hans-Walter Rix (MPIA), and Soledad Villar (JHU) for valuable discussions.
 
 % \raggedright
-\footnotesize
-\bibliographystyle{annotate}
+\bibliographystyle{hogg-plain-annote}
 \bibliography{sailing.bib}
 % \printbibliography
 \end{document}
