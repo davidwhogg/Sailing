@@ -87,7 +87,7 @@
 A simple momentum-transport model for sailing}
 \markright{\textsf{Hogg \& Kleban / Momentum-transport model for sailing}}
 \author{DWH, MK, others?}
-\date{June 2021}
+\date{2021}
 \begin{document}
 \maketitle
 
@@ -372,6 +372,7 @@ and (for optimization purposes) the velocity difference $\vboat-\vwater$ is impl
 This optimization is one-dimensional, but it is a global optimization, so it requires some attention; details of our implmentation of the optimization are given in \secref{sec:implementation}.
 Some examples of GoodSailing(tm) settings of sail and keel are shown in \figref{fig:good}, along with the resulting boat velocity vectors.
 A summary of all possible boat--water velocity vectors possible, for GoodSailing(tm) at many different keel orientations, is shown in \figref{fig:hourgood}.
+This latter figure is the HOGG WHAT DIAGRAM that is standard in all books on the subject of sailing (HOGG GIVE REFERENCES).
 \begin{figure}[t!]
   \includegraphics[width=\textwidth]{good.pdf}
   \caption{Visualizations of GoodSailing(tm) for different settings of the orientation of the keel.
@@ -391,9 +392,21 @@ A summary of all possible boat--water velocity vectors possible, for GoodSailing
 
 HOGG: Figure showing direction cosines of sail relative to keel/boat orientation?
 
-HOGG: Comments on GoodSailing(tm): As we saw in \secref{sec:steady}, you can sail dwfttw, and you can sail upwind, and you can sail fttw in general. But you can't sail dufttw or ddfttw. The settings of the sail look ``tight'' relative to standard sailing practice. But this boat has flat sails, so it's hard to compare the exact settings with sailor experiences (which are all with curved sails).
+There are many comments to be made here about GoodSailing(tm), but mainly the point is that GoodSailing(tm) confirms what we saw in \secref{sec:steady}.
+You can sail upwind, you can sail faster than the wind, and you can even sail downwind faster than the wind.
+You can't sail \emph{directly} upwind, and you can't sail \emph{directly} downwind faster than the wind.
+You can't give the boat precisely zero velocity with respect to either the water or the air, and the boat doesn't sail exactly in the direction it is pointed (it sails downwind of that, relative to the water).
+In detail, to an experienced sailor, the trim of the sail in \figref{fig:good} might look a little ``tight'' relative to standard best practice.
+But of course our sail is a planar approximation to a real sail; the curvature of the sail makes these angles wrong in detail (the angles shown in \figref{fig:good} are not quite right for either the boom or the bulk of any curved sail).
+The details of \figref{fig:hourgood} will depend on the physical properties or design of the boat.
+We return to this point in \secref{sec:design}.
 
-HOGG: Final comment: But this is not the BEST a sailor can do, because (a) boat doesn't move in the $\uvec_{\parallel\keel}$ direction, (b) because the destination might also be moving wrt the water, and (c) because you might want to take a tacking path...
+GoodSailing(tm) is good!
+But it is not the \emph{best} a sailor can do, for various reasons:
+One is that the boat does not move relative to the water exactly in the $\uvec_{\parallel\keel}$ direction, so the optimization for the projection onto $\uvec_{\parallel\keel}$ might not be quite right.
+Another is that the destination might also be moving with respect to the water (for example, if the destination is on the banks of a flowing river), so the relative velocity in \eqref{eq:good} is the wrong relative velocity.
+Yet another is that you might have a destination in mind that is directly upwind or directly downwind and you will need to not just optimize your velocity but instead take a non-trivial tacking path.
+We address a few of these next.
 
 \section{Better sailing}\label{sec:better}
 
@@ -434,9 +447,9 @@ HOGG discuss the hourglass figure.
   \figurerule
 \end{figure}
 
-Now if you want to plan a complete path or journey for the sailboat in (unrealistically) steady wind, you... HOGG
-
-HOGG PUT FIGURES HERE SHOWING TRAJECTORIES FOR SIMPLE JOURNEYS. MAYBE??
+BetterSailing(tm) is better than GoodSailing(tm).
+However, BetterSailing(tm) is still not the best we can do.
+HOGG: Now if you want to plan a complete path or journey for the sailboat in (unrealistically) steady wind, you have to know yet more things... out of scope? ... HOGG
 
 \section{Boat properties and boat design}\label{sec:design}
 
