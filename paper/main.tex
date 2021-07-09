@@ -17,6 +17,8 @@
 
 % to-do items:
 % ------------
+% - Put (m/s) onto hourglass figure captions.
+% - Make figure comparing different boats.
 % - Change citations to Tao to make it clear that the model is wrong!!
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
 % - Make sure we aren't claiming that the model is NOVEL. It is just SIMPLE.
@@ -56,6 +58,7 @@
 \newcommand{\vwater}{\vec{v}_\water}
 \newcommand{\vboat}{\vec{v}_\boat}
 \newcommand{\vdest}{\vec{v}_\destination}
+\newcommand{\mm}{\mathrm{m^2}}
 \newcommand{\mps}{\mathrm{m\,s^{-1}}}
 \newcommand{\mmps}{\mathrm{m^2\,s^{-1}}}
 
@@ -413,7 +416,8 @@ HOGG IN THIS SECTION EXPLICITLY DEFINE ``BETTER SAILING''.
 A type-A sailor---or maybe a competitive sailor---is trying to get from a current position to a destination as quickly as possible\footnote{%
 We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}.
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
-The sailor should then maximize the scalar product $\uvec_\destination^\top\,\vboat$
+The sailor should then maximize the scalar product of the boat's velocity (relative to the destination) onto the unit vector pointing to the destination.
+That is, we could define BetterSailing(tm) as
 \begin{align}\label{eq:better}
     \uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better &\leftarrow \argmax_{\uvec_{\perp\sail},\uvec_{\perp\keel}} \left[\uvec_\destination^\top\,(\vboat-\vdest)\right] ~,
 \end{align}
@@ -425,7 +429,10 @@ So the optimization objective really is the projection of the boat velocity onto
 While this is all simple to state, the global optimization is a bit painful to implement in code.
 We give details in \secref{sec:implementation}.
 
-HOGG PUT FIGURES HERE SHOWING THE OPTIMAL SETTINGS OF SAIL AND KEEL ORIENTATIONS FOR DIFFERENT DESTINATION DIRECTIONS.
+We show examples of BetterSailing(tm) in \figref{fig:better}, where we show the direction to the destination and the settings of the keel and sail.
+In these examples, we have set the velocity of the destination equal to the velocity of the water, but this will not be the case in general.
+In \figref{fig:hourbetter} we show the velocities obtained in BetterSailing(tm), which are a subset of the velocities obtained in GoodSailing(tm).
+In particular, the velocities that are not optimal for some particular destination are not used.
 \begin{figure}[t!]
   \includegraphics[width=\textwidth]{better.pdf}
   \caption{Visualizations of BetterSailing(tm) for different directions to a distant destination.
@@ -435,8 +442,6 @@ HOGG PUT FIGURES HERE SHOWING THE OPTIMAL SETTINGS OF SAIL AND KEEL ORIENTATIONS
   In these cases, the idea is that the best route to the destination involves frequent tacking back and forth across the path to the destination.\label{fig:better}}
   \figurerule
 \end{figure}
-
-HOGG discuss the hourglass figure.
 \begin{figure}[t!]
   ~\hfill\includegraphics[width=3in]{hourglass-better.pdf}\hfill~
   \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for BetterSailing(tm) for a set of randomly oriented destination vectors.
@@ -445,15 +450,43 @@ HOGG discuss the hourglass figure.
   \figurerule
 \end{figure}
 
-BetterSailing(tm) is better than GoodSailing(tm).
-However, BetterSailing(tm) is still not the best we can do.
-HOGG: Now if you want to plan a complete path or journey for the sailboat in (unrealistically) steady wind, you have to know yet more things... out of scope? ... HOGG
+BetterSailing(tm) is better than GoodSailing(tm), because BetterSailing(tm) takes better account of the sailor's objectives.
+However, BetterSailing(tm) is \emph{still} not the best we can do.
+For example, a sailor must in general take non-trivial tacking paths from origin to destination (especially when the destination is upwind, but even when the destination is downwind).
+The corners of that path---``coming about'' in sailing parlance---cost time, so their frequency should be balanced against slightly non-optimal sailing directions.
+Thus an even better sailor will put the boat into configurations that don't appear in \figref{fig:hourbetter}.
+The full exposition of this requires a model for the costs of coming about.
+That's outside the scope of this \documentname.
 
 \section{Boat properties and boat design}\label{sec:design}
 
-HOGG: In the above experiments and diagrams we made use of a boat with the following properties....
+In all of the experiments and figures given above, we made use of a model boat with the following effective areas:
+\begin{align}
+  A_\sail &= XXX\,\mm \\
+  A_\keel &= YYY\,\mm \\
+  A_\above &= ZZZ\,\mm \\
+  A_\below &= QQQ\,\mm ~.
+\end{align}
+This boat is designed such that $\rho_\air\,A_\sail = \rho_\water\,A_\keel$, which seems sensible, but is perhaps not industry standard.
+This boat also has very good drag ratios or lift ratios:
+The ratio of effective area of sail to hull-above is 256, as is the ratio of effective area of keel to hull-below.
+All these ratios were set not by analyzing any real boats, but by making the velocity curve shown in \figref{fig:hourgood} look reasonable, or accord with our intuitions and expectations.
+HOGG: NEED A BETTER NAME THAN VELOCITY CURVE; WHAT IS THIS DIAGRAM CALLED?
+Recall, for one, that our boat is a brutal approximation!
+For two, these areas are \emph{effective areas} within this brutal approximation, not measured areas.
 
-HOGG: These properties might seem unreasonable! However, remember that our boat is just a brutal approximation.
+As we change the ratios of the effective areas, the shapes of the velocity curves change.
+In \figref{fig:design} we show the effect on the boat velocity curves of changing the ratios $A_\sail/A_\keel$, $A_\sail/A_\above$, and $A_\keel/A_\below$....HOGG
+\begin{figure}[t!]
+  ~\hfill HOGG \hfill~
+  \caption{Same as \figref{fig:hourgood} but for varying values of the three ratios $A_\sail/A_\keel$, $A_\sail/A_\above$, and $A_\keel/A_\below$.\label{fig:design}}
+  \figurerule
+\end{figure}
+
+HOGG: Comment on what we seen in \figref{fig:design}.
+HOGG take the limit of infinite area ratios and show that you get absurd results.
+
+HOGG: 
 A true boat has sails that are globally curved\footnote{%
 In the local-curvature or Riemann-curvature senses, sails are often not (very) curved; after all, they are often made from flat pieces of fabric.
 However, they are curved in the global or colloquial sense: Different patches of the sail have differently oriented normal vectors.
@@ -463,8 +496,6 @@ and forces that are different in detail from these pure ram-pressure forces.
 HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
 HOGG: Introduce drag ratios or lift ratios for the air and the water. And then show how the hourglass plots depend on these ratios. such as: Relative area of sail and keel. Relative area of hull and keel. Etc.
-
-HOGG take the limit of infinite area ratios and show that you get absurd results. Also understand and cite the Terry Tao blog post \cite{tao}.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
