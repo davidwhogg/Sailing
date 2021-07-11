@@ -17,7 +17,6 @@
 
 % to-do items:
 % ------------
-% - Put (m/s) onto hourglass figure captions.
 % - Make figure comparing different boats.
 % - Change citations to Tao to make it clear that the model is wrong!!
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
@@ -26,6 +25,7 @@
 % — Make some comments on the situations in which the ram-pressure force approximation is more appropriate---gale force or lull?
 % - Is the latex footnote-footnote separation fucked?
 % - Do we still mention "tensors" anywhere? make sure the abstract is consistent with the body.
+% - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" or than 0.5 times the wind claim? We can beat that too.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -385,7 +385,7 @@ This latter figure is the HOGG WHAT DIAGRAM that is standard in all books on the
 \end{figure}
 \begin{figure}[t!]
   ~\hfill\includegraphics[width=3in]{hourglass-good.pdf}\hfill~
-  \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for GoodSailing(tm) for a set of randomly oriented keels.
+  \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for GoodSailing(tm) for a set keel orientations.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:good}.
   Compare this to \figref{fig:hourglass}.
   As is visible in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead; there are no \emph{directly} upwind options. This figure is directly comparable to [HOGG WHAT FIGURES IN THE BOOKS ABOUT SAILING?].\label{fig:hourgood}}
@@ -445,7 +445,7 @@ In particular, the velocities that are not optimal for some particular destinati
 \end{figure}
 \begin{figure}[t!]
   ~\hfill\includegraphics[width=3in]{hourglass-better.pdf}\hfill~
-  \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for BetterSailing(tm) for a set of randomly oriented destination vectors.
+  \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for BetterSailing(tm) for a set of destination vectors of different orientations.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:better}.
   Compare this to \figref{fig:hourglass} and also to \figref{fig:hourgood}.\label{fig:hourbetter}}
   \figurerule
@@ -465,12 +465,12 @@ In all of the experiments and figures given above, we made use of a model boat w
 \begin{align}
   A_\sail &= 1400\,\mm \\
   A_\keel &= 2\,\mm \\
-  A_\above &= 5\,\mm \\
+  A_\above &= 5.6\,\mm \\
   A_\below &= 0.008\,\mm ~.
 \end{align}
 This boat is designed such that $\rho_\air\,A_\sail = \rho_\water\,A_\keel$, which seems sensible, but is perhaps not industry standard.
 This boat also has very good drag ratios or lift ratios:
-The ratio of effective area of sail to hull-above is 256, as is the ratio of effective area of keel to hull-below.
+The ratio of effective area of sail to hull-above is 250, as is the ratio of effective area of keel to hull-below.
 All these ratios were set not by analyzing any real boats, but by making the velocity curve shown in \figref{fig:hourgood} look reasonable, or accord with our intuitions and expectations.
 HOGG: NEED A BETTER NAME THAN VELOCITY CURVE; WHAT IS THIS DIAGRAM CALLED?
 Recall, for one, that our boat is a brutal approximation!
