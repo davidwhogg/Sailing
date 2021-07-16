@@ -10,3 +10,4 @@ A ram-pressure model for sailing.
 ## Contributors & Acknowledgements
 - **Matt Kleban** (NYU)
 - **Hans-Walter Rix** (MPIA)
+- **Hyung-Don Ryoo** (NYU)
