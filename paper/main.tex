@@ -4,7 +4,6 @@
 % -------------------------------
 % - KSF
 % - Kilian Walsh
-% - Hyung Don Ryoo
 % - Sanjoy Mahajan
 % - David Grier
 % - All those in the acks.
@@ -17,8 +16,9 @@
 
 % to-do items:
 % ------------
-% - Make figure comparing different boats.
-% - Change citations to Tao to make it clear that the model is wrong!!
+% - Switch to calling the sail and keel orientations "effective orientations" not just orientations. And say why.
+% - make sure I clearly introduce the concept of lift ratio and stick with it.
+% - Change citations to Tao to make it clear that the Tao model is (probably) wrong!!
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
 % - Make sure we aren't claiming that the model is NOVEL. It is just SIMPLE.
 % - Reconsider the post-equation commas? (HWR SAY).
@@ -26,6 +26,7 @@
 % - Is the latex footnote-footnote separation fucked?
 % - Do we still mention "tensors" anywhere? make sure the abstract is consistent with the body.
 % - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" or than 0.5 times the wind claim? We can beat that too.
+% - Respond to comments by Hyung Don Ryoo, in email to Hogg, 2021-07-15.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -98,10 +99,11 @@ A simple momentum-transport model for sailing}
     Similarly, there is a ram-pressure force on the keel, depending on the relative water--boat velocity.
     The resulting expression for the total force on the boat is coordinate-free and consistent with Galilean relativity.
     The solutions corresponding to sailing in steady wind correspond to boat velocities that deliver vanishing total force, given the angles of the sail and keel.
-    We use this model to derive simple rules for sailing that are not far off from standard sailing practice, for sailing in different directions (including upwind).
+    We use this model to derive simple properties of sailing that are not far off from standard folklore and measurements.
     One consequence of this model is that a sailboat does not move (relative to the water) precisely in the direction that its keel points (the direction of the prow); it moves slightly downwind of that.
-    Another consequence is that it is possible for an extremely anisotropic (extremely well designed) boat to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
-    Interestingly, nothing conceptual about the mechanical model or discussion depend on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; but the important thing is that the model \emph{does} depend on what's assumed about the angular re-direction of the wind momentum flux.
+    Another consequence is that it is possible for an extremely well designed boat (very good lift ratios) to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
+    Another is that cross-wind sailing is fastest when the effective area of the sail is larger than the effective area of the keel by the ratio of the density of water to the density of air.
+    Nothing conceptual about this model depends on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; the important thing is that the model \emph{does} depend on angular re-direction of fluid momentum flux.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
