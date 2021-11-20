@@ -113,7 +113,7 @@ A simple momentum-transport model for sailing}
 We (the authors) are not sailors!
 However, we believe that sailing is a beautiful technology.
 The boat is powered by the wind, and yet it can travel (possibly with a tacking course) in any direction.
-Of course it's not consistent with Galilean relativity to say that the boat is powered by the wind:
+Of course it's not consistent with Galilean relativity\footnote{We refer to Galilean relativity repeatedly in this \documentname. Of course Galilean relativity is just the low-velocity approximation to special relativity \cite{sr}. But we are not going to consider air--water velocity differences that are an appreciable fraction of the speed of light (except maybe in the discussion in \secref{sec:discussion}).} to say that the boat is powered by the wind:
 There is no absolute velocity, and there is a valid rest frame in which the wind velocity is zero.
 The Galilean-relativistic thing to say is that the boat is powered by the relative velocity between the air and the water.
 Indeed, the symmetry between the air and the water in the mechanisms of sailing is the fundamental theme of one of the better books on the physics of sailing \cite{symmetry}.
@@ -138,7 +138,6 @@ They work on \emph{momentum transport}.
 There are multiple books about the physics of sailing (including \cite{symmetry, explained, sails, pos}).
 These books vary in their physical correctness and their comprehensiveness.
 They are mainly aimed at sailors who want to understand better their boats and how to design them and sail them.
-This paper is aimed at a different audience.
 This paper is aimed at physicists and students of physics interested in a simple, implementable, physically justifiable model of sailing.
 This model is a sandbox for experimenting with wind-powered travel and wind-powered machines, which are, in turn, key concepts in sustainable technology.
 Our model of sailing is also something that can be implemented by students new to physics, in extremely simple code (an example of which is released in conjunction with this \documentname\footnote{All code used in this \documentname{} is available under a HOGG WHAT LICENSE? at \url{https://github.com/davidwhogg/Sailing}.}).
@@ -147,7 +146,7 @@ Importantly in what follows, we deliver only zeroth-order physical explanations.
 In detail, the flow of air over a sail, and water over a keel, involves boundary layers, turbulence, and all the subtleties and complexities of fluid dynamics.
 We drop all of that in favor of a pure-momentum model that erases all of these critical details, and boils all of this down to some effective areas and direction vectors.
 This over-simplification might be frustrating to sailing experts, or fluid dynamicists.
-But our goal is to find the simplest possible, dimensionally correct, Galilean-symmetric rules for a boat that can sail non-trivially.
+But our goal is to find the simplest possible, dimensionally correct, Galilean-relativistic rules for a boat that can sail non-trivially.
 You might say that this is an astrophysics-quality model of a sailboat!
 The only prior work we know in this space is \cite{tao}, but that model is (in our view) overly simplistic.
 For example, it doesn't lead to steady-state sailing because the drag forces (in that model) vanish (HOGG CHECK).
@@ -158,7 +157,7 @@ It is important that any model for a sailboat precisely obey Galilean relativity
 Indeed---according to lore---Galilean relativity was discovered by consideration of doing physics experiments in the hold of a sailing ship \cite{galileo}.
 The contemporary view of Galilean relativity is that all velocities that appear in physical law or the prediction of observables must be relative velocities.
 In addition to obeying this symmetry, our model is consistent with dimensional analysis and is equivariant to rotations and reflections.
-We also make use of good, coordinate-free expressions, in the style of (for example) \cite{kusse}.
+We also make use of good, coordinate-free expressions.
 
 Our model for forces on a sailboat presented below in \secref{sec:model} is a very generic momentum-transport model.
 In astrophysics contexts, forces from momentum transport from winds or relative motions of bodies and fluids are called ``ram-pressure'' forces.
@@ -185,7 +184,7 @@ The air that intersects the sail and neighborhood gets redirected, and so there 
 %in direction.
 %There is therefore not just a momentum flux into the sail, there is a rate of momentum change being input into the air from the sail.
 That momentum transport---the (vector) change in momentum in the air per unit time---is the (vector) force on the air from the sail.
-Half of the explanation for how a sailboat sails uses the equal-and-opposite reaction to this force.
+Half of the explanation for how a sailboat sails uses the equal-and-opposite reaction to this force (the other half of the explanation will come from the keel).
 
 This momentum-transport explanation of a sail (or a wing) 
 %has an expression that is, essentially,
@@ -200,15 +199,15 @@ The incoming momentum flux upstream of the surface is different than the outgoin
 %A bit repetitive, possibly trim more
 
 In this paper we are not arguing that ram pressure on flat sails is a complete explanation of a sailboat!
-We are arguing that the sailboat can be modeled as having two important surfaces---the sail and the keel---one of which deviates the flow of air in the rest-frame of the boat, and the other deviates the flow of water.
+We are arguing that the sailboat can be modeled as having two important surfaces---the sail and the keel---one of which deviates the flow of air, and the other deviates the flow of water.
 The angles of the sail and keel with respect to the air--boat and water-boat velocity vectors set the angular deviations of the two fluids, and therefore both the magnitudes and the directions of the sail and keel forces.
 The directions of the forces can be manipulated to create amazing boat dynamics and kinematics.
-The point of this \documentname{} is that much of the amazing dynamics can be observed in an amazingly simple model for the sailboat.
+The point of this \documentname{} is that much of the amazing dynamics can be understood in an amazingly simple model for the sailboat.
 So while we use the phrases ``flat sail'' and ``ram-pressure'' in what follows to describe our model, we really mean ``simple momentum transport''.
 
 \section{Ram-pressure sailboat}\label{sec:model}
 
-We are going to work in 2D, with velocities $\vec{v}$ and forces $\vec{F}$ that are column vectors (or $2\times 1$ matrices).
+We are going to work in 2D (you can think of the two dimensions as the surface of a map of a local patch of the Earth, if you like), with velocities $\vec{v}$ and forces $\vec{F}$ that are column vectors (or $2\times 1$ matrices).
 To stay coordinate-free, we are going to talk about angles as orientations of unit vectors like $\uvec_{\perp\sail}$ and $\uvec_{\parallel\sail}$ (which will be defined below).
 If you prefer to think in terms of angles, you can choose a coordinate system and then
 \begin{align}
@@ -273,7 +272,7 @@ Similarly, the forces from the water are given by
   \vec{F}_{\hull-\water} & = \rho_\water\,A_{\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,\label{eq:endmodel}
 \end{align}
 where the sail is replaced by the keel everywhere, and $A_{\below}$ is an effective area related to the area of the hull below the water surface.
-HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE.
+HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE. LIKE FOR INSTANCE LIFT RATIOS.
 
 The above model could be called ``isotropic boat, thin planar sail and keel''.
 There is an alternative model to be made, using the same elements, which could be called ``parallelepiped sail, parallelepiped keel''.
@@ -536,12 +535,12 @@ HOGG: What were our assumptions? What are the myriad ways in which those assumpt
 
 HOGG: iso-planar vs parallelepipeds...
 
-HOGG: Take some time to bash the Bernoulli bullshit.
+HOGG: Take some time to bash the Bernoulli bullshit. Note also that the different-path-length part of that argument is explicitly not true for a sail!
 
 HOGG: This model implies, indirectly, that keels should be curved! And they are, in high-end sailing (HOGG cite?)
 
 HOGG: Because we have such a simple model, there might be a version for a star ship that sails by photon pressure.
-Most thinking about solar sails and reflected-photon propulsion is thinking in terms of sailing ``down wind'' of the nearby star, but with multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination from two or more stars.
+Most thinking about solar sails and reflected-photon propulsion is thinking in terms of sailing ``down wind'' of the nearby star, but with multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination from two or more stars. This might involve a relativistic generalization of the above.
 HOGG: Someone must have thought of all this before!
 
 HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do complete successful path planning, and coming about costs time. So you will sail beyond the limits of BetterSailing(tm) if you do this correctly. This is out of scope for this \documentname.
