@@ -27,8 +27,10 @@
 % — Make some comments on the situations in which the ram-pressure force approximation is more appropriate---gale force or lull?
 % - Is the latex footnote-footnote separation fucked?
 % - Do we still mention "tensors" anywhere? make sure the abstract is consistent with the body.
-% - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" or than 0.5 times the wind claim? We can beat that too.
+% - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" (as in Kimball) or than 0.5 times the wind claim? We can beat that too.
 % - Respond to comments by Hyung Don Ryoo, in email to Hogg, 2021-07-15.
+% - Make sure the spirit of the bibliographic comments get pulled into the main text.
+% - Somewhere comment that the wind is a function of height, which means that another approximation has to do with what particular mean wind speed we are considering.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -113,7 +115,9 @@ A simple momentum-transport model for sailing}
 We (the authors) are not sailors!
 However, we believe that sailing is a beautiful technology.
 The boat is powered by the wind, and yet it can travel (possibly with a tacking course) in any direction.
-Of course it's not consistent with Galilean relativity\footnote{We refer to Galilean relativity repeatedly in this \documentname. Of course Galilean relativity is just the low-velocity approximation to special relativity \cite{sr}. But we are not going to consider air--water velocity differences that are an appreciable fraction of the speed of light (except maybe in the discussion in \secref{sec:discussion}).} to say that the boat is powered by the wind:
+Of course it's not consistent with Galilean relativity\footnote{We refer to Galilean relativity repeatedly in this \documentname.
+Of course Galilean relativity is just the low-velocity approximation to special relativity \cite{sr}.
+But we are not going to consider air--water velocity differences that are an appreciable fraction of the speed of light (except maybe in the discussion in \secref{sec:discussion}).} to say that the boat is powered by the wind:
 There is no absolute velocity, and there is a valid rest frame in which the wind velocity is zero.
 The Galilean-relativistic thing to say is that the boat is powered by the relative velocity between the air and the water.
 Indeed, the symmetry between the air and the water in the mechanisms of sailing is the fundamental theme of one of the better books on the physics of sailing \cite{symmetry}.
@@ -148,8 +152,7 @@ We drop all of that in favor of a pure-momentum model that erases all of these c
 This over-simplification might be frustrating to sailing experts, or fluid dynamicists.
 But our goal is to find the simplest possible, dimensionally correct, Galilean-relativistic rules for a boat that can sail non-trivially.
 You might say that this is an astrophysics-quality model of a sailboat!
-The only prior work we know in this space is \cite{tao}, but that model is (in our view) overly simplistic.
-For example, it doesn't lead to steady-state sailing because the drag forces (in that model) vanish (HOGG CHECK).
+The only prior work we know in this space is \cite{tao}, but that model is (in our view) overly simplistic, and maybe dimensionally incorrect (it appears to make forces proportional to velocities, instead of squared velocities).
 In principle also \cite{pos} delivers similar equations to what we derive below, based on similar considerations and similar approximations, but their goals are not really for their reader to build an implementable model.
 
 Above, we've mentioned Galilean relativity:
@@ -221,20 +224,18 @@ and water that hits its planar keel produces a ram-pressure force perpendicular 
 We can construct the complete force law on the sailboat by thinking about ram-pressure forces on surfaces.
 As we note above, if the fluid (air or water in this case) is thought of as being composed of particles that bounce elastically off of a flat surface of area $A$, then the ram-pressure force on that surface is
 \begin{align}\label{eq:flat}
-    \vec{F}_\flat &= \eta\,\rho\,A\,(\uvec_\perp^\top\vec{v})^2\,\uvec_\perp ~,
+    \vec{F}_\flat &= \eta\,\rho\,A\,(\uvec_\perp\cdot\vec{v})^2\,\uvec_\perp ~,
 \end{align}
 where $\eta$ is a dimensionless prefactor, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the %velocity of the fluid in the rest frame of the surface, 
 relative velocity between the fluid and the surface,
-and $\uvec_\perp^\top\vec{v}$ is the scalar inner product (dot product) of the two vectors.
-MK - I'M NOT A FAN OF THIS NOTATION FOR INNER PRODUCT, ESPECIALLY WITH UPPER AND LOWER Ts.
-
+and $\uvec_\perp\cdot\vec{v}$ is the scalar inner product (dot product) of the two vectors.
 
 Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{%
 Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$ for real boats in typical conditions. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of our brutal model.}.
 We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ (to make an effective area) in everything that follows.
 If you don't like that we had to orient the unit vector $\uvec_\perp$ ``down-flow'', then you can manage the signs by re-writing \eqref{eq:flat} as
 \begin{align}\label{eq:flat2}
-    \vec{F}_\flat &= \eta\,\rho\,A\,|\uvec_\perp^\top\vec{v}|\,(\uvec_\perp^\top\vec{v})\,\uvec_\perp ~;
+    \vec{F}_\flat &= \eta\,\rho\,A\,|\uvec_\perp\cdot\vec{v}|\,(\uvec_\perp\cdot\vec{v})\,\uvec_\perp ~;
 \end{align}
 in this formulation, $\uvec_\perp$ can point in either of the two directions that are normal to the surface.
 The force law \eqref{eq:flat} and \eqref{eq:flat2} is very similar to what's derived or discussed in \cite{symmetry} (Section~8.4) and in \cite{pos} (Chapters~2, 3).
@@ -256,7 +257,7 @@ In detail the forces from the air are given by
   \\
   \vec{\Delta v}_\air &\equiv \vair - \vboat \label{eq:deltav}
   \\
-  \vec{F}_{\sail-\air} & = \rho_\air\,A_\sail\,(\uvec_{\perp\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\perp\sail} \label{eq:Fsailair}
+  \vec{F}_{\sail-\air} & = \rho_\air\,A_\sail\,(\uvec_{\perp\sail}\cdot\vec{\Delta v}_\air)^2\,\uvec_{\perp\sail} \label{eq:Fsailair}
   \\
   \vec{F}_{\hull-\air} & = \rho_\air\,A_{\above}\,|\vec{\Delta v}_\air|\,\vec{\Delta v}_\air \label{eq:Fhullair} ~,
 \end{align}
@@ -267,12 +268,17 @@ Similarly, the forces from the water are given by
   \\
   \vec{\Delta v}_\water &\equiv \vwater - \vboat
   \\
-  \vec{F}_{\keel-\water} & = \rho_\water\,A_\keel\,(\uvec_{\perp\keel}^\top\,\vec{\Delta v}_\water)^2\,\uvec_{\perp\keel}
+  \vec{F}_{\keel-\water} & = \rho_\water\,A_\keel\,(\uvec_{\perp\keel}\cdot\vec{\Delta v}_\water)^2\,\uvec_{\perp\keel}
   \\
   \vec{F}_{\hull-\water} & = \rho_\water\,A_{\below}\,|\vec{\Delta v}_\water|\,\vec{\Delta v}_\water ~,\label{eq:endmodel}
 \end{align}
 where the sail is replaced by the keel everywhere, and $A_{\below}$ is an effective area related to the area of the hull below the water surface.
-HOGG NEED WE SAY MORE ABOUT THESE? PROBABLY YES THERE ARE COMMENTS TO BE MADE. LIKE FOR INSTANCE LIFT RATIOS.
+
+In some of what follows, we will make use of dimensionless ratios of effective areas.
+For example, the ratio of sail to keel $A_\sail/A_\keel$ will affect the ratio of upwind to downwind sailing speeds (and, surprisingly, affect cross-wind sailing).
+For another, the ratios of sail and keel to the relevant parts of the hull $A_\sail/A_\above$ and $A_\keel/A_\below$ act like ``lift ratios'' in the study of flying:
+They control the ratio of useful sailing forces to drag.
+We will refer to these---na\"ively---as lift ratios in what follows.
 
 The above model could be called ``isotropic boat, thin planar sail and keel''.
 There is an alternative model to be made, using the same elements, which could be called ``parallelepiped sail, parallelepiped keel''.
@@ -281,7 +287,7 @@ So, for example, the force from the air on the boat in this model is
 \begin{align}
   \vec{F}_\air &= \vec{F}_{\sail-\air} + \vec{F}_{\parallel-\air}
   \\
-  \vec{F}_{\parallel-\air} & = \rho_\air\,A_{\sail\parallel}\,(\uvec_{\parallel\sail}^\top\,\vec{\Delta v}_\air)^2\,\uvec_{\parallel\sail}
+  \vec{F}_{\parallel-\air} & = \rho_\air\,A_{\sail\parallel}\,(\uvec_{\parallel\sail}\cdot\vec{\Delta v}_\air)^2\,\uvec_{\parallel\sail}
    ~,
 \end{align}
 where $F_{\sail-\air}$ and $\vec{\Delta v}_\air$ are as defined in \eqref{eq:Fsailair} and \eqref{eq:deltav}, and $\uvec_{\parallel\sail}$ is the unit vector perpendicular to $\uvec_{\perp\sail}$ (but also pointing downwind).
@@ -379,7 +385,7 @@ In our simple, ram-pressure boat, how should we set the planar sail?
 We could define \emph{GoodSailing(tm)} to be setting the sail orientation optimally, given the orientation of the boat.
 This might look something like the following:
 \begin{align}\label{eq:good}
-    \uvec_{\perp\sail}^\good &\leftarrow \argmax_{\uvec_{\perp\sail}} \left[\uvec_{\parallel\keel}^\top\,(\vboat-\vwater)\right] ~,
+    \uvec_{\perp\sail}^\good &\leftarrow \argmax_{\uvec_{\perp\sail}} \left[\uvec_{\parallel\keel}\cdot(\vboat-\vwater)\right] ~,
 \end{align}
 where $\uvec_{\perp\sail}^\good$ is the best orientation of the (planar) sail conditioned on the orientation of the keel,
 $\uvec_{\parallel\keel}$ is the unit vector pointing along the keel (parallel to the keel, in the forwards direction),
@@ -388,7 +394,7 @@ and (for optimization purposes) the velocity difference $\vboat-\vwater$ is impl
 This optimization is one-dimensional, but it is a global optimization, so it requires some attention; details of our implmentation of the optimization are given in \secref{sec:implementation}.
 Some examples of GoodSailing(tm) settings of sail and keel are shown in \figref{fig:good}, along with the resulting boat velocity vectors.
 A summary of all possible boat--water velocity vectors possible, for GoodSailing(tm) at many different keel orientations, is shown in \figref{fig:hourgood}.
-This latter figure is the HOGG WHAT DIAGRAM that is standard in all books on the subject of sailing (HOGG GIVE REFERENCES).
+This latter figure is sometimes called a ``speed diagram'' \cite{pos}; it is standard in all books on the subject of sailing (HOGG GIVE REFERENCES and figure numbers).
 \begin{figure}[t!]
   \includegraphics[width=\textwidth]{good.pdf}
   \caption{Visualizations of GoodSailing(tm) for different settings of the orientation of the keel.
@@ -402,11 +408,9 @@ This latter figure is the HOGG WHAT DIAGRAM that is standard in all books on the
   \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for GoodSailing(tm) for a set keel orientations.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:good}.
   Compare this to \figref{fig:hourglass}.
-  As is visible in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead; there are no \emph{directly} upwind options. This figure is directly comparable to [HOGG WHAT FIGURES IN THE BOOKS ABOUT SAILING?].\label{fig:hourgood}}
+  As is visible in \figref{fig:good}, when the keel orientation is too close to directly upwind, the boat goes downwind instead; there are no \emph{directly} upwind options. This figure is sometimes called a ``speed curve'' \cite{pos}. It is directly comparable to [HOGG WHAT FIGURES IN THE BOOKS ABOUT SAILING?].\label{fig:hourgood}}
   \figurerule
 \end{figure}
-
-HOGG: Figure showing direction cosines of sail relative to keel/boat orientation?
 
 There are many comments to be made here about GoodSailing(tm), but mainly the point is that GoodSailing(tm) confirms what we saw in \secref{sec:steady}.
 You can sail upwind, you can sail faster than the wind, and you can even sail downwind faster than the wind.
@@ -426,15 +430,13 @@ We address a few of these next.
 
 \section{Better sailing}\label{sec:better}
 
-HOGG IN THIS SECTION EXPLICITLY DEFINE ``BETTER SAILING''.
-
 A type-A sailor---or maybe a competitive sailor---is trying to get from a current position to a destination as quickly as possible\footnote{%
 We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}.
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
 The sailor should then maximize the scalar product of the boat's velocity (relative to the destination) onto the unit vector pointing to the destination.
 That is, we could define BetterSailing(tm) as
 \begin{align}\label{eq:better}
-    \uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better &\leftarrow \argmax_{\uvec_{\perp\sail},\uvec_{\perp\keel}} \left[\uvec_\destination^\top\,(\vboat-\vdest)\right] ~,
+    \uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better &\leftarrow \argmax_{\uvec_{\perp\sail},\uvec_{\perp\keel}} \left[\uvec_\destination\cdot(\vboat-\vdest)\right] ~,
 \end{align}
 where $\uvec_{\perp\sail}^\better,\uvec_{\perp\keel}^\better$ are the best settings of the orientations of the keel and sail, given the direction $\uvec_\destination$ to the destination, and (because we are Galilean-relativistic) this velocity is relative to the velocity $\vdest$ of the destination (which might not be stationary with respect to the water; imagine that we are sailing on a fast-flowing river).
 In this expression \eqref{eq:better}, implicitly $\vboat$ is being thought of as a function of the orientations (and more).
@@ -461,7 +463,7 @@ In particular, the velocities that are not optimal for some particular destinati
   ~\hfill\includegraphics[width=3in]{hourglass-better.pdf}\hfill~
   \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for BetterSailing(tm) for a set of destination vectors of different orientations.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:better}.
-  Compare this to \figref{fig:hourglass} and also to \figref{fig:hourgood}.\label{fig:hourbetter}}
+  Compare this speed curve to \figref{fig:hourglass} and also to \figref{fig:hourgood}.\label{fig:hourbetter}}
   \figurerule
 \end{figure}
 
@@ -477,16 +479,15 @@ That's outside the scope of this \documentname.
 
 In all of the experiments and figures given above, we made use of a model boat with the following effective areas:
 \begin{align}
-  A_\sail &= 1400\,\mm \\
+  A_\sail &= 1400\,\mm \label{eq:boat1}\\
   A_\keel &= 2\,\mm \\
   A_\above &= 5.6\,\mm \\
-  A_\below &= 0.008\,\mm ~.
+  A_\below &= 0.008\,\mm \label{eq:boat4} ~.
 \end{align}
 This boat is designed such that $\rho_\air\,A_\sail = \rho_\water\,A_\keel$, which seems sensible, but is perhaps not industry standard.
 This boat also has very good drag ratios or lift ratios:
-The ratio of effective area of sail to hull-above is 250, as is the ratio of effective area of keel to hull-below.
-All these ratios were set not by analyzing any real boats, but by making the velocity curve shown in \figref{fig:hourgood} look reasonable, or accord with our intuitions and expectations.
-HOGG: NEED A BETTER NAME THAN VELOCITY CURVE; WHAT IS THIS DIAGRAM CALLED?
+The sail lift ratio (the ratio of effective area of sail to hull-above) is 250, as is the keel lift ratio (the ratio of effective area of keel to hull-below).
+All these ratios were set not by analyzing any real boats, but by making the speed curve shown in \figref{fig:hourgood} look reasonable, or accord with our intuitions and expectations.
 Recall, for one, that our boat is a brutal approximation!
 For two, these areas are \emph{effective areas} within this brutal approximation, not measured areas.
 Probably the least realistic of these effective-area ratios is $A_\keel/A_\below$; probably real boats rarely have this keel lift ratio in the hundreds.
@@ -498,7 +499,10 @@ In \figref{fig:design} we show the effect on the boat velocity curves of changin
   \includegraphics[width=0.5\textwidth]{design_A.pdf}%
   \includegraphics[width=0.5\textwidth]{design_C.pdf}\\%
   ~\hfill\includegraphics[width=0.5\textwidth]{design_E.pdf}\hfill~
-  \caption{Each panel is analagous to \figref{fig:hourgood} but in each case we have varied one of the dimensionless ratios....HOGG....for varying values of the three ratios $A_\sail/A_\keel$, $A_\sail/A_\above$, and $A_\keel/A_\below$.\label{fig:design}}
+  \caption{Each panel is analagous to \figref{fig:hourgood} but in each case we have varied one of the boat's dimensionless ratios. In each panel, the grey points show the same speed curve as that plotted in \figref{fig:hourgood}, which was computed for the boat described by the parameters given in \eqref{eq:boat1} through \eqref{eq:boat4}, and for a wind speed (relative to the water) of $8\,\mps$.
+  In the top-left panel, the small and large black points show variations as we vary the sail lift ratio $A_\sail/A_\above$ from HOGG (small dots) to HOGG (large dots).
+  In the top-right panel, the small and large black dots show variations as we vary the keel lift ratio $A_\keel/A_\below$ from HOGG (small dots) to HOGG (large dots).
+  In the bottom-left panel, the small and large black dots show the variations as we vary the sail-to-keel ratio $A_\sail/A_\keel$ from HOGG (small dots) to HOGG (large dots).\label{fig:design}}
   \figurerule
 \end{figure}
 
@@ -515,7 +519,7 @@ All that said, the most sophisticated sails in the world are also curved in the 
 and forces that are different in detail from these pure ram-pressure forces.
 HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
-HOGG: make sure we consistently use the term "lift ratio" for the air and the water, and that this is a real term.
+HOGG: make sure we consistently use the term ``lift ratio'' for the air and the water, and that this is a real term.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
@@ -536,6 +540,8 @@ HOGG: What were our assumptions? What are the myriad ways in which those assumpt
 HOGG: iso-planar vs parallelepipeds...
 
 HOGG: Take some time to bash the Bernoulli bullshit. Note also that the different-path-length part of that argument is explicitly not true for a sail!
+
+HOGG: Speaking of misconceptions: These results probably do indeed show that you can travel directly downwind faster than the wind. That maybe resolves some folk conflicts or arguments?
 
 HOGG: This model implies, indirectly, that keels should be curved! And they are, in high-end sailing (HOGG cite?)
 
