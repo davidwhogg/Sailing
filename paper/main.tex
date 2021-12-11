@@ -369,7 +369,7 @@ The wedge slips forward.
 Maybe that helps?
 HOGG SAYS: I THINK WE NEED A DIAGRAM HERE, SHOWING DWFTTW and UW.
 
-Finally, although upwind travel is slow going, with lots of tacking (HOGG DO WE NEED TO DEFINE THIS?) required, if you are situated \emph{on the boat}, upwind travel \emph{feels very fast}.
+Finally, although upwind travel is slow going, with lots of tacking (HOGG DO WE NEED TO DEFINE THIS? YES WE DO) required, if you are situated \emph{on the boat}, upwind travel \emph{feels very fast}.
 Why?
 Because your experience of speed is, at least in part, the feeling of the wind in your face.
 If you think about \figref{fig:hourglass} in terms of the boat-air velocity instead of the boat-water velocity---that is, if you Galilean-boost to the rest frame of the air---the upwind travel has much larger boat-air velocities than the downwind travel.
@@ -487,14 +487,18 @@ In all of the experiments and figures given above, we made use of a model boat w
 This boat is designed such that $\rho_\air\,A_\sail = \rho_\water\,A_\keel$, which seems sensible, but is perhaps not industry standard.
 This boat also has very good drag ratios or lift ratios:
 The sail lift ratio (the ratio of effective area of sail to hull-above) is 250, as is the keel lift ratio (the ratio of effective area of keel to hull-below).
-All these ratios were set not by analyzing any real boats, but by making the speed curve shown in \figref{fig:hourgood} look reasonable, or accord with our intuitions and expectations.
-Recall, for one, that our boat is a brutal approximation!
+All these ratios were set not by analyzing any real boats, but by making the speed curve shown in \figref{fig:hourgood} look reasonable, or accord with expectations set by the books on the physics of sailing HOGG CITE THESE.
+
+In thinking about these areas, recall, for one, that our boat is a brutal approximation!
 For two, these areas are \emph{effective areas} within this brutal approximation, not measured areas.
 Probably the least realistic of these effective-area ratios is $A_\keel/A_\below$; probably real boats rarely have this keel lift ratio in the hundreds.
 In this sense, maybe our model is more appropriate for an ice yacht than a sailboat?
+HOGG BUT SEE THE AMERICA'S CUP BOATS!
+
+HOGG NOW ADDRESS THE EXCELLENT LIFT RATIOS.
 
 As we change the ratios of the effective areas, the shapes of the velocity curves change.
-In \figref{fig:design} we show the effect on the boat velocity curves of changing the ratios $A_\sail/A_\keel$, $A_\sail/A_\above$, and $A_\keel/A_\below$....HOGG
+In \figref{fig:design} we show the effect on the boat velocity curves of changing the ratios $A_\sail/A_\keel$, $A_\sail/A_\above$ (the sail lift ratio), and $A_\keel/A_\below$ (the keel lift ratio)....HOGG
 \begin{figure}[t!]
   \includegraphics[width=0.5\textwidth]{design_A.pdf}%
   \includegraphics[width=0.5\textwidth]{design_C.pdf}\\%
@@ -506,7 +510,7 @@ In \figref{fig:design} we show the effect on the boat velocity curves of changin
   \figurerule
 \end{figure}
 
-HOGG: Comment on what we seen in \figref{fig:design}. HOGG: Note that if you set $\rho_\air\,A_\sail=\rho_\water\,A_\keel$ you get the fastest possible cross-wind sailing speed. Is that a result, and is it known?
+HOGG: Comment on what we see in \figref{fig:design}. HOGG: Note that if you set $\rho_\air\,A_\sail=\rho_\water\,A_\keel$ you get the fastest possible cross-wind sailing speed. Is that a result, and is it known?
 
 HOGG maybe take the limit of infinite lift ratios and show that you get absurd results.
 
@@ -531,15 +535,22 @@ HOGG: How we implement GoodSailing(tm) and BetterSailing(tm) optimizations. It's
 
 \section{Discussion}\label{sec:discussion}
 
-HOGG: What did we find? What's important about that?
+This \documentname{} presented what we believe to be the simplest model of sailing that is both physically realizable and also reproduces most of the salient features of the behavior of sailboats.
+The model is simple to state, makes use of nothing more than undergraduate mechanics, conforms to Galilean relativity and coordinate freedom, and is extremely easy to implement numerically.
+It makes explicit that the boat is powered by the relative velocity of the air and water.
+It demonstrates that there is nothing physically strange about being able to travel, by sailboat, upwind, or downwind faster than the wind, in both cases with some tacking.
+Along the way, we found that there are best sail-to-keel area ratios for cross-wind sailing, and that keels ought to be curved like sails; both of these ``predictions'' seem to have evidence in the best-in-class sailing technologies of today.
 
-HOGG: Galilean symmetry, coordinate freedom?
+The model makes brutal assumptions.
+In some sense, this is the ``spherical cow'' model of a sailboat.
+It literally assumed (incorrectly) that the hull of the boat is spatially isotropic (cylindrically symmetric).
+It assumed that viscosities are negligible, and that the effects of turbulence are all perfectly captured by a trivial ram-pressure expression (force proportional to an area times velocity squared).
+The model assumed that the drag coefficients $\eta$ do not depend on the angles of the sail or keel, nor on the relative speeds of air, water, and boat.
+All these assumptions are wrong in detail.
+They could be fixed and accuracy could be improved, but at the expense of adding many new parameters and constants, which distract from the principal story:
+Sailing is a very simple phenomenon from a fundamental-physics perspective.
 
-HOGG: What were our assumptions? What are the myriad ways in which those assumptions must be wrong? For example, boat has an asymmetry in the wind too, so really the boat must also matter. Viscosity; why can we ignore it? But turbulence; we can't ignore that! Constant $\eta$ is also wrong.
-
-HOGG: iso-planar vs parallelepipeds...
-
-HOGG: Take some time to bash the Bernoulli bullshit. Note also that the different-path-length part of that argument is explicitly not true for a sail!
+HOGG: This is a momentum-transport model! NOW Take some time to bash the Bernoulli bullshit. Note also that the different-path-length part of that argument is explicitly not true for a sail!
 
 HOGG: Speaking of misconceptions: These results probably do indeed show that you can travel directly downwind faster than the wind. That maybe resolves some folk conflicts or arguments?
 
