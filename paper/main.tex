@@ -31,6 +31,7 @@
 % - Respond to comments by Hyung Don Ryoo, in email to Hogg, 2021-07-15.
 % - Make sure the spirit of the bibliographic comments get pulled into the main text.
 % - Somewhere comment that the wind is a function of height, which means that another approximation has to do with what particular mean wind speed we are considering.
+% - Are we clear that we also find that you can sail faster than the wind, in general, like cross-wind? Emphasize that when we first figure it out.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -230,8 +231,8 @@ where $\eta$ is a dimensionless prefactor, $\rho$ is the density of the fluid, $
 relative velocity between the fluid and the surface,
 and $\uvec_\perp\cdot\vec{v}$ is the scalar inner product (dot product) of the two vectors.
 
-Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity\footnote{%
-Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$ for real boats in typical conditions. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of our brutal model.}.
+Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity.\footnote{%
+Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$ for real boats in typical conditions. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of our brutal model.}
 We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ (to make an effective area) in everything that follows.
 If you don't like that we had to orient the unit vector $\uvec_\perp$ ``down-flow'', then you can manage the signs by re-writing \eqref{eq:flat} as
 \begin{align}\label{eq:flat2}
@@ -303,9 +304,9 @@ Mathematically, steady sailing (constant $\vboat$) in steady wind and steady cur
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
 If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel.
-This is a root-finding problem that (probably) has no closed form\footnote{%
+This is a root-finding problem that (probably) has no closed form.\footnote{%
 It might be interesting to note that the flat-surface force \eqref{eq:flat} is a vector-valued quadratic form, so if one constructed the sailboat model completely from flat surfaces, the force law, in this approximation would be a quadratic form.
-That might lead to a closed-form solution for the equation \eqref{eq:sailing} of steady sailing.}.
+That might lead to a closed-form solution for the equation \eqref{eq:sailing} of steady sailing.}
 We solve equation~\eqref{eq:sailing} numerically in the code associated with this \documentname\footnote{%
 HOGG GIVE LINK HERE}
 by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
@@ -430,8 +431,8 @@ We address a few of these next.
 
 \section{Better sailing}\label{sec:better}
 
-A type-A sailor---or maybe a competitive sailor---is trying to get from a current position to a destination as quickly as possible\footnote{%
-We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}.
+A type-A sailor---or maybe a competitive sailor---is trying to get from a current position to a destination as quickly as possible.\footnote{%
+We don't particularly endorse this attitude towards sailing. The journey \emph{is} the destination.}
 Our view is that this sailor should start by specifying the unit vector $\uvec_\destination$ that points from the current position of the boat towards the destination of the boat.
 The sailor should then maximize the scalar product of the boat's velocity (relative to the destination) onto the unit vector pointing to the destination.
 That is, we could define BetterSailing(tm) as
@@ -477,7 +478,7 @@ That's outside the scope of this \documentname.
 
 \section{Boat properties and boat design}\label{sec:design}
 
-In all of the experiments and figures given above, we made use of a model boat with the following effective areas:
+In all of the experiments and figures given above, we made use of a model boat with the following effective areas: HOGG THESE ARE ABSURD. FIX AND RERUN.
 \begin{align}
   A_\sail &= 1400\,\mm \label{eq:boat1}\\
   A_\keel &= 2\,\mm \\
@@ -515,11 +516,11 @@ HOGG: Comment on what we see in \figref{fig:design}. HOGG: Note that if you set 
 HOGG maybe take the limit of infinite lift ratios and show that you get absurd results.
 
 HOGG: 
-A true boat has sails that are globally curved\footnote{%
+A true boat has sails that are globally curved,\footnote{%
 In the local-curvature or Riemann-curvature senses, sails are often not (very) curved; after all, they are often made from flat pieces of fabric.
 However, they are curved in the global or colloquial sense: Different patches of the sail have differently oriented normal vectors.
 It is in this colloquial sense that we are using the words ``curved'' and ``flat''.
-All that said, the most sophisticated sails in the world are also curved in the local sense \cite{sails}.},
+All that said, the most sophisticated sails in the world are also curved in the local sense \cite{sails}.}
 and forces that are different in detail from these pure ram-pressure forces.
 HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
@@ -538,15 +539,18 @@ HOGG: How we implement GoodSailing(tm) and BetterSailing(tm) optimizations. It's
 This \documentname{} presented what we believe to be the simplest model of sailing that is both physically realizable and also reproduces most of the salient features of the behavior of sailboats.
 The model is simple to state, makes use of nothing more than undergraduate mechanics, conforms to Galilean relativity and coordinate freedom, and is extremely easy to implement numerically.
 It makes explicit that the boat is powered by the relative velocity of the air and water.
-It demonstrates that there is nothing physically strange about being able to travel, by sailboat, upwind, or downwind faster than the wind, in both cases with some tacking.
-Along the way, we found that there are best sail-to-keel area ratios for cross-wind sailing, and that keels ought to be curved like sails; both of these ``predictions'' seem to have evidence in the best-in-class sailing technologies of today.
+It demonstrates that it is easy for a sailboat to travel faster than the wind (or, to be specific, to travel relative to the water faster than the magnitude of the relative wind-water velocity).
+It demonstrates that there is nothing physically strange about being able to travel, by sailboat, upwind, or downwind faster than the wind, in both cases by taking a tacking course.
+Along the way, we found that the best sail-to-keel effective-area ratio for cross-wind sailing is the ratio of the density of water to the density of air; and we found that keels ought to be curved like sails.
+Both of these ``predictions'' seem to have evidence in the best-in-class sailing technologies of today.
 
-The model makes brutal assumptions.
+This model makes brutal assumptions and approximations.
 In some sense, this is the ``spherical cow'' model of a sailboat.
 It literally assumed (incorrectly) that the hull of the boat is spatially isotropic (cylindrically symmetric).
 It assumed that viscosities are negligible, and that the effects of turbulence are all perfectly captured by a trivial ram-pressure expression (force proportional to an area times velocity squared).
 The model assumed that the drag coefficients $\eta$ do not depend on the angles of the sail or keel, nor on the relative speeds of air, water, and boat.
-All these assumptions are wrong in detail.
+The model ignored that the wind is gusty, and that wind speeds (and water speeds) vary with height (and depth).
+All these approximations are wrong in detail.
 They could be fixed and accuracy could be improved, but at the expense of adding many new parameters and constants, which distract from the principal story:
 Sailing is a very simple phenomenon from a fundamental-physics perspective.
 
@@ -556,9 +560,16 @@ HOGG: Speaking of misconceptions: These results probably do indeed show that you
 
 HOGG: This model implies, indirectly, that keels should be curved! And they are, in high-end sailing (HOGG cite?)
 
-HOGG: Because we have such a simple model, there might be a version for a star ship that sails by photon pressure.
-Most thinking about solar sails and reflected-photon propulsion is thinking in terms of sailing ``down wind'' of the nearby star, but with multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination from two or more stars. This might involve a relativistic generalization of the above.
-HOGG: Someone must have thought of all this before!
+We expressed pride that our model is explicitly Galilean-relativistic.
+That begs the question: What about special relativity?
+Of course our model is consistent with special relativity; Galilean relativity is the low-velocity limit, when all relative velocities have magnitudes way less than the speed of light.
+Now what about \emph{relativistic sailing?}
+Because we have such a simple model, we conjecture that there might be a version for a star ship that sails by photon pressure (or on stellar winds or supernovae ejecta or other quasi-relativistic flows).
+Most contemporary thinking about solar sails and reflected-photon propulsion is thinking in terms of sailing purely ``down wind'' of a single, nearby star, which dominates the photon pressure on any active surface.
+But the Galaxy is filled with stars!
+With multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination from multiple stars.
+This might involve a relativistic generalization of the above.
+HOGG: Someone must have thought of all this before! CITE THEM.
 
 HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do complete successful path planning, and coming about costs time. So you will sail beyond the limits of BetterSailing(tm) if you do this correctly. This is out of scope for this \documentname.
 
