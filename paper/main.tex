@@ -194,7 +194,7 @@ This momentum-transport explanation of a sail (or a wing)
 %has an expression that is, essentially,
 can be expressed as a particle flux (number per time) times a change in momentum per particle.
 These are also the physical components of a ram-pressure force.
-Indeed, the most basic derivation of the ram-pressure force is in the microscopic model of an ideal gas, in which particles bounce elastically off the surface, changing their momentum.
+Indeed, the most basic derivation of the ram-pressure force is in the microscopic model of an ideal gas, in which particles bounce elastically off the surface, changing their momenta.
 HOGG PUT A DIAGRAM HERE AND EQUATIONS.
 In this ideal-gas model, the mean force on the surface can be thought of as the combination of many tiny impulses per unit time from these elastic collisions.
 What's important about the model, however, is the momentum transport:
@@ -541,15 +541,15 @@ The model is simple to state, makes use of nothing more than undergraduate mecha
 It makes explicit that the boat is powered by the relative velocity of the air and water.
 It demonstrates that it is easy for a sailboat to travel faster than the wind (or, to be specific, to travel relative to the water faster than the magnitude of the relative wind-water velocity).
 It demonstrates that there is nothing physically strange about being able to travel, by sailboat, upwind, or downwind faster than the wind, in both cases by taking a tacking course.
-Along the way, we found that the best sail-to-keel effective-area ratio for cross-wind sailing is the ratio of the density of water to the density of air; and we found that keels ought to be curved like sails.
-Both of these ``predictions'' seem to have evidence in the best-in-class sailing technologies of today.
+Along the way, we found that the best sail-to-keel effective-area ratio for cross-wind sailing is the ratio of the density of water to the density of air; and we found that keels ought to be curved like sails (HOGG DO WE EXPLICITLY DISCUSS THIS ABOVE? IF NOT, WE SHOULD, WHERE WE DISCUSS THE SYMMETRY BETWEEN SAIL AND KEEL, OR WHERE WE DISCUSS THE CURVATURE OF THE SAILS.)
+For both of these ``predictions'' there seems to be evidence in the designs of the best-in-class sailing vessels today.
 
 This model makes brutal assumptions and approximations.
 In some sense, this is the ``spherical cow'' model of a sailboat.
 It literally assumed (incorrectly) that the hull of the boat is spatially isotropic (cylindrically symmetric).
 It assumed that viscosities are negligible, and that the effects of turbulence are all perfectly captured by a trivial ram-pressure expression (force proportional to an area times velocity squared).
 The model assumed that the drag coefficients $\eta$ do not depend on the angles of the sail or keel, nor on the relative speeds of air, water, and boat.
-The model ignored that the wind is gusty, and that wind speeds (and water speeds) vary with height (and depth).
+The model ignored that the wind is gusty, and that wind speeds (and water speeds), in the real world, vary with height (and depth).
 All these approximations are wrong in detail.
 They could be fixed and accuracy could be improved, but at the expense of adding many new parameters and constants, which distract from the principal story:
 Sailing is a very simple phenomenon from a fundamental-physics perspective.
@@ -571,7 +571,15 @@ With multiple sources of illumination, in principle one might be able to make a 
 This might involve a relativistic generalization of the above.
 HOGG: Someone must have thought of all this before! CITE THEM.
 
-HOGG: Even BetterSailing(tm) is not the best you can do, because you have to do complete successful path planning, and coming about costs time. So you will sail beyond the limits of BetterSailing(tm) if you do this correctly. This is out of scope for this \documentname.
+We defined GoodSailing(tm), which is an optimal setting of the orientation of the sail, given the orientation of the boat.
+And we defined BetterSailing(tm), which is an optimal setting of both the orientation of the boat and the orientation of the sail, given the direction to the destination.
+But even this is not the best you can do, because optimal sailing (from a time-to-destination perspective) involves complete path planning, constrained to start at the origin and end at the destination.
+For destinations that are close to directly downwind or directly upwind of the origin, this complete path planning will involve tacking the boat.
+Each tack involves a ``coming about'' or a rotation of the boat to put the wind on the other beam (HOGG CORRECT LANGUAGE HERE?).
+Each coming about costs time.
+So optimal path planning must involve that cost, factored against the requirement (if you delay coming about) that you will sail beyond the limits of what BetterSailing(tm) recommends, given your destination.
+That is, the global optimal path will not be locally optimal at all points.
+A full discussion of this path planning is out of scope for this \documentname, but clearly interesting from an engineering perspective.
 
 HOGG: All code used to make the figures in this \documentname{} are available HOGG WHERE?
 
