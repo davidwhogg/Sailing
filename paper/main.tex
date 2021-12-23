@@ -32,6 +32,7 @@
 % - Make sure the spirit of the bibliographic comments get pulled into the main text.
 % - Somewhere comment that the wind is a function of height, which means that another approximation has to do with what particular mean wind speed we are considering.
 % - Are we clear that we also find that you can sail faster than the wind, in general, like cross-wind? Emphasize that when we first figure it out.
+% - Need to pull in most recent figures; parameters have changed.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -100,11 +101,11 @@ A simple momentum-transport model for sailing}
 
 \begin{abstract}\noindent
     We present a simplified model for the forces on a sailboat.
-    Our model is that there is a ram-pressure force on the sail, with a magnitude and direction that depend on the alignment of the relative air--boat velocity with the sail orientation according to an anisotropic drag tensor.
-    Similarly, there is a ram-pressure force on the keel, depending on the relative water--boat velocity.
+    Our model is that there is a ram-pressure force on the sail, with a magnitude and direction that depend on the relative air--boat velocity and the sail orientation.
+    Similarly, there is a ram-pressure force on the keel, depending on the relative water--boat velocity and the keel orientation.
     The resulting expression for the total force on the boat is coordinate-free and consistent with Galilean relativity.
     The solutions corresponding to sailing in steady wind correspond to boat velocities that deliver vanishing total force, given the angles of the sail and keel.
-    We use this model to derive simple properties of sailing that are not far off from standard folklore and measurements.
+    We use this simple model to derive simple properties of sailing that are not far off from standard folklore and measurements.
     One consequence of this model is that a sailboat does not move (relative to the water) precisely in the direction that its keel points (the direction of the prow); it moves slightly downwind of that.
     Another consequence is that it is possible for an extremely well designed boat (very good lift ratios) to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
     Another is that cross-wind sailing is fastest when the effective area of the sail is larger than the effective area of the keel by the ratio of the density of water to the density of air.
@@ -311,8 +312,6 @@ We solve equation~\eqref{eq:sailing} numerically in the code associated with thi
 HOGG GIVE LINK HERE}
 by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
 
-HOGG: Define direction cosines with the wind, and with boat parts, using vectors. ADD THOSE direction cosines to the figure panels.
-
 In \figref{fig:steady} we show examples of steady sailing, for a wide range of orientations of the keel and sail.
 All these examples are shown in the water rest frame.
 The boat has four free parameters $(A_\sail,A_\keel,A_{\above},A_{\below})$ all with units of area (or really three independent dimensionless ratios of these four areas).
@@ -478,12 +477,11 @@ That's outside the scope of this \documentname.
 
 \section{Boat properties and boat design}\label{sec:design}
 
-In all of the experiments and figures given above, we made use of a model boat with the following effective areas: HOGG THESE ARE ABSURD. FIX AND RERUN.
+In all of the experiments and figures given above, we made use of a model boat with the following effective areas: HOGG SAY: THESE ARE NOW CONSISTENT WITH THE NOTEBOOK, BUT NOT WITH THE FIGURES. NEED TO PULL IN NEW UPDATED FIGURES.
 \begin{align}
-  A_\sail &= 1400\,\mm \label{eq:boat1}\\
-  A_\keel &= 2\,\mm \\
-  A_\above &= 5.6\,\mm \\
-  A_\below &= 0.008\,\mm \label{eq:boat4} ~.
+  A_\sail / A_\keel &= 700 \quad\mbox{(sail-to-keel ratio)}\label{eq:boat1}\\
+  A_\sail / A_\above &= 200 \quad\mbox{(sail lift ratio)}\\
+  A_\keel / A_\below &= 200 \quad\mbox{(keel lift ratio)}\label{eq:boat4}
 \end{align}
 This boat is designed such that $\rho_\air\,A_\sail = \rho_\water\,A_\keel$, which seems sensible, but is perhaps not industry standard.
 This boat also has very good drag ratios or lift ratios:
@@ -505,9 +503,9 @@ In \figref{fig:design} we show the effect on the boat velocity curves of changin
   \includegraphics[width=0.5\textwidth]{design_C.pdf}\\%
   ~\hfill\includegraphics[width=0.5\textwidth]{design_E.pdf}\hfill~
   \caption{Each panel is analagous to \figref{fig:hourgood} but in each case we have varied one of the boat's dimensionless ratios. In each panel, the grey points show the same speed curve as that plotted in \figref{fig:hourgood}, which was computed for the boat described by the parameters given in \eqref{eq:boat1} through \eqref{eq:boat4}, and for a wind speed (relative to the water) of $8\,\mps$.
-  In the top-left panel, the small and large black points show variations as we vary the sail lift ratio $A_\sail/A_\above$ from HOGG (small dots) to HOGG (large dots).
-  In the top-right panel, the small and large black dots show variations as we vary the keel lift ratio $A_\keel/A_\below$ from HOGG (small dots) to HOGG (large dots).
-  In the bottom-left panel, the small and large black dots show the variations as we vary the sail-to-keel ratio $A_\sail/A_\keel$ from HOGG (small dots) to HOGG (large dots).\label{fig:design}}
+  In the top-left panel, the small and large black points show variations as we vary the sail lift ratio $A_\sail/A_\above$ from 40 (small dots) to 200 (grey dots) to 1000 (large dots).
+  In the top-right panel, the small and large black dots show variations as we vary the keel lift ratio $A_\keel/A_\below$ from 40 (small dots) to 200 (grey dots) to 1000 (large dots).
+  In the bottom-left panel, the small and large black dots show the variations as we vary the sail-to-keel ratio $A_\sail/A_\keel$ from 140 (small dots) to 700 (grey dots) to 3500 (large dots).\label{fig:design}}
   \figurerule
 \end{figure}
 
