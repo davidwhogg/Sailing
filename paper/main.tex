@@ -33,6 +33,7 @@
 % - Somewhere comment that the wind is a function of height, which means that another approximation has to do with what particular mean wind speed we are considering.
 % - Are we clear that we also find that you can sail faster than the wind, in general, like cross-wind? Emphasize that when we first figure it out.
 % - Note that even a small change in the lift ratio on the sail and you can't go upwind!
+% - Move comments from the annotated bibliography up into the text somewhere and drop the annotations.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -73,6 +74,7 @@
 \newcommand{\documentname}{\textsl{Article}}
 \newcommand{\secref}[1]{Section~\ref{#1}}
 \newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
 
 % typesetting adjustments
 \makeatletter
@@ -146,7 +148,7 @@ These books vary in their physical correctness and their comprehensiveness.
 They are mainly aimed at sailors who want to understand better their boats and how to design them and sail them.
 This paper is aimed at physicists and students of physics interested in a simple, implementable, physically justifiable model of sailing.
 This model is a sandbox for experimenting with wind-powered travel and wind-powered machines, which are, in turn, key concepts in sustainable technology.
-Our model of sailing is also something that can be implemented by students new to physics, in extremely simple code (an example of which is released in conjunction with this \documentname\footnote{All code used in this \documentname{} is available under a HOGG WHAT LICENSE? at \url{https://github.com/davidwhogg/Sailing}.}).
+Our model of sailing is also something that can be implemented by students new to physics, in extremely simple code (an example of which is released in conjunction with this \documentname\footnote{All code used in this \documentname{} is available under the MIT License at \url{https://github.com/davidwhogg/Sailing}.}).
 
 Importantly in what follows, we deliver only zeroth-order physical explanations.
 In detail, the flow of air over a sail, and water over a keel, involves boundary layers, turbulence, and all the subtleties and complexities of fluid dynamics.
@@ -501,11 +503,11 @@ In \figref{fig:design} we show the effect on the boat velocity curves of changin
 \begin{figure}[t!]
   \includegraphics[width=0.5\textwidth]{design_A.pdf}%
   \includegraphics[width=0.5\textwidth]{design_C.pdf}\\%
-  ~\hfill\includegraphics[width=0.5\textwidth]{design_E.pdf}\hfill~
+  \rule{0.25\textwidth}{0pt}\includegraphics[width=0.5\textwidth]{design_E.pdf}
   \caption{Each panel is analagous to \figref{fig:hourgood} but in each case we have varied one of the boat's dimensionless ratios. In each panel, the grey points show the same speed curve as that plotted in \figref{fig:hourgood}, which was computed for the boat described by the parameters given in \eqref{eq:boat1} through \eqref{eq:boat4}, and for a wind speed (relative to the water) of $8\,\mps$.
   In the top-left panel, the small and large black points show variations as we vary the sail lift ratio $A_\sail/A_\above$ from 40 (small dots) to 200 (grey dots) to 1000 (large dots).
   In the top-right panel, the small and large black dots show variations as we vary the keel lift ratio $A_\keel/A_\below$ from 40 (small dots) to 200 (grey dots) to 1000 (large dots).
-  In the bottom-left panel, the small and large black dots show the variations as we vary the sail-to-keel ratio $A_\sail/A_\keel$ from 140 (small dots) to 700 (grey dots) to 3500 (large dots).\label{fig:design}}
+  In the bottom panel, the small and large black dots show the variations as we vary the sail-to-keel ratio $A_\sail/A_\keel$ from 140 (small dots) to 700 (grey dots) to 3500 (large dots).\label{fig:design}}
   \figurerule
 \end{figure}
 
@@ -526,9 +528,21 @@ HOGG: make sure we consistently use the term ``lift ratio'' for the air and the 
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
-HOGG: Newton's method (CITE), invert, solve, etc.
-Note that in practice, Newton's method works amazingly well.
-For Newton's method we make use of the derivatives---HOGG GIVE HERE THE DERIVATIVES of the ram-pressure expressions---which are order-2 tensors.
+All the code used in this \documentname{} is available open-source under the \textsl{MIT License} at \url{https://github.com/davidwhogg/Sailing}.
+Here we review a few of the implementation details.
+
+Steady sailing \eqref{eq:sailing}, being defined by the solution to a nonlinear equation, can be found by Newton's method.
+We find it by iterating to convergence the operation
+\begin{equation}
+    \vec{v} \leftarrow \vec{v} - \left[\frac{\dd \vec{F}}{\dd \vec{v}}\right]_{\vec{v}}^{-1}\cdot \vec{F}(\vec{v}) ~,
+\end{equation}
+where the derivative is a $3\times 3$ matrix, the inverse is a matrix inverse, and $\vec{F}(\vec{v})$ is given above in \eqref{eq:sailing}, which, in turn, depends on equations in \secref{sec:model}.
+In detail, the matrix inverse is not ever explicitly computed, but instead the code executes a \code{numpy.linalg.solve} (HOGG CITE NUMPY) operation, which is more numerically stable.
+Newton's method depends on an initialization.
+In practice, initializing at the mean of the water and air velocities works in every case.
+Newton's method may not be necessary here: The equations are quadratic in the velocity, so there might be a closed-form solution. KLEBAN: THOUGHTS??
+Newton's method requires the $3\times 3$ derivative tensor $\dd\vec{F}/\dd\vec{v}$.
+The code explicitly delivers this derivative, but it would be possible to use \code{jax} (HOGG CITE JAX) or any other autodifferentiation package to get the tensor automatically.
 
 HOGG: How we implement GoodSailing(tm) and BetterSailing(tm) optimizations. It's a mess!
 
