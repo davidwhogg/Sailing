@@ -513,6 +513,10 @@ In \figref{fig:design} we show the effect on the boat velocity curves of changin
 
 HOGG: Comment on what we see in \figref{fig:design}. HOGG: Note that if you set $\rho_\air\,A_\sail=\rho_\water\,A_\keel$ you get the fastest possible cross-wind sailing speed. Is that a result, and is it known?
 
+HOGG: Note that being able to sail upwind either requires excellent sail lift ratio, or else small sail-to-keel ratio.
+
+HOGG: Various books (any books? find citations) say that you can't sail downwind faster than the wind. We don't find this, but it is certainly true for many settings of the dimensionless ratios. So maybe this says something about the realities of constructed, real-world boats?
+
 HOGG maybe take the limit of infinite lift ratios and show that you get absurd results.
 
 HOGG: 
@@ -524,11 +528,15 @@ All that said, the most sophisticated sails in the world are also curved in the 
 and forces that are different in detail from these pure ram-pressure forces.
 HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
+HOGG: Since sails and keels have parallel roles in this, if it behooves sails to be curved, it probably also behooves keels to be curved.
+HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? Also the rudder is involved.
+
 HOGG: make sure we consistently use the term ``lift ratio'' for the air and the water, and that this is a real term.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
 All the code used in this \documentname{} is available open-source under the \textsl{MIT License} at \url{https://github.com/davidwhogg/Sailing}.
+The code depends on \code{numpy} (HOGG CITE), \code{scipy} (HOGG CITE), and \code{matplotlib} (HOGG CITE).
 Here we review a few of the implementation details.
 
 Steady sailing \eqref{eq:sailing}, being defined by the solution to a nonlinear equation, can be found by Newton's method.
@@ -537,14 +545,25 @@ We find it by iterating to convergence the operation
     \vec{v} \leftarrow \vec{v} - \left[\frac{\dd \vec{F}}{\dd \vec{v}}\right]_{\vec{v}}^{-1}\cdot \vec{F}(\vec{v}) ~,
 \end{equation}
 where the derivative is a $3\times 3$ matrix, the inverse is a matrix inverse, and $\vec{F}(\vec{v})$ is given above in \eqref{eq:sailing}, which, in turn, depends on equations in \secref{sec:model}.
-In detail, the matrix inverse is not ever explicitly computed, but instead the code executes a \code{numpy.linalg.solve} (HOGG CITE NUMPY) operation, which is more numerically stable.
+In detail, the matrix inverse is not ever explicitly computed, but instead the code executes a \code{numpy.linalg.solve} (HOGG CITE NUMPY) operation, which is more numerically stable for this operation.
 Newton's method depends on an initialization.
 In practice, initializing at the mean of the water and air velocities works in every case.
 Newton's method may not be necessary here: The equations are quadratic in the velocity, so there might be a closed-form solution. KLEBAN: THOUGHTS??
 Newton's method requires the $3\times 3$ derivative tensor $\dd\vec{F}/\dd\vec{v}$.
 The code explicitly delivers this derivative, but it would be possible to use \code{jax} (HOGG CITE JAX) or any other autodifferentiation package to get the tensor automatically.
 
-HOGG: How we implement GoodSailing(tm) and BetterSailing(tm) optimizations. It's a mess!
+GoodSailing(tm) is a global optimization defined in \eqref{eq:good}.
+We solve this global optimization by starting with a grid of 16 equally spaced (in angle) sail orientations $\uvec_{\perp\sail}$ in the range 0 to $\pi$ radians (in whatever coordinate system; it doesn't matter).
+We evaluate the objective function of \eqref{eq:good} on this grid.
+The best value for the sail orientation $\uvec_{\perp\sail}$ from that grid search is used as the initialization for a local optimization.
+In detail we use the \code{scipy} (HOGG CITE) implementation of the Nelder--Mead algorithm (HOGG CITE) but this could probably be improved by using analytic derivatives and a gradient descent method.
+
+Similarly, BetterSailing(tm) is a global optimization defined in \eqref{eq:better}.
+We solve this global optimization by starting with a uniformly spaced grid of 16 keel orientations $\uvec_{\perp\keel}$ within $\pm1/8$ of a radian of the direction to the destination.
+For each of these keel orientations, we find the GoodSailing(tm) optimization and compute the objective function of \eqref{eq:better} for the orienations $\uvec^\good_{\perp\sail},\uvec_{\perp\keel}$.
+The pair of best values of these orientations from this grid is used as the initialization for a local optimization.
+Again we use Nelder--Mead, but probably this could be improved with a gradient descent, such as conjugate gradient (CITE).
+There are a few precisely degenerate orientations for the destination direction (for example, when the destination is precisely upwind); the code currently breaks these degeneracies in an uncontrolled way.
 
 \section{Discussion}\label{sec:discussion}
 
