@@ -511,11 +511,19 @@ In \figref{fig:design} we show the effect on the boat velocity curves of changin
   \figurerule
 \end{figure}
 
-HOGG: Comment on what we see in \figref{fig:design}. HOGG: Note that if you set $\rho_\air\,A_\sail=\rho_\water\,A_\keel$ you get the fastest possible cross-wind sailing speed. Is that a result, and is it known?
+There are a number of boat-design considerations visible in \figref{fig:design}.
+Sailing upwind is possible only if either the sail lift ratio is large, or the sail-to-keel ratio is small, or both.
+Since upwind sailing is critical for the success of a boat, and since obtaining very high lift ratios can be difficult, we predict that most commercial sailboats have sail-to-keel ratios smaller than the 700 of our fiducial boat.
+Sailing downwind faster than the wind is possible only if the keel lift ratio is large, or the sail-to-keel ratio is large.
+Sailing cross-wind is at its best when the sail-to-keel ratio is equal to the ratio of the density of water to the density of air.
+For context, these ratios (lift ratios and sail-to-keel ratio) are ratios of effective areas, not real areas.
 
-HOGG: Note that being able to sail upwind either requires excellent sail lift ratio, or else small sail-to-keel ratio.
+These design considerations relate to rigging (HOGG: CORRECT WORD) choices that sailors make for different journeys.
+For example, in downwind travel, often much larger or additional sails are employed (HOGG CITE).
 
-HOGG: Various books (any books? find citations) say that you can't sail downwind faster than the wind. We don't find this, but it is certainly true for many settings of the dimensionless ratios. So maybe this says something about the realities of constructed, real-world boats?
+Various books (HOGG find citations) say that you can't sail downwind faster than the wind.
+We don't find this, but it is certainly true that sailing downwind faster than the wind is impossible for many settings of the dimensionless ratios.
+Perhaps in real boats, with limited lift ratios, the importance of being able to sail upwind forces a small sail-t0-keel ratio and the sacrifice of failing downwind faster than the wind, which is rarely used in the normal practice of sailing.
 
 HOGG maybe take the limit of infinite lift ratios and show that you get absurd results.
 
@@ -528,10 +536,12 @@ All that said, the most sophisticated sails in the world are also curved in the 
 and forces that are different in detail from these pure ram-pressure forces.
 HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
 
-HOGG: Since sails and keels have parallel roles in this, if it behooves sails to be curved, it probably also behooves keels to be curved.
-HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? Also the rudder is involved.
+One amusing comment to make about the curvature of sails is that---since sails and keels have parallel roles in sailing---if it behooves sails to be curved, it probably also behooves keels to be curved.
+HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? CITE! Also the rudder is involved CITE.
 
-HOGG: make sure we consistently use the term ``lift ratio'' for the air and the water, and that this is a real term.
+HOGG: make sure we use the term ``lift ratio'' for the air and the water consistently with respect to the literature, and that this is a real term.
+
+KLEBAN: Should we quantitatively report on the conditions for dwfttw? And the conditions for upwind? Right now this is all qualitative.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
