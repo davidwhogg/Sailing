@@ -492,14 +492,18 @@ All these ratios were set not by analyzing any real boats, but by making the spe
 
 In thinking about these areas, recall, for one, that our boat is a brutal approximation!
 For two, these areas are \emph{effective areas} within this brutal approximation, not measured areas.
-Probably the least realistic of these effective-area ratios is $A_\keel/A_\below$; probably real boats rarely have this keel lift ratio in the hundreds.
+Probably the least realistic of these effective-area ratios is the keel lift ratio $A_\keel/A_\below$; probably real boats rarely have this lift ratio in the hundreds.
 In this sense, maybe our model is more appropriate for an ice yacht than a sailboat?
 HOGG BUT SEE THE AMERICA'S CUP BOATS!
 
-HOGG NOW ADDRESS THE EXCELLENT LIFT RATIOS.
-
 As we change the ratios of the effective areas, the shapes of the velocity curves change.
-In \figref{fig:design} we show the effect on the boat velocity curves of changing the ratios $A_\sail/A_\keel$, $A_\sail/A_\above$ (the sail lift ratio), and $A_\keel/A_\below$ (the keel lift ratio)....HOGG
+In \figref{fig:design} we show the effect on the boat velocity curves of changing the sail-to-keel ratio $A_\sail/A_\keel$, the sail lift ratio $A_\sail/A_\above$, and the keel lift ratio $A_\keel/A_\below$ (the keel lift ratio).
+There are a number of boat-design considerations visible in this \figurename:
+Sailing upwind is possible only if either the sail lift ratio is large, or the sail-to-keel ratio is small, or both.
+Since upwind sailing is critical for the success of a boat, and since obtaining very high lift ratios can be difficult, we predict that most commercial sailboats have sail-to-keel ratios smaller than the 700 of our fiducial boat.
+Sailing downwind faster than the wind is possible only if the keel lift ratio is large, or the sail-to-keel ratio is large.
+Sailing cross-wind is at its best when the sail-to-keel ratio is equal to the ratio of the density of water to the density of air.
+For context, recall that these ratios (lift ratios and sail-to-keel ratio) are ratios of effective areas, not real areas.
 \begin{figure}[t!]
   \includegraphics[width=0.5\textwidth]{design_A.pdf}%
   \includegraphics[width=0.5\textwidth]{design_C.pdf}\\%
@@ -511,30 +515,21 @@ In \figref{fig:design} we show the effect on the boat velocity curves of changin
   \figurerule
 \end{figure}
 
-There are a number of boat-design considerations visible in \figref{fig:design}.
-Sailing upwind is possible only if either the sail lift ratio is large, or the sail-to-keel ratio is small, or both.
-Since upwind sailing is critical for the success of a boat, and since obtaining very high lift ratios can be difficult, we predict that most commercial sailboats have sail-to-keel ratios smaller than the 700 of our fiducial boat.
-Sailing downwind faster than the wind is possible only if the keel lift ratio is large, or the sail-to-keel ratio is large.
-Sailing cross-wind is at its best when the sail-to-keel ratio is equal to the ratio of the density of water to the density of air.
-For context, these ratios (lift ratios and sail-to-keel ratio) are ratios of effective areas, not real areas.
-
 These design considerations relate to rigging (HOGG: CORRECT WORD) choices that sailors make for different journeys.
 For example, in downwind travel, often much larger or additional sails are employed (HOGG CITE).
 
 Various books (HOGG find citations) say that you can't sail downwind faster than the wind.
 We don't find this, but it is certainly true that sailing downwind faster than the wind is impossible for many settings of the dimensionless ratios.
-Perhaps in real boats, with limited lift ratios, the importance of being able to sail upwind forces a small sail-t0-keel ratio and the sacrifice of failing downwind faster than the wind, which is rarely used in the normal practice of sailing.
+Perhaps in real boats, with limited lift ratios, the importance of being able to sail upwind forces a small sail-to-keel ratio and the sacrifice of sailing downwind faster than the wind, which is rarely used in the normal practice of sailing.
 
-HOGG maybe take the limit of infinite lift ratios and show that you get absurd results.
-
-HOGG: 
 A true boat has sails that are globally curved,\footnote{%
 In the local-curvature or Riemann-curvature senses, sails are often not (very) curved; after all, they are often made from flat pieces of fabric.
 However, they are curved in the global or colloquial sense: Different patches of the sail have differently oriented normal vectors.
 It is in this colloquial sense that we are using the words ``curved'' and ``flat''.
 All that said, the most sophisticated sails in the world are also curved in the local sense \cite{sails}.}
 and forces that are different in detail from these pure ram-pressure forces.
-HOGG: REPHRASE: The curvature of the sails will in general rotate the air force vectors towards the direction in which the boat is pointed.
+The curvature of the sails will in general lead to differences between the sail orientation we compute for GoodSailing(tm) and the orientation of, say, the boom of any real sailboat.
+That is, in just the same sense that the areas are effective areas, the orientations are effective orientations.
 
 One amusing comment to make about the curvature of sails is that---since sails and keels have parallel roles in sailing---if it behooves sails to be curved, it probably also behooves keels to be curved.
 HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? CITE! Also the rudder is involved CITE.
@@ -546,7 +541,7 @@ KLEBAN: Should we quantitatively report on the conditions for dwfttw? And the co
 \section{Numerical implementation notes}\label{sec:implementation}
 
 All the code used in this \documentname{} is available open-source under the \textsl{MIT License} at \url{https://github.com/davidwhogg/Sailing}.
-The code depends on \code{numpy} (HOGG CITE), \code{scipy} (HOGG CITE), and \code{matplotlib} (HOGG CITE).
+The code depends on \code{numpy} \cite{numpy}, \code{scipy} \cite{scipy}, and \code{matplotlib} \cite{matplotlib}.
 Here we review a few of the implementation details.
 
 Steady sailing \eqref{eq:sailing}, being defined by the solution to a nonlinear equation, can be found by Newton's method.
@@ -555,7 +550,7 @@ We find it by iterating to convergence the operation
     \vec{v} \leftarrow \vec{v} - \left[\frac{\dd \vec{F}}{\dd \vec{v}}\right]_{\vec{v}}^{-1}\cdot \vec{F}(\vec{v}) ~,
 \end{equation}
 where the derivative is a $3\times 3$ matrix, the inverse is a matrix inverse, and $\vec{F}(\vec{v})$ is given above in \eqref{eq:sailing}, which, in turn, depends on equations in \secref{sec:model}.
-In detail, the matrix inverse is not ever explicitly computed, but instead the code executes a \code{numpy.linalg.solve} (HOGG CITE NUMPY) operation, which is more numerically stable for this operation.
+In detail, the matrix inverse is not ever explicitly computed, but instead the code executes a \code{numpy.linalg.solve} \cite{numpy} operation, which is more numerically stable for this operation.
 Newton's method depends on an initialization.
 In practice, initializing at the mean of the water and air velocities works in every case.
 Newton's method may not be necessary here: The equations are quadratic in the velocity, so there might be a closed-form solution. KLEBAN: THOUGHTS??
@@ -566,13 +561,13 @@ GoodSailing(tm) is a global optimization defined in \eqref{eq:good}.
 We solve this global optimization by starting with a grid of 16 equally spaced (in angle) sail orientations $\uvec_{\perp\sail}$ in the range 0 to $\pi$ radians (in whatever coordinate system; it doesn't matter).
 We evaluate the objective function of \eqref{eq:good} on this grid.
 The best value for the sail orientation $\uvec_{\perp\sail}$ from that grid search is used as the initialization for a local optimization.
-In detail we use the \code{scipy} (HOGG CITE) implementation of the Nelder--Mead algorithm (HOGG CITE) but this could probably be improved by using analytic derivatives and a gradient descent method.
+In detail we use the \code{scipy} \cite{scipy} implementation of the Nelder--Mead algorithm \cite{nelder-mead} but this could probably be improved by using analytic derivatives and a gradient descent method.
 
 Similarly, BetterSailing(tm) is a global optimization defined in \eqref{eq:better}.
 We solve this global optimization by starting with a uniformly spaced grid of 16 keel orientations $\uvec_{\perp\keel}$ within $\pm1/8$ of a radian of the direction to the destination.
 For each of these keel orientations, we find the GoodSailing(tm) optimization and compute the objective function of \eqref{eq:better} for the orienations $\uvec^\good_{\perp\sail},\uvec_{\perp\keel}$.
 The pair of best values of these orientations from this grid is used as the initialization for a local optimization.
-Again we use Nelder--Mead, but probably this could be improved with a gradient descent, such as conjugate gradient (CITE).
+Again we use Nelder--Mead, but probably this could be improved with a gradient descent, such as conjugate gradient \cite{conjugate-gradient}.
 There are a few precisely degenerate orientations for the destination direction (for example, when the destination is precisely upwind); the code currently breaks these degeneracies in an uncontrolled way.
 
 \section{Discussion}\label{sec:discussion}
@@ -582,7 +577,7 @@ The model is simple to state, makes use of nothing more than undergraduate mecha
 It makes explicit that the boat is powered by the relative velocity of the air and water.
 It demonstrates that it is easy for a sailboat to travel faster than the wind (or, to be specific, to travel relative to the water faster than the magnitude of the relative wind-water velocity).
 It demonstrates that there is nothing physically strange about being able to travel, by sailboat, upwind, or downwind faster than the wind, in both cases by taking a tacking course.
-Along the way, we found that the best sail-to-keel effective-area ratio for cross-wind sailing is the ratio of the density of water to the density of air; and we found that keels ought to be curved like sails (HOGG DO WE EXPLICITLY DISCUSS THIS ABOVE? IF NOT, WE SHOULD, WHERE WE DISCUSS THE SYMMETRY BETWEEN SAIL AND KEEL, OR WHERE WE DISCUSS THE CURVATURE OF THE SAILS.)
+Along the way, we found that the best sail-to-keel effective-area ratio for cross-wind sailing is the ratio of the density of water to the density of air; and we found that keels ought to be curved like sails.
 For both of these ``predictions'' there seems to be evidence in the designs of the best-in-class sailing vessels today.
 
 This model makes brutal assumptions and approximations.
@@ -598,8 +593,8 @@ Sailing is a very simple phenomenon from a fundamental-physics perspective.
 HOGG: This is a momentum-transport model! NOW Take some time to bash the Bernoulli bullshit. Note also that the different-path-length part of that argument is explicitly not true for a sail!
 
 HOGG: Speaking of misconceptions: These results probably do indeed show that you can travel directly downwind faster than the wind. That maybe resolves some folk conflicts or arguments?
-
-HOGG: This model implies, indirectly, that keels should be curved! And they are, in high-end sailing (HOGG cite?)
+In practice it might be hard to build a boat with good enough dimensionless ratios (HOGG refer back to design results).
+This might be why some sources say it is impossible (HOGG CITE).
 
 We expressed pride that our model is explicitly Galilean-relativistic.
 That begs the question: What about special relativity?
