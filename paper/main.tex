@@ -18,8 +18,6 @@
 % ------------
 % - Add to the abstract the point that the sailboat is defined by 3 dimensionless numbers: The sail-to-keel ratio, and two lift ratios.
 % - confirm that "lift ratio" is the correct terminology.
-% - Switch to calling the sail and keel orientations "effective orientations" not just orientations. And say why.
-% - make sure I clearly introduce the concept of lift ratio and stick with it.
 % - Change citations to Tao to make it clear that the Tao model is (probably) wrong!!
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
 % - Make sure we aren't claiming that the model is NOVEL. It is just SIMPLE.
@@ -27,13 +25,12 @@
 % — Make some comments on the situations in which the ram-pressure force approximation is more appropriate---gale force or lull?
 % - Is the latex footnote-footnote separation fucked?
 % - Do we still mention "tensors" anywhere? make sure the abstract is consistent with the body.
-% - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" (as in Kimball) or than 0.5 times the wind claim? We can beat that too.
 % - Respond to comments by Hyung Don Ryoo, in email to Hogg, 2021-07-15.
-% - Make sure the spirit of the bibliographic comments get pulled into the main text.
-% - Somewhere comment that the wind is a function of height, which means that another approximation has to do with what particular mean wind speed we are considering.
+% - Make sure the spirit of the bibliographic comments get pulled into the main text (and removed from the bibiliography).
+% - Fix the et al typography in the bibliography?
 % - Are we clear that we also find that you can sail faster than the wind, in general, like cross-wind? Emphasize that when we first figure it out.
-% - Note that even a small change in the lift ratio on the sail and you can't go upwind!
-% - Move comments from the annotated bibliography up into the text somewhere and drop the annotations.
+% - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" (as in Kimball) or than 0.5 times the wind claim? We can perhaps beat that too.
+% - Should we be more careful to use Galilean-relativistic language, like instead of "upwind" say "upwind relative to the water"? Like always?
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -107,11 +104,11 @@ A simple momentum-transport model for sailing}
     Similarly, there is a ram-pressure force on the keel, depending on the relative water--boat velocity and the keel orientation.
     The resulting expression for the total force on the boat is coordinate-free and consistent with Galilean relativity.
     The solutions corresponding to sailing in steady wind correspond to boat velocities that deliver vanishing total force, given the angles of the sail and keel.
-    We use this simple model to derive simple properties of sailing that are not far off from standard folklore and measurements.
+    We use this simple model to derive a phenomenology of sailing that is not far off from standard folklore and measurements.
     One consequence of this model is that a sailboat does not move (relative to the water) precisely in the direction that its keel points (the direction of the prow); it moves slightly downwind of that.
     Another consequence is that it is possible for an extremely well designed boat (very good lift ratios) to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
     Another is that cross-wind sailing is fastest when the effective area of the sail is larger than the effective area of the keel by the ratio of the density of water to the density of air.
-    Nothing conceptual about this model depends on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; the important thing is that the model \emph{does} depend on angular re-direction of fluid momentum flux; sail curvature can help with this.
+    Nothing conceptual about this model depends on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; the important thing is that the model \emph{does} depend on angular re-direction of fluid momentum flux; sail curvature can help with this, as could keel curvature.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
@@ -310,9 +307,8 @@ If we want to operationalize steady sailing in code, steady sailing can be thoug
 This is a root-finding problem that (probably) has no closed form.\footnote{%
 It might be interesting to note that the flat-surface force \eqref{eq:flat} is a vector-valued quadratic form, so if one constructed the sailboat model completely from flat surfaces, the force law, in this approximation would be a quadratic form.
 That might lead to a closed-form solution for the equation \eqref{eq:sailing} of steady sailing.}
-We solve equation~\eqref{eq:sailing} numerically in the code associated with this \documentname\footnote{%
-HOGG GIVE LINK HERE}
-by means of the vector generalization of Newton's method (we return to this in \secref{sec:implementation}).
+We solve equation~\eqref{eq:sailing} numerically in our code (\secref{sec:implementation})
+by means of the vector generalization of Newton's method.
 
 In \figref{fig:steady} we show examples of steady sailing, for a wide range of orientations of the keel and sail.
 All these examples are shown in the water rest frame.
@@ -528,8 +524,9 @@ However, they are curved in the global or colloquial sense: Different patches of
 It is in this colloquial sense that we are using the words ``curved'' and ``flat''.
 All that said, the most sophisticated sails in the world are also curved in the local sense \cite{sails}.}
 and forces that are different in detail from these pure ram-pressure forces.
-The curvature of the sails will in general lead to differences between the sail orientation we compute for GoodSailing(tm) and the orientation of, say, the boom of any real sailboat.
-That is, in just the same sense that the areas are effective areas, the orientations are effective orientations.
+The curvature of the sails is probably necessary to deliver high lift ratios; redirection of momentum with low drag usually requires carefully tuned surfaces (as seen in wings and propellers as well).
+The curvature of the sails will in general lead to differences between the sail orientation we compute in our simple model for GoodSailing(tm) and the orientation of, say, the boom of any real sailboat.
+That is, in just the same sense that the areas we use are effective areas, the orientations we use are effective orientations.
 
 One amusing comment to make about the curvature of sails is that---since sails and keels have parallel roles in sailing---if it behooves sails to be curved, it probably also behooves keels to be curved.
 HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? CITE! Also the rudder is involved CITE.
