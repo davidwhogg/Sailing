@@ -31,6 +31,7 @@
 % - Are we clear that we also find that you can sail faster than the wind, in general, like cross-wind? Emphasize that when we first figure it out.
 % - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" (as in Kimball) or than 0.5 times the wind claim? We can perhaps beat that too.
 % - Should we be more careful to use Galilean-relativistic language, like instead of "upwind" say "upwind relative to the water"? Like always?
+% - Mention sailing hydrofoil where we discuss the keel lift ratio: The point of the hyrdrofoil is to reduce A_below.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
@@ -469,8 +470,8 @@ In particular, the velocities that are not optimal for some particular destinati
 BetterSailing(tm) is better than GoodSailing(tm), because BetterSailing(tm) takes better account of the sailor's objectives.
 However, BetterSailing(tm) is \emph{still} not the best we can do.
 For example, a sailor must in general take non-trivial tacking paths from origin to destination (especially when the destination is upwind, but even when the destination is downwind).
-The corners of that path---``coming about'' in sailing parlance---cost time, so their frequency should be balanced against slightly non-optimal sailing directions.
-Thus an even better sailor will put the boat into configurations that don't appear in \figref{fig:hourbetter}.
+The corners of that path---each of the comings about---cost time, so their frequency should be balanced against slightly non-optimal sailing directions.
+That is, a BestSailing(tm) sailor will put the boat into configurations that don't appear in \figref{fig:hourbetter}.
 The full exposition of this requires a model for the costs of coming about.
 That's outside the scope of this \documentname.
 
@@ -512,7 +513,7 @@ For context, recall that these ratios (lift ratios and sail-to-keel ratio) are r
   \figurerule
 \end{figure}
 
-These design considerations relate to rigging (HOGG: CORRECT WORD) choices that sailors make for different journeys.
+These design considerations relate to sail choices that sailors make for different journeys.
 For example, in downwind travel, often much larger or additional sails are employed (HOGG CITE).
 
 Various books (HOGG find citations) say that you can't sail downwind faster than the wind.
@@ -607,18 +608,17 @@ HOGG: Someone must have thought of all this before! CITE THEM.
 
 We defined GoodSailing(tm), which is an optimal setting of the orientation of the sail, given the orientation of the boat.
 And we defined BetterSailing(tm), which is an optimal setting of both the orientation of the boat and the orientation of the sail, given the direction to the destination.
-But even this is not the best you can do, because optimal sailing (from a time-to-destination perspective) involves complete path planning, constrained to start at the origin and end at the destination.
+But (as we mention in \secref{sec:better}) even this is not the best you can do, because optimal sailing (from a time-to-destination perspective) involves complete path planning, constrained to start at the origin and end at the destination.
 For destinations that are close to directly downwind or directly upwind of the origin, this complete path planning will involve tacking the boat.
-Each tack involves a ``coming about'' or a rotation of the boat to put the wind on the other beam (HOGG CORRECT LANGUAGE HERE?).
+Each tack involves a coming about---a rotation of the boat---to put the wind on the other side of the boat and sail.
 Each coming about costs time.
 So optimal path planning must involve that cost, factored against the requirement (if you delay coming about) that you will sail beyond the limits of what BetterSailing(tm) recommends, given your destination.
 That is, the global optimal path will not be locally optimal at all points.
 A full discussion of this path planning is out of scope for this \documentname, but clearly interesting from an engineering perspective.
 
-HOGG: All code used to make the figures in this \documentname{} are available HOGG WHERE?
-
 \paragraph{Acknowledgements:}
 It is a pleasure to thank Will Kinney (Buffalo), Hans-Walter Rix (MPIA), Hyung-Don Ryoo (NYU), and Soledad Villar (JHU) for valuable discussions and comments.
+All code used to make the figures in this \documentname{} are available under the open-source \textsl{MIT License} at \url{https://github.com/davidwhogg/Sailing}.
 
 % \raggedright
 \bibliographystyle{hogg-plain-annote}
