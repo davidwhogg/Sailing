@@ -17,7 +17,6 @@
 % to-do items:
 % ------------
 % - Add to the abstract the point that the sailboat is defined by 3 dimensionless numbers: The sail-to-keel ratio, and two lift ratios.
-% - confirm that "lift ratio" is the correct terminology.
 % - Change citations to Tao to make it clear that the Tao model is (probably) wrong!!
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
 % - Make sure we aren't claiming that the model is NOVEL. It is just SIMPLE.
@@ -84,8 +83,9 @@
 \setlength{\textwidth}{5.00in}
 \setlength{\oddsidemargin}{3.25in}
 \addtolength{\oddsidemargin}{-0.5\textwidth}
-\setlength{\textheight}{9.00in}
-\setlength{\topmargin}{-0.40in}
+\setlength{\textheight}{9.40in}
+\setlength{\topmargin}{-0.50in}
+\setlength{\footskip}{0.25in}
 \pagestyle{myheadings}
 \newcommand{\figurerule}{\rule[1ex]{\textwidth}{0.2pt}}
 \linespread{1.08}
@@ -280,7 +280,7 @@ In some of what follows, we will make use of dimensionless ratios of effective a
 For example, the ratio of sail to keel $A_\sail/A_\keel$ will affect the ratio of upwind to downwind sailing speeds (and, surprisingly, affect cross-wind sailing).
 For another, the ratios of sail and keel to the relevant parts of the hull $A_\sail/A_\above$ and $A_\keel/A_\below$ act like ``lift ratios'' in the study of flying:
 They control the ratio of useful sailing forces to drag.
-We will refer to these---na\"ively---as lift ratios in what follows.
+We will refer to these---na\"ively---as \emph{lift ratios} in what follows, even though that is slightly at odds with the usual use of the term ``lift ratio''.\footnote{The usual definition of the lift ratio is ratio of the lift force to the drag force, at a given speed and pitch (orientation). Here we are defining an orientation-free ratio of effective areas. At every setting of the sail orientation, the ratio of effective areas $A_\sail/A_\above$ is proportional to the true sail lift ratio. For this reason, we refer to the ratio of effective areas as the lift ratio in what follows.}
 
 The above model could be called ``isotropic boat, thin planar sail and keel''.
 There is an alternative model to be made, using the same elements, which could be called ``parallelepiped sail, parallelepiped keel''.
@@ -305,7 +305,7 @@ Mathematically, steady sailing (constant $\vboat$) in steady wind and steady cur
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
 \end{align}
 If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel.
-This is a root-finding problem that (probably) has no closed form.\footnote{%
+This is a root-finding problem that (probably---KLEBAN??) has no closed form.\footnote{%
 It might be interesting to note that the flat-surface force \eqref{eq:flat} is a vector-valued quadratic form, so if one constructed the sailboat model completely from flat surfaces, the force law, in this approximation would be a quadratic form.
 That might lead to a closed-form solution for the equation \eqref{eq:sailing} of steady sailing.}
 We solve equation~\eqref{eq:sailing} numerically in our code (\secref{sec:implementation})
@@ -341,7 +341,7 @@ Many of the resulting boat--water velocities are near zero, because randomly ori
   ~\hfill\includegraphics[width=3in]{hourglass-random.pdf}\hfill~
   \caption{The $x$ and $y$ coordinates of the relative boat--water velocity $\vboat-\vwater$ for a set of randomly oriented keels and sails.
   For all of these trials, the relative wind--water velocity is $\vair-\vwater=(8\,\mps)\,\uvec_x$ (that is, $8\,\mps$ in the $x$ direction), as it is in every panel of \figref{fig:steady}.
-  Points to the left of the leftmost vertical grey line are sail--keel settings for which the boat sails upwind. Points to the right of the rightmost vertical grey line are sail--keel settings for which the boat sails downwind faster than the wind.
+  Points to the left of the leftmost vertical grey line are sail--keel settings for which the boat sails upwind (relative to the water). Points to the right of the rightmost vertical grey line are sail--keel settings for which the boat sails downwind (relative to the water) faster than the wind.
   There are no settings that go \emph{directly} upwind, and no settings that go \emph{directly} downwind faster than the wind.\label{fig:hourglass}}
   \figurerule
 \end{figure}
@@ -485,7 +485,6 @@ In all of the experiments and figures given above, we made use of a model boat w
 \end{align}
 This boat is designed such that $\rho_\air\,A_\sail = \rho_\water\,A_\keel$, which seems sensible, but is perhaps not industry standard.
 This boat also has very good drag ratios or lift ratios:
-The sail lift ratio (the ratio of effective area of sail to hull-above) is 250, as is the keel lift ratio (the ratio of effective area of keel to hull-below).
 All these ratios were set not by analyzing any real boats, but by making the speed curve shown in \figref{fig:hourgood} look reasonable, or accord with expectations set by the books on the physics of sailing HOGG CITE THESE.
 
 In thinking about these areas, recall, for one, that our boat is a brutal approximation!
@@ -514,7 +513,7 @@ For context, recall that these ratios (lift ratios and sail-to-keel ratio) are r
 \end{figure}
 
 These design considerations relate to sail choices that sailors make for different journeys.
-For example, in downwind travel, often much larger or additional sails are employed (HOGG CITE).
+For example, in downwind travel, often much larger or additional sails are employed \cite{sails} (HOGG CONFIRM APPROPRIATENESS OF THIS CITATION).
 
 Various books (HOGG find citations) say that you can't sail downwind faster than the wind.
 We don't find this, but it is certainly true that sailing downwind faster than the wind is impossible for many settings of the dimensionless ratios.
@@ -532,8 +531,6 @@ That is, in just the same sense that the areas we use are effective areas, the o
 
 One amusing comment to make about the curvature of sails is that---since sails and keels have parallel roles in sailing---if it behooves sails to be curved, it probably also behooves keels to be curved.
 HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? CITE! Also the rudder is involved CITE.
-
-HOGG: make sure we use the term ``lift ratio'' for the air and the water consistently with respect to the literature, and that this is a real term.
 
 KLEBAN: Should we quantitatively report on the conditions for dwfttw? And the conditions for upwind? Right now this is all qualitative.
 
@@ -554,7 +551,7 @@ Newton's method depends on an initialization.
 In practice, initializing at the mean of the water and air velocities works in every case.
 Newton's method may not be necessary here: The equations are quadratic in the velocity, so there might be a closed-form solution. KLEBAN: THOUGHTS??
 Newton's method requires the $3\times 3$ derivative tensor $\dd\vec{F}/\dd\vec{v}$.
-The code explicitly delivers this derivative, but it would be possible to use \code{jax} (HOGG CITE JAX) or any other autodifferentiation package to get the tensor automatically.
+The code explicitly delivers this derivative, but it would be possible to use any autodifferentiation framework to get the tensor in closed form automatically.
 
 GoodSailing(tm) is a global optimization defined in \eqref{eq:good}.
 We solve this global optimization by starting with a grid of 16 equally spaced (in angle) sail orientations $\uvec_{\perp\sail}$ in the range 0 to $\pi$ radians (in whatever coordinate system; it doesn't matter).
@@ -589,22 +586,35 @@ All these approximations are wrong in detail.
 They could be fixed and accuracy could be improved, but at the expense of adding many new parameters and constants, which distract from the principal story:
 Sailing is a very simple phenomenon from a fundamental-physics perspective.
 
-HOGG: This is a momentum-transport model! NOW Take some time to bash the Bernoulli bullshit. Note also that the different-path-length part of that argument is explicitly not true for a sail!
+This is a momentum-transport model.
+The flight of birds and planes is also explained by momentum transport.
+There is a common misconception about airfoils that they generate lift primarily because of Bernoulli effect and differing path lengths across the top and bottom.
+This misconception is now debunked \cite{lift}.
+A version of this debunked argument has also occasionally been applied to the forces on sails \cite{explained}.
+However, it is not applicable, not just because it has been generally debunked, but also because the windward and leeward sides of the sail have the same path lengths, so the differing-path-length part of the argument can't be applied \cite{sails} (HOGG CHECK THAT THIS IS THE CORRECT CITE).
+Flying and sailing are very related; they both involve redirecting the momenta of fluids, as does swimming.
 
-HOGG: Speaking of misconceptions: These results probably do indeed show that you can travel directly downwind faster than the wind. That maybe resolves some folk conflicts or arguments?
-In practice it might be hard to build a boat with good enough dimensionless ratios (HOGG refer back to design results).
-This might be why some sources say it is impossible (HOGG CITE).
+Speaking of misconceptions: These results probably do indeed show that you can travel directly downwind faster than the wind.
+Of course our sailboat can't (it has to tack), but a pair of sailboats working in tandem could tack oppositely downwind and pull a cargo directly downwind faster than the wind.
+That finding, perhaps, resolves some folk conflicts or arguments that it is physically impossible?
+In practice it might be hard to build a boat with good enough dimensionless ratios (see \secref{design}).
+Maybe it would be easier to build ice boats with the required ratios.
+This might be why some sources say it is impossible (KLEBAN CITE).
+
+Speaking of ice boats: These could have great properties!
+These are boats that, instead of having a keel in the water, have thin blades that slide on lake ice.
+With the change from a keel in water to blades on ice, the equivalent of the keel lift ratio could be almost arbitrarily large for an ice boat, and the equivalent of the sail-to-keel ratio could approach zero, because ice is a solid and does not flow (on the relevant time scales).
+Our design investigations (\secref{sec:design}) suggest that ice boats should be capable of extremely fast upwind travel.
 
 We expressed pride that our model is explicitly Galilean-relativistic.
-That begs the question: What about special relativity?
-Of course our model is consistent with special relativity; Galilean relativity is the low-velocity limit, when all relative velocities have magnitudes way less than the speed of light.
+That begs the question: What about \emph{special relativity} \cite{sr}?
+Of course our model is consistent with special relativity; Galilean relativity is the low-velocity limit, when all relative velocities have magnitudes much less than the speed of light.
 Now what about \emph{relativistic sailing?}
 Because we have such a simple model, we conjecture that there might be a version for a star ship that sails by photon pressure (or on stellar winds or supernovae ejecta or other quasi-relativistic flows).
 Most contemporary thinking about solar sails and reflected-photon propulsion is thinking in terms of sailing purely ``down wind'' of a single, nearby star, which dominates the photon pressure on any active surface.
 But the Galaxy is filled with stars!
-With multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination from multiple stars.
-This might involve a relativistic generalization of the above.
-HOGG: Someone must have thought of all this before! CITE THEM.
+With multiple sources of illumination, in principle one might be able to make a photon-pressure vehicle that can sail or tack in arbitrary directions, given illumination (and maybe also gravitational forces) from multiple stars.
+This might involve a relativistic generalization of the above, because the momenta would be photon momenta, and Doppler shifts would replace velocity differences.
 
 We defined GoodSailing(tm), which is an optimal setting of the orientation of the sail, given the orientation of the boat.
 And we defined BetterSailing(tm), which is an optimal setting of both the orientation of the boat and the orientation of the sail, given the direction to the destination.
