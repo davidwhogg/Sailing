@@ -31,11 +31,16 @@
 % - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" (as in Kimball) or than 0.5 times the wind claim? We can perhaps beat that too.
 % - Should we be more careful to use Galilean-relativistic language, like instead of "upwind" say "upwind relative to the water"? Like always?
 % - Mention sailing hydrofoil where we discuss the keel lift ratio: The point of the hyrdrofoil is to reduce A_below.
+% - Answer Gruzinov's question: How does one sail downwind fttw? What does it look like.
+% - Explain why amateur sailboats have huge keels and professional boats have small keels. Upwind sailing is the answer!
+% - Kleban points about non-trivial wind force f(theta) and references (in email, maybe).
+% - Add little flags on masts of figures to show wind wrt boat.
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[letterpaper]{geometry} % because Overleaf is weird.
-\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \graphicspath{{./}{../ipynb/}}
 
@@ -160,7 +165,7 @@ In principle also \cite{pos} delivers similar equations to what we derive below,
 Above, we've mentioned Galilean relativity:
 It is important that any model for a sailboat precisely obey Galilean relativity; it is an extremely important symmetry for understanding sailing \cite{symmetry}.
 Indeed---according to lore---Galilean relativity was discovered by consideration of doing physics experiments in the hold of a sailing ship \cite{galileo}.
-The contemporary view of Galilean relativity is that all velocities that appear in physical law or the prediction of observables must be relative velocities.
+The contemporary view of Galilean relativity is that all velocities that appear in physical law or the prediction of observables must be relative velocities, or in other words, velocity differences.
 In addition to obeying this symmetry, our model is consistent with dimensional analysis and is equivariant to rotations and reflections.
 We also make use of good, coordinate-free expressions.
 
@@ -170,7 +175,7 @@ We use that term a bit in what follows, but since it means different things to d
 We'll discuss these forces conceptually in \secref{sec:ram}, give Galilean-relativistic expressions in \secref{sec:model}, and use them to explain the steady-state motion of a sailboat in \secref{sec:steady}.
 We follow this modeling with some optimization, useful to an idealized sailor on our idealized boat, in \secref{sec:good} and \secref{sec:better}.
 When we optimize the trim of our boat, we learn about what things the boat can do, in terms of sailing speed, and sailing upwind and downwind.
-It's impressive!
+Spoiler: It is impressive!
 We will discuss the dependence of our results on our boat properties in \secref{sec:design}.
 We comment on the implementation of the model in \secref{sec:implementation} and we remark on limitations and extensions in \secref{sec:discussion}.
 
@@ -179,7 +184,7 @@ We comment on the implementation of the model in \secref{sec:implementation} and
 Sailboats and sails---like airplanes and wings---are beautiful curved structures that are designed to redirect air with as little turbulence as possible.
 So why would we make a planar-sail approximation and model that planar sail with a ram-pressure force?
 Ram-pressure forces are generally associated with bow shocks and turbulent wakes.
-Many things (cars, launch vehicles) are designed to \emph{avoid} the ram-pressure effect known as air resistance or drag.
+Many things (cars, propellers, launch vehicles) are designed to \emph{avoid} the ram-pressure effect known as air resistance or drag.
 
 Fundamentally, a sailboat sail works by redirecting the momentum of the air.
 %, in the rest frame of the boat.
@@ -193,7 +198,7 @@ Half of the explanation for how a sailboat sails uses the equal-and-opposite rea
 
 This momentum-transport explanation of a sail (or a wing) 
 %has an expression that is, essentially,
-can be expressed as a particle flux (number per time) times a change in momentum per particle.
+can be expressed as a particle flux (number per area per time) times a change in momentum per particle.
 These are also the physical components of a ram-pressure force.
 Indeed, the most basic derivation of the ram-pressure force is in the microscopic model of an ideal gas, in which particles bounce elastically off the surface, changing their momenta.
 HOGG PUT A DIAGRAM HERE AND EQUATIONS.
@@ -207,7 +212,7 @@ In this paper we are not arguing that ram pressure on flat sails is a complete e
 We are arguing that the sailboat can be modeled as having two important surfaces---the sail and the keel---one of which deviates the flow of air, and the other deviates the flow of water.
 The angles of the sail and keel with respect to the air--boat and water-boat velocity vectors set the angular deviations of the two fluids, and therefore both the magnitudes and the directions of the sail and keel forces.
 The directions of the forces can be manipulated to create amazing boat dynamics and kinematics.
-The point of this \documentname{} is that much of the amazing dynamics can be understood in an amazingly simple model for the sailboat.
+The point of this \documentname{} is that much of the amazing dynamics can be understood in a dead simple model for the sailboat.
 So while we use the phrases ``flat sail'' and ``ram-pressure'' in what follows to describe our model, we really mean ``simple momentum transport''.
 
 \section{Ram-pressure sailboat}\label{sec:model}
@@ -219,7 +224,7 @@ If you prefer to think in terms of angles, you can choose a coordinate system an
     \uvec_{\perp\sail} &= \begin{bmatrix}\cos\theta_\sail \\ \sin\theta_\sail\end{bmatrix} ~ ; ~ \uvec_{\parallel\sail} = \begin{bmatrix}-\sin\theta_\sail \\ \cos\theta_\sail\end{bmatrix} ~,
 \end{align}
 for some angle $\theta_\sail$ in that coordinate system.
-We won't particularly use angles much in what follows, but if you want to come back to angles, you can take the arctangent of the components of $\uvec_{\perp\sail}$.
+We won't particularly use angles much in what follows, because we want to remain coordinate free, but if you want to come back to angles, you can take arctangents of ratios of components of unit vectors like $\uvec_{\perp\sail}$.
 
 Our sailboat is going to be a simple anisotropic object such that wind that hits its planar sail produces a ram-pressure force perpendicular to the surface of the sail,
 and water that hits its planar keel produces a ram-pressure force perpendicular to the surface of the keel.
@@ -228,12 +233,14 @@ As we note above, if the fluid (air or water in this case) is thought of as bein
 \begin{align}\label{eq:flat}
     \vec{F}_\flat &= \eta\,\rho\,A\,(\uvec_\perp\cdot\vec{v})^2\,\uvec_\perp ~,
 \end{align}
-where $\eta$ is a dimensionless prefactor, $\rho$ is the density of the fluid, $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow), $\vec{v}$ is the %velocity of the fluid in the rest frame of the surface, 
-relative velocity between the fluid and the surface,
-and $\uvec_\perp\cdot\vec{v}$ is the scalar inner product (dot product) of the two vectors.
+where $\eta$ is a dimensionless prefactor,
+  $\rho$ is the density of the fluid,
+  $\uvec_\perp$ is the unit vector perpendicular to the surface (oriented such that it points down-flow),
+  $\vec{v}$ is the relative velocity of the fluid with respect to the surface,
+  and $\uvec_\perp\cdot\vec{v}$ is the scalar inner product (dot product) of the two vectors.
 
 Na\"ively in the particle-collision model the prefactor $\eta$ is 2, but in the world of real fluids it depends on the shape of the surface, the velocity, and (if things are tiny) the viscosity.\footnote{%
-Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical lengthscale (like the height of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$ for real boats in typical conditions. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from perspective of our brutal model.}
+Viscosities only matter for very small objects, much smaller than sailboats. The way to see this is by computing the Reynolds number, which, loosely speaking, is the ratio of inertial forces to viscous forces. It is a typical length scale (like the width of the sail) times a typical velocity (like the relative velocity of the boat and air) divided by the kinematic viscosity (something like $10^{-5}\,\mmps$ for air and $10^{-6}\,\mmps$ for water). Typical Reynolds numbers for both the boat--air contact and the boat--water contact are therefore on the order of $10^6$ to $10^7$ for real boats in typical conditions. That is, viscosity plays no first-order role in sailing. In detail it shapes the turbulence in the wakes coming off the sail and keel edges, but that is a tiny detail from the perspective of our brutal model.}
 We're going to treat $\eta$ as an uninteresting constant; in particular we are going to assume that it doesn't depend on velocity, such that it can be combined with the area $A$ (to make an effective area) in everything that follows.
 If you don't like that we had to orient the unit vector $\uvec_\perp$ ``down-flow'', then you can manage the signs by re-writing \eqref{eq:flat} as
 \begin{align}\label{eq:flat2}
@@ -627,7 +634,12 @@ That is, the global optimal path will not be locally optimal at all points.
 A full discussion of this path planning is out of scope for this \documentname, but clearly interesting from an engineering perspective.
 
 \paragraph{Acknowledgements:}
-It is a pleasure to thank Will Kinney (Buffalo), Hans-Walter Rix (MPIA), Hyung-Don Ryoo (NYU), and Soledad Villar (JHU) for valuable discussions and comments.
+It is a pleasure to thank
+  Will Kinney (Buffalo),
+  Hans-Walter Rix (MPIA),
+  Hyung-Don Ryoo (NYU), and
+  Soledad Villar (JHU)
+for valuable discussions and comments.
 All code used to make the figures in this \documentname{} are available under the open-source \textsl{MIT License} at \url{https://github.com/davidwhogg/Sailing}.
 
 % \raggedright
