@@ -6,7 +6,7 @@
 % - Kilian Walsh
 % - Sanjoy Mahajan
 % - David Grier
-% - Lehman Garrison, HWR, Dani Maoz?
+% - Dani Maoz? Joe Shields?
 % - All those in the acks.
 
 % style notes:
@@ -18,6 +18,7 @@
 % to-do items:
 % ------------
 % - Update figure captions to match new figures!
+% - Add to the abstract and the introduction and discussion that this is only a 2-D model of sailing. Not 3-D!
 % - Add to the abstract the point that the sailboat is defined by 3 dimensionless numbers: The sail-to-keel ratio, and two lift ratios.
 % - Change citations to Tao to make it clear that the Tao model is (probably) wrong!!
 % - Make sure I cite {symmetry} appropriately in various places. Probably also point out that it is a fun longer read.
@@ -33,15 +34,20 @@
 % - What claims in the literature exist about maximum boat speeds? Have I seen a 2x wind claim? We can beat that. Have I seen a "never faster downwind than the wind" (as in Kimball) or than 0.5 times the wind claim? We can perhaps beat that too.
 % - Should we be more careful to use Galilean-relativistic language, like instead of "upwind" say "upwind relative to the water"? Like always?
 % - Mention sailing hydrofoil where we discuss the keel lift ratio: The point of the hyrdrofoil is to reduce A_below.
-% - Answer Gruzinov's question: How does one sail downwind fttw? What does it look like.
 % - Explain why amateur sailboats have huge keels and professional boats have small keels. Upwind sailing is the answer!
 % - Kleban points about non-trivial wind force f(theta) and references (in email, maybe).
 % - Note that better sailing (tm) is almost never in the direction of the target!
+% - Is there an analog of the Betts or Betz limit? Also just generally discussion of power, power dissipated, and so on.
+% - Do we adequately mention sustainability in the introduction?
+% - How to plot the phase space of dimensionless ratios that allow for UW and DWFTTW?
+% - Can we address stability and uniqueness of the solutions to the (quartic, actually) equations?
+% - Do we clearly define the dimensionless ratios that define a boat? There are three.
+% - Kleban wants polars -- plots that are used in the business. Can do!
 
 \documentclass[letterpaper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[letterpaper]{geometry} % because Overleaf is weird.
-\PassOptionsToPackage{hyphens}{url}
+\usepackage[letterpaper]{geometry}
+\PassOptionsToPackage{hyphens}{url} % huh?
 \usepackage[hidelinks]{hyperref}
 \usepackage{graphicx}
 \graphicspath{{./}{../ipynb/}}
@@ -99,10 +105,10 @@
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
 \title{\bfseries%
-A simple momentum-transport model for sailing}
-\markright{\textsf{Hogg \& Kleban / Momentum-transport model for sailing}}
+How do sailboats work? A simple momentum-transport model}
+\markright{\textsf{Hogg \& Kleban / A momentum-transport model for sailing}}
 \author{DWH, MK, others?}
-\date{2021}
+\date{2021--2024}
 \begin{document}
 \maketitle
 
@@ -110,8 +116,8 @@ A simple momentum-transport model for sailing}
     We present a simplified model for the forces on a sailboat.
     Our model is that there is a ram-pressure force on the sail, with a magnitude and direction that depend on the relative air--boat velocity and the sail orientation.
     Similarly, there is a ram-pressure force on the keel, depending on the relative water--boat velocity and the keel orientation.
-    The resulting expression for the total force on the boat is coordinate-free and consistent with Galilean relativity.
-    The solutions corresponding to sailing in steady wind correspond to boat velocities that deliver vanishing total force, given the angles of the sail and keel.
+    The resulting expression for the total force on the boat is coordinate-free and covariant in the sense of Galilean relativity.
+    The solutions corresponding to sailing in steady wind correspond to boat velocities that deliver vanishing total force, given orientations of the sail and keel.
     We use this simple model to derive a phenomenology of sailing that is not far off from standard folklore and measurements.
     One consequence of this model is that a sailboat does not move (relative to the water) precisely in the direction that its keel points (the direction of the prow); it moves slightly downwind of that.
     Another consequence is that it is possible for an extremely well designed boat (very good lift ratios) to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
@@ -376,12 +382,12 @@ One might ask: Intuitively, how does upwind travel work?
 You can think of the boat like a slippery wedge, with the wind pushing on one side of the wedge (the sail) and the water pushing on the other side of the wedge (the keel).
 The wedge slips forward.
 Maybe that helps?
-HOGG SAYS: I THINK WE NEED A DIAGRAM HERE, SHOWING DWFTTW and UW.
+We will say more about upwind sailing in \secref{sec:upwind}.
 
 Finally, although upwind travel is slow going, with lots of tacking required, if you are situated \emph{on the boat}, upwind travel \emph{feels very fast}.
 Why?
 Because your experience of speed is, at least in part, the feeling of the wind in your face.
-If you think about \figref{fig:hourglass} in terms of the boat--air velocity instead of the boat--water velocity---that is, if you Galilean-boost to the rest frame of the air---the upwind travel has much larger boat--air velocities than the downwind travel.
+If you think about the boat--air velocity instead of the boat--water velocity---that is, if you Galilean-boost to the rest frame of the air---the upwind travel has much larger boat--air velocities than the downwind travel.
 So even though you can sail fast (relative to the water) downwind, it sometimes \emph{feels} faster upwind, because your strongest perception is of the relative boat--air velocity, not the relative boat--water velocity.
 
 \section{Good sailing}\label{sec:good}
@@ -484,6 +490,10 @@ That is, a BestSailing(tm) sailor will put the boat into configurations that don
 The full exposition of this requires a model for the costs of coming about.
 That's outside the scope of this \documentname.
 
+\section{Sailing downwind faster than the wind and upwind}\label{sec:upwind}
+
+HOGG WRITE HERE.
+
 \section{Boat properties and boat design}\label{sec:design}
 
 In all of the experiments and figures given above, we made use of a model boat with the following effective-area ratios:
@@ -541,7 +551,8 @@ That is, in just the same sense that the areas we use are effective areas, the o
 One amusing comment to make about the curvature of sails is that---since sails and keels have parallel roles in sailing---if it behooves sails to be curved, it probably also behooves keels to be curved.
 HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? CITE! Also the rudder is involved CITE.
 
-KLEBAN: Should we quantitatively report on the conditions for dwfttw? And the conditions for upwind? Right now this is all qualitative.
+KLEBAN SAY: Should we quantitatively report on the conditions for dwfttw? And the conditions for upwind? Right now this is all qualitative.
+HOGG SAY: YES; THERE are settings for the dimensionless ratios that permit and don't permit it. Not sure how to present this because there are three dimensionless ratios.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
@@ -643,7 +654,7 @@ It is a pleasure to thank
   Hyung-Don Ryoo (NYU), and
   Soledad Villar (JHU)
 for valuable discussions and comments.
-All code used to make the figures in this \documentname{} are available under the open-source \textsl{MIT License} at \url{https://github.com/davidwhogg/Sailing}.
+All code used to solve equations and make figures in this \documentname{} is available under the open-source \textsl{MIT License} at \url{https://github.com/davidwhogg/Sailing}.
 
 % \raggedright
 \bibliographystyle{hogg-plain-annote}
