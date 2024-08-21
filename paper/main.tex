@@ -496,9 +496,13 @@ That's outside the scope of this \documentname.
 
 HOGG WRITE HERE.
 
+HOGG: How are uw and dwfttw the same question in different reference frames?
+
 HOGG: Argument about the wedge being squeezed.
 
 HOGG: Diagrams.
+
+HOGG: Note about how it feels. Is this repetitive with comments above? If so, remove them and replace with references down to this Section.
 
 \section{Boat properties and boat design}\label{sec:design}
 
@@ -530,10 +534,24 @@ For context, recall that these ratios (lift ratios and sail-to-keel ratio) are r
   \includegraphics[width=0.5\textwidth]{design_A.pdf}%
   \includegraphics[width=0.5\textwidth]{design_C.pdf}\\%
   \rule{0.25\textwidth}{0pt}\includegraphics[width=0.5\textwidth]{design_E.pdf}
-  \caption{Each panel is analagous to \figref{fig:hourgood} but in each case we have varied one of the boat's dimensionless ratios. In each panel, the grey points show the same speed curve as that plotted in \figref{fig:hourgood}, which was computed for the boat described by the parameters given in \eqref{eq:boat1} through \eqref{eq:boat4}, and for a wind speed (relative to the water) of $8\,\mps$.
+  \caption{HOGG SOME PARTS OF THIS CAPTION ARE WRONG Each panel is analagous to \figref{fig:hourgood} but in each case we have varied one of the boat's dimensionless ratios. In each panel, the grey points show the same speed curve as that plotted in \figref{fig:hourgood}, which was computed for the boat described by the parameters given in \eqref{eq:boat1} through \eqref{eq:boat4}, and for a wind speed (relative to the water) of $8\,\mps$.
   In the top-left panel, the small and large black points show variations as we vary the sail lift ratio $A_\sail/A_\above$ from 40 (small dots) to 200 (grey dots) to 1000 (large dots).
   In the top-right panel, the small and large black dots show variations as we vary the keel lift ratio $A_\keel/A_\below$ from 40 (small dots) to 200 (grey dots) to 1000 (large dots).
   In the bottom panel, the small and large black dots show the variations as we vary the sail-to-keel ratio $A_\sail/A_\keel$ from 140 (small dots) to 700 (grey dots) to 3500 (large dots).\label{fig:design}}
+  \figurerule
+\end{figure}
+
+KLEBAN SAY: Should we quantitatively report on the conditions for dwfttw? And the conditions for upwind? Right now this is all qualitative.
+HOGG SAY: YES; THERE are settings for the dimensionless ratios that permit and don't permit it. These are illustrated in \figref{fig:dwfttw}, as a function of lift ratios, for boats with two different values of the sail-to-keel area ratio.
+The brief summary is .... HOGG
+\begin{figure}[t!]
+  \includegraphics[width=0.5\textwidth]{upwind_vmg.pdf}%
+  \includegraphics[width=0.5\textwidth]{downwind_vmg.pdf}\\%
+  \rule{0.25\textwidth}{0pt}\includegraphics[width=0.5\textwidth]{crosswind_vmg.pdf}
+  \caption{HOGG WRITE CAPTION.
+  In the top-left panel, HOGG.
+  In the top-right panel, HOGG.
+  In the bottom panel, HOGG.\label{fig:dwfttw}}
   \figurerule
 \end{figure}
 
@@ -556,9 +574,6 @@ That is, in just the same sense that the areas we use are effective areas, the o
 
 One amusing comment to make about the curvature of sails is that---since sails and keels have parallel roles in sailing---if it behooves sails to be curved, it probably also behooves keels to be curved.
 HOGG: Evidence that contemporary racing boats have keels with an active trailing edge? CITE! Also the rudder is involved CITE.
-
-KLEBAN SAY: Should we quantitatively report on the conditions for dwfttw? And the conditions for upwind? Right now this is all qualitative.
-HOGG SAY: YES; THERE are settings for the dimensionless ratios that permit and don't permit it. Not sure how to present this because there are three dimensionless ratios. Working on it.
 
 \section{Numerical implementation notes}\label{sec:implementation}
 
