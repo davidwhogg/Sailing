@@ -266,7 +266,7 @@ If, instead of a planar object, you have an isotropic object (a sphere in fully 
 where $\eta$ is a (different) dimensionless prefactor, $A$ is now the cross-sectional or projected area of the surface, and $\vec{v}$ is still the fluid velocity in the rest frame of the object.
 Again $\eta$ depends on velocity, but again we are going to ignore that.
 
-Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull.
+Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull. LEHMAN: ISN'T THE KEEL TECHNICALLY PART OF THE HULL? IF SO, THE HULL WOULDN'T REALLY BE ISOTROPIC. MAYBE JUST NEED TO DEFINE HULL VS KEEL HERE.
 Thus the ram-pressure force on the sailboat will have four components, a force on the flat sail from the air, a force on the flat keel from the water, a force on the hull from the air, and a force on the hull from the water.
 This model is extremely simplistic!
 In some sense it is the closest possible object to the spherical cow that will sail non-trivially.
@@ -320,7 +320,7 @@ In what follows, we use the \emph{isotropic boat with thin planar sail and keel}
 Mathematically, steady sailing (constant $\vboat$) in steady wind and steady current (constant $\vair, \vwater$) is given by
 \begin{align}\label{eq:sailing}
     \vec{F} &= \vec{F}_\air + \vec{F}_\water = \vec{0} ~.
-\end{align}
+\end{align} 
 If we want to operationalize steady sailing in code, steady sailing can be thought of as a root-finding problem, in which we find the vector $\vboat$ that makes \eqref{eq:sailing} true, given the orientations $\uvec_{\perp\sail}, \uvec_{\perp\keel}$ of the sail and keel.
 This is a root-finding problem that (probably---KLEBAN??) has no closed form.\footnote{%
 It might be interesting to note that the flat-surface force \eqref{eq:flat} is a vector-valued quadratic form, so if one constructed the sailboat model completely from flat surfaces, the force law, in this approximation would be a quadratic form.
@@ -502,7 +502,11 @@ HOGG: Argument about the wedge being squeezed.
 
 HOGG: Diagrams.
 
-HOGG: Note about how it feels. Is this repetitive with comments above? If so, remove them and replace with references down to this Section.
+LEHMAN: AN OBSERVATION ABOUT FIG.~2: THE DWFTTW PARAMETER SPACE LOOKS SYMMETRICAL WITH UPWIND SAILING! (IS THIS STRICTLY TRUE?) THIS MAKES SOME SENSE: ONCE YOU'RE GOING DWFTTW, YOU HAVE A HEADWIND THAT IS THE SAME AS IF YOU WERE SAILING UPWIND. BUT THE VELOCITY RELATIVE TO THE WATER IS DIFFERENT IN THE TWO CASES, SO WHAT RESTORES THE SYMMETRY? MAYBE FIG.~7 PROVES THAT THE SYMMETRY IS ACCIDENTAL.
+
+LEHMAN: IS ONE WAY TO THINK ABOUT DWFTTW THAT SOME OF THE "USELESS" FORCE OF THE WIND ON THE SAIL/HULL (I.E.~PERPENDICULAR TO DIRECTION OF TRAVEL) GETS REDIRECTED TO "USEFUL" FORCE BY THE ANGLE OF THE KEEL AGAINST THE WATER? IF SO, THIS WOULD SEEM TO REQUIRE THE TOTAL WIND-SAIL FORCE AT A "FAST" ANGLE TO BE GREATER THAN THE WIND-SAIL FORCE DIRECTLY DOWNWIND. NOT SURE WHY THIS WOULD BE TRUE, BUT MAYBE MY CONFUSION COULD BE HELPFUL IN DECIDING HOW TO WRITE THIS SECTION...
+
+HOGG: Possible Note about how it feels. Is this repetitive with comments above? If so, remove them and replace with references down to this Section.
 
 \section{Boat properties and boat design}\label{sec:design}
 
