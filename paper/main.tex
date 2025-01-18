@@ -1,4 +1,4 @@
-% This paper is copyright 2021 the authors.
+% This paper is copyright 2021, 2025 the authors.
 
 % people who might comment on it:
 % -------------------------------
@@ -8,6 +8,7 @@
 % - David Grier
 % - Dani Maoz? Joe Shields?
 % - Saskia Hekker
+% - Charlie Peskin
 % - All those in the acks.
 
 % style notes:
@@ -15,6 +16,7 @@
 % - Always air before water, always sail before keel before hull.
 % - Need to choose typesetting for GoodSailing and BetterSailing and then be consistent.
 % - Maybe the "flat" force should be the "planar" force?
+% - Do we capitalize north and east and southeast>
 
 % to-do items:
 % ------------
@@ -108,7 +110,7 @@
 \frenchspacing\sloppy\sloppypar\raggedbottom
 
 \title{\bfseries%
-How do sailboats work? A simple momentum-transport model}
+The spherical scow: a simple model for sailboats}
 \markright{\textsf{Hogg \& Kleban / A momentum-transport model for sailing}}
 \author{DWH, MK, others?}
 \date{2021--2024}
@@ -116,16 +118,16 @@ How do sailboats work? A simple momentum-transport model}
 \maketitle
 
 \begin{abstract}\noindent
-    We present a simplified model for the forces on a sailboat.
-    Our model is that there is a ram-pressure force on the sail, with a magnitude and direction that depend on the relative air--boat velocity and the sail orientation.
-    Similarly, there is a ram-pressure force on the keel, depending on the relative water--boat velocity and the keel orientation.
+    We present a simple model that captures the essential physics governing a sailboat. In this model, the sail experiences a ram-pressure force determined by the boat’s velocity relative to the air and the sail’s orientation. Similarly, there is a ram-pressure force on the keel depending on the boat’s velocity relative to the water and the keel’s orientation. Finally, the hull experiences a force determined by the relative velocities of air and water with respect to the boat.
     The resulting expression for the total force on the boat is coordinate-free and covariant in the sense of Galilean relativity.
-    The solutions corresponding to sailing in steady wind correspond to boat velocities that deliver vanishing total force, given orientations of the sail and keel.
-    We use this simple model to derive a phenomenology of sailing that is not far off from standard folklore and measurements.
+    
+    Solutions corresponding to sailing at constant velocity in steady wind correspond to boat velocities that,  for given sail and keel orientations, yield zero net force.
+    We use this simple model to derive a phenomenology of sailing that is not far off from standard folklore and real-world measurements.
+    
     One consequence of this model is that a sailboat does not move (relative to the water) precisely in the direction that its keel points (the direction of the prow); it moves slightly downwind of that.
-    Another consequence is that it is possible for an extremely well designed boat (very good lift ratios) to sail downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
-    Another is that cross-wind sailing is fastest when the effective area of the sail is larger than the effective area of the keel by the ratio of the density of water to the density of air.
-    Nothing conceptual about this model depends on the \emph{curvature} of the sail, in contradiction to some folk explanations of sailing; the important thing is that the model \emph{does} depend on angular re-direction of fluid momentum flux; sail curvature can help with this, as could keel curvature.
+    Another consequence is that it is possible for a well-designed boat (with very good lift ratios) to make progress downwind (relative to the water) \emph{faster than the wind}, on a tacking course.
+    Another is that cross-wind sailing is fastest when the effective area of the sail is larger than the effective area of the keel by a factor equal to the ratio of the density of water to the density of air.
+    The model does not include \emph{curvature} of the sail.  In contradiction to some folk explanations of sailing, our model boat is nevertheless able to sail upwind, and make progress downwind faster than the wind. The model \emph{does} depend on angular re-direction of fluid momentum flux (sail curvature would help with this, as would keel curvature).
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
@@ -133,25 +135,32 @@ How do sailboats work? A simple momentum-transport model}
 We (the authors) are not serious sailors!
 However, we believe that sailing is a beautiful technology.
 The boat is powered by the wind, and yet it can travel (possibly with a tacking course) in any direction.
-Of course it's not consistent with Galilean relativity\footnote{We refer to Galilean relativity repeatedly in this \documentname.
+Of course it is not consistent with Galilean relativity\footnote{We refer to Galilean relativity repeatedly in this \documentname.
 Of course Galilean relativity is just the low-velocity approximation to special relativity \cite{sr}.
-But we are not going to consider air--water velocity differences that are an appreciable fraction of the speed of light (except maybe in the discussion in \secref{sec:discussion}).} to say that the boat is powered by the wind:
-There is no absolute velocity, and there is a valid rest frame in which the wind velocity is zero.
-The Galilean-relativistic thing to say is that the boat is powered by the relative velocity between the air and the water.
+But we are not going to consider air--water velocity differences that are an appreciable fraction of the speed of light (except maybe in the discussion in \secref{sec:discussion}).} to say that the boat is powered by the motion of air:
+There is no absolute velocity, and there is a valid  frame in which the air velocity is zero.
+The Galilean-relativistic description is that the boat is powered by the relative velocity between the air and the water (which is a good definition of ``wind").
 Indeed, the symmetry between the air and the water in the mechanisms of sailing is the fundamental theme of one of the better books on the physics of sailing \cite{symmetry}.
 Here we build the simplest possible physical model for a sailboat---and sailing---that is consistent with symmetries and captures all of the leading-order features of the technology.
 
-KLEBAN: Write things about ddwfttw, maybe? For context only! But it is worth saying that if we can understand sailing with a simple model, we might resolve some disputes about ddwfttw.
+One of the interesting conceptual questions related to sailing is whether it is possible to progress downwind, in a wind-powered vehicle, faster than the wind.  To be clear, imagine a balloon with the same density as the air that drifts downwind at exactly the speed of the air.  Can a sailboat (or other wind-powered vehicle) beat the balloon to a mark dead downwind of the starting point?  The immediate reaction of many people is that this must be impossible.  After all, how can a wind-powered vehicle outrun the wind that powers it?  
+
+We will see that this is in fact possible according to our simple model (with sufficiently optimal parameters for the sailboat), and  is relatively routine in real (but very high-performance!) boats CITE?.
+Some years ago a pair of engineers even constructed a cart driven by a propeller CITE.
+The propeller is geared to the cart's wheels, which provide the torque that drives the propeller.
+Remarkably, this cart is capable of running straight downwind at several times the speed of the wind.  Of course, the rotation of the propeller means that not all parts of the vehicle are, in fact, moving dead downwind; indeed, the blades of the propeller act much like the sails of a sailboat tacking on a downwind reach CITE?.  The \emph{force} driving the cart comes from molecules of air that bounce off these moving, angled surfaces, while the \emph{energy} comes from the fact that the relative motion of air and ground is slowed by the passing cart.
+
+HOGG: DO WE NEED A PARAGRAPH ON SUSTAINABLE ENERGY, new transportation technologies, wind power and so on? That's also motivation.
 
 When we were little, we were taught a story about how airfoils (wings on airplanes, for example) generate lift, in which the air path over the top of the lenticular, curved wing is longer than the path under the bottom, so velocities are different (top to bottom), and thus there is a net force from a difference in Bernoulli pressures.
 This model is now known to be wrong (see, for example, \cite{lift}):
 There is no reason for the air flow to ``join up'' at the end of the airfoil.
-And, besides, airplanes can fly upside-down!
+Besides, airplanes can fly upside-down!
 The best leading-order description is that the lift on the wing comes from \emph{redirection of the flow of air}.
 There is a volumetric rate of momentum change downwards in the air flowing onto the wing, which leads to an equal-and-opposite force upwards on the wing.
 Similarly, the force on a sailboat sail is from the redirection of the flow of the air encountering the sail.
 This point is made admirably in some books on the physics of sailing (especially \cite{sails}).
-And the force on a sailboat keel is from the redirection of the flow of water encountering the keel.
+The force on a sailboat keel is from the redirection of the flow of water encountering the keel.
 These forces are sometimes called ``lift'' forces in analogy to the lift force on an airplane wing.
 This \documentname{} is partially motivated by these observations.
 Sailboats sail by managing momentum changes in the air and water.
@@ -190,6 +199,51 @@ Spoiler: It is impressive!
 We will discuss the dependence of our results on our boat properties in \secref{sec:design}.
 We comment on the implementation of the model in \secref{sec:implementation} and we remark on limitations and extensions in \secref{sec:discussion}.
 
+\section{Qualitative discussion}\label{sec:qualitative}
+
+HOGG: AUDIT FOR REPETITIVENESS BETWEEN THIS AND WHAT'S ABOVE AND BELOW.
+
+Before we introduce our quantitative, but simple, physical model for a sailboat,
+let's look at how sailing works, qualitatively.
+A sailboat works on the \emph{relative velocity} of the air and the water,
+with the sail intersecting the air and the keel intersecting the water.
+That is, sailing in an arbitrary direction depends on there being a difference between the air velocity and the water velocity.
+The relevant air and water velocities are those relative to the boat, because the sail and keel move with the boat.
+
+With good engineering, or when simplified as we simplify below, the pressure forces from the air on the sail and from the water on the keel
+have directions that are close to normal to the sail and keel surfaces.
+(Of course sails are curved but we will consider the mean sail surface normal direction for the purpose of this discussion.)
+Thus if we set the direction of the keel and the sail such that they form a kind of wedge,
+the normal forces from the air and water will squeeze this wedge and the boat will be pushed forward.
+It will be pushed forward in much the same way that a slippery watermelon seed will shoot outwards when squeezed between your fingertips.
+
+The easiest sailing direction to understand is cross-wind.
+Here the wind is coming from (say) the north, and the boat is pointed (roughly) east.
+In the frame of the boat, the air is coming from the northeast, and the water is coming from the southeast.
+The water is coming from the southeast in the frame of the boat because the boat is being pushed downwind by the air.
+The air--sail normal force and water--keel normal force push the boat forward.
+Figure~HOGG shows the geometry of the situation in the water frame, the boat frame, and idealized to the squeezed wedge.
+HOGG: CROSSWIND DIAGRAM IN WATER FRAME, BOAT FRAME, and abstracted down to a wedge.
+
+In some ways the most important sailing direction is upwind (in the frame of the water).
+The ability for boats to sail upwind is critical for making round-trip journeys on our planet with its relatively steady atmospheric currents.
+The boat cannot sail directly upwind but it can make upwind progress by tacking at angles to the wind.
+If the wind is coming from the north, on one one of these tacks the boat might be pointed towards the northeast.
+In the boat frame, the wind is coming from the north-northeast, and the water is coming from the east-northeast because the boat is being pushed downwind by the air.
+Figure~HOGG shows the geometry of this situation.
+
+The strangest (and rarest) sailing direction is downwind faster than the wind (in the frame of the water).
+Again, this must be done by tacking.
+HOGG... KEEP WRITING.
+
+HOGG: HOW FAST can we sail?
+As the boat goes faster, the air and water velocities (relative to the boat) start to converge.
+The wedge gets very narrow.
+This will only work if the forces are very precisely normal.
+That is only true if the lift ratios are very high---drag forces are very low.
+But there is no limit \emph{in principle} to how fast a boat can sail.
+And, indeed sailboats routinely sail substantially faster than the windspeed (relative to the water) CITE.
+
 \section{Why ram-pressure forces?}\label{sec:ram}
 
 Sailboats and sails---like airplanes and wings---are beautiful curved structures that are designed to redirect air with as little turbulence as possible.
@@ -225,6 +279,8 @@ The angles of the sail and keel with respect to the air--boat and water-boat vel
 The directions of the forces can be manipulated to create amazing boat dynamics and kinematics.
 The point of this \documentname{} is that much of the amazing dynamics can be understood in a dead simple model for the sailboat.
 So while we use the phrases ``flat sail'' and ``ram-pressure'' in what follows to describe our model, we really mean ``simple momentum transport''.
+
+HOGG TECHNICAL POINT that ram pressure is in play when Reynolds numbers are huge. They are huge.
 
 \section{Ram-pressure sailboat}\label{sec:model}
 
@@ -267,7 +323,8 @@ If, instead of a planar object, you have an isotropic object (a sphere in fully 
 where $\eta$ is a (different) dimensionless prefactor, $A$ is now the cross-sectional or projected area of the surface, and $\vec{v}$ is still the fluid velocity in the rest frame of the object.
 Again $\eta$ depends on velocity, but again we are going to ignore that.
 
-Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull. LEHMAN: ISN'T THE KEEL TECHNICALLY PART OF THE HULL? IF SO, THE HULL WOULDN'T REALLY BE ISOTROPIC. MAYBE JUST NEED TO DEFINE HULL VS KEEL HERE.
+Our model for a sailboat is going to be that it is a composite object, composed of a flat sail, a flat keel, and an isotropic partially submerged hull.
+LEHMAN: ISN'T THE KEEL TECHNICALLY PART OF THE HULL? IF SO, THE HULL WOULDN'T REALLY BE ISOTROPIC. MAYBE JUST NEED TO DEFINE HULL VS KEEL HERE.
 Thus the ram-pressure force on the sailboat will have four components, a force on the flat sail from the air, a force on the flat keel from the water, a force on the hull from the air, and a force on the hull from the water.
 This model is extremely simplistic!
 In some sense it is the closest possible object to the spherical cow that will sail non-trivially.
@@ -337,7 +394,9 @@ The values we chose for these four parameters are given in \secref{sec:design} a
   \includegraphics[width=\textwidth]{steady.pdf}
   \caption{HOGG: THIS CAPTION IS ALL WRONG NOW: ALL PLOTTED VELOCITIES ARE DIFFERENCES. Visualizations of the boat velocity $\vboat$ for different settings of the orientations of the keel and sail, all presented in the water rest frame.
   The views are top-down; the keel is represented by a thick grey line, the sail is represented by a thin black line, and the wind and boat velocities are represented by black arrows.
-  Most of the settings of the keel and sail lead to downwind travel, but a few in the top-left quarter of this grid lead to upwind travel. LEHMAN: HIGHLIGHT THE FRAME WITH THE OPTIMAL ANGLE OF ATTACK IN EACH COLUMN?\label{fig:steady}}
+  Most of the settings of the keel and sail lead to downwind travel, but a few in the top-left quarter of this grid lead to upwind travel.
+  LEHMAN: HIGHLIGHT THE FRAME WITH THE OPTIMAL ANGLE OF ATTACK IN EACH COLUMN?
+  \label{fig:steady}}
   \figurerule
 \end{figure}
 
